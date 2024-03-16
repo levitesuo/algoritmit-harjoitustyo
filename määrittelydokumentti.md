@@ -7,7 +7,7 @@ Vaellusreitin suunnittelu algoritmisesti.
 Tämä algoritmi ikävä kyllä ottaa reitin suunnittelussa huomioon vain maaston korkeuden.
 Käytetään perlin noisea generoimaan 3d korkeus kartta.
 Haluaisin löytää ns. energiatehokkaimman reitin paikasta a paikkaan b.
-Käytännössä ylämäkeen liikkuminen kuluttaa paljon energiaa kun taas alamäkeen ei ole sen helpompaa kun tasaisella kävely.
+Käytännössä ylämäkeen liikkuminen kuluttaa paljon energiaa kun taas alamäkeen ei ole sen helpompaa kulkea kun tasaisella kävely.
 
 
 ## [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise)

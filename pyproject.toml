@@ -8,6 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 invoke = "^2.2.0"
+perlin-noise = "^1.12"
+matplotlib = "^3.8.3"
+open3d = "0.13.0"
 
 
 [tool.poetry.group.dev.dependencies]

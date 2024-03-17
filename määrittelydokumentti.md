@@ -8,7 +8,11 @@ Tämä algoritmi ikävä kyllä ottaa reitin suunnittelussa huomioon vain maasto
 Käytetään perlin noisea generoimaan 3d korkeus kartta.
 Haluaisin löytää ns. energiatehokkaimman reitin paikasta a paikkaan b.
 Käytännössä ylämäkeen liikkuminen kuluttaa paljon energiaa kun taas alamäkeen ei ole sen helpompaa kulkea kun tasaisella kävely.
+Aloitetaan funtiolla
+liikkumisen hinta = max(1.4 ** (ylöspäin liikkeen määrä * a - 10), 0)
+a = positiivinen realilukukerroin
 
+Hypoteesina on että vaikka alaspäin liikkuminen voi olla ilmaista pitää algoritmitn
 
 ## [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise)
 Perlin noisella saan generoitua uskottavia 3d maaston korkeus karttoja.

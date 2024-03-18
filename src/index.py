@@ -6,7 +6,7 @@ from perlin_noise import PerlinNoise
 from a_star import a_star
 
 
-noise = PerlinNoise(octaves=5, seed=1)
+noise = PerlinNoise(octaves=2, seed=2)
 xpix, ypix = 100, 100
 data_range = (0, 1)
 point_ammount = 100

@@ -35,8 +35,8 @@ def height_mapping(x_pos, y_pos, x_goal, y_goal, grid):
 def heigt_mapping_function(height_diff):
     a = 10
     if height_diff < 0:
-        return height_diff * -1
-    return (height_diff * a) ** 2
+        return abs(height_diff) + 1
+    return (height_diff * a) ** 2 + 1
 
 
 def get_node_grid(grid):
@@ -68,6 +68,9 @@ def trace_path(cell_details, dest):
         temp_col = cell_details[row][col].parent[1]
         row = temp_row
         col = temp_col
+        if len(path) > 100000:
+            print("The lengt of the path is over 100000. Is this intended?")
+            return
 
     # Add the source cell to the path
     path.append((row, col))

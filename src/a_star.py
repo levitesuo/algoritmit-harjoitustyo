@@ -1,43 +1,17 @@
 import math
 import heapq
-
-
-class Node:
-    def __init__(self, x, y, grid, height_mapping_function):
-        self._pos = (x, y)
-        self.edges = [[0 for _ in range(3)] for _ in range(3)]
-        self._grid = grid
-        self._height_mapping_function = height_mapping_function
-
-        self.parent = (0, 0)
-        self.f = float('inf')
-        self.g = float('inf')
-        self.h = 0
-        self._init_edges()
-
-    def _init_edges(self):
-        x = self._pos[0]
-        y = self._pos[1]
-        size = len(self._grid)
-        for i in range(-1, 2):
-            for j in range(-1, 2):
-                if 0 <= y + j < size and 0 <= x + i < size and not (i == 0 and j == 0):
-                    self.edges[i+1][j+1] = self._height_mapping_function(
-                        self._grid[x+i][y+j]-self._grid[x][y])
-                else:
-                    self.edges[i+1][j+1] = float('inf')
-        print(self.edges)
+from node import Node
 
 
 def height_mapping_function(height_diff):
-    a = 10
+    a = 100
     if height_diff < -0.1:
-        return height_diff * -5 + 0.5 + 1
-    return (height_diff * a) * 20 + 3 + 1
+        return height_diff * -5 * a + 0.5 + 1
+    return height_diff * 20 * a + 3 + 1
 
 
 def get_node_grid(grid):
-    return [[Node(i, j, grid, height_mapping_function) for j in range(len(grid))] for i in range(len(grid))]
+    return [[Node((i, j), grid, height_mapping_function) for j in range(len(grid))] for i in range(len(grid))]
 
 
 def if_in_grid(x, y, grid):
@@ -51,32 +25,16 @@ def h_function(x_pos, y_pos, x_goal, y_goal, grid):
     return length
 
 
-def trace_path(cell_details, dest):
-    print("The Path is ")
+def trace_path(node_map, goal):
     path = []
-    row = dest[0]
-    col = dest[1]
 
-    # Trace the path from destination to source using parent cells
-    while not (cell_details[row][col].parent[0] == row and cell_details[row][col].parent[1] == col):
-        path.append((row, col))
-        temp_row = cell_details[row][col].parent[0]
-        temp_col = cell_details[row][col].parent[1]
-        row = temp_row
-        col = temp_col
-        if (row, col) in path:
-            print("ERROR: LOOP IN PATH")
-            return []
-
-    # Add the source cell to the path
-    path.append((row, col))
-    # Reverse the path to get the path from source to destination
-    path.reverse()
-
-    # Print the path
-    for i in path:
-        print("->", i, end=" ")
-    print()
+    parent = goal
+    while parent != (0, 0):
+        path.append(parent)
+        parent = node_map[parent[0]][parent[1]].parent
+        if parent in path:
+            print("ERROR: LOOP IN PAHT")
+            return path
     return path
 
 

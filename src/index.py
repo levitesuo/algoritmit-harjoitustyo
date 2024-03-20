@@ -1,15 +1,15 @@
-from mpl_toolkits import mplot3d
 from matplotlib import pyplot
 from matplotlib import cm
 import numpy as np
+from random import randint
 from perlin_noise import PerlinNoise
 from a_star import a_star
 
 
-noise = PerlinNoise(octaves=2, seed=2)
+noise = PerlinNoise(octaves=4, seed=randint(1, 100))
 xpix, ypix = 100, 100
 data_range = (0, 1)
-point_ammount = 100
+point_ammount = 200
 a = np.linspace(data_range[0], data_range[1], point_ammount)
 b = np.linspace(data_range[0], data_range[1], point_ammount)
 x, y = np.meshgrid(a, b)
@@ -26,7 +26,11 @@ bx.plot_surface(x, y, z, rcount=r, ccount=c, facecolors=colors, shade=False)
 # bx.plot_wireframe(x, y, z, zorder=0)
 # wf = pyplot.axes(projection='3d')
 
-data = a_star((10, 10), (90, 90), z)
+start = (randint(0, point_ammount//2), randint(0, point_ammount//2))
+goal = (randint(point_ammount//2, point_ammount),
+        randint(point_ammount//2, point_ammount))
+
+data = a_star(start, goal, z)
 path = data[0]
 visited = data[1]
 
@@ -36,9 +40,9 @@ path_z = []
 
 
 for cord in path:
-    x_c = cord[0] / point_ammount * \
+    x_c = cord[1] / point_ammount * \
         (data_range[1]-data_range[0]) + data_range[0]
-    y_c = cord[1] / point_ammount * \
+    y_c = cord[0] / point_ammount * \
         (data_range[1]-data_range[0]) + data_range[0]
     z_c = z[cord[0]][cord[1]]
     path_x.append(x_c)

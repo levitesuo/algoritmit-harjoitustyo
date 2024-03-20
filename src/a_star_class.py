@@ -4,7 +4,7 @@ from node import Node
 from high_map_func import height_mapping_function
 
 
-class a_star:
+class AStar:
     '''
         Solves the A* algorithm on a heightmap.
         Inputs are a grid wich is a square 2d array with values that represent their height.
@@ -17,22 +17,27 @@ class a_star:
         self._nodes = []
 
         self.goal = None
+        self.found = None
 
     def init(self, start, goal, grid):
         '''Give a* the info it needs.'''
         if self._check_node_validity(start):
-            return "The start must be inside the grid."
+            print("INIT FAILED: The start must be inside the grid.")
+            return False
         if self._check_node_validity(goal):
-            return "The goal must be inside the grid."
+            print("INIT FAILED: The goal must be inside the grid.")
+            return False
         if len(grid) != len(grid[0]):
-            return "The grid must be a square."
-        self.closed_list = []
+            print("INIT FAILED: The grid must be a square.")
+            return False
         self.open_list = []
+        self.found = False
         size = len(grid)
 
         self.goal = goal
         self._nodes = [[Node((i, j), grid, height_mapping_function)
                         for i in range(size)] for j in range(size)]
+        self.closed_list = [[False for _ in range(size)] for _ in range(size)]
 
         self._nodes[start[0]][start[1]].f = 0
         self._nodes[start[0]][start[1]].g = 0
@@ -41,16 +46,17 @@ class a_star:
 
         heapq.heappush(
             self.open_list, (0, (start[0], start[1]), self._nodes[start[0]][start[1]]))
+        return True
 
     def step(self):
         '''A* performs a single step of the algorithm.'''
         if len(self.open_list) == 0:
-            print("Stepping failed. Open list empty. initialize the algo again.")
+            print("STEPPING FAILED: Open list empty. initialize the algo again.")
             return True
         p = heapq.heappop(self.open_list)
 
         i = p[1][0]
-        j = p[1][0]
+        j = p[1][1]
 
         self.closed_list[i][j] = True
 
@@ -62,6 +68,7 @@ class a_star:
 
             if self._check_node_validity((new_i, new_j)) and not self.closed_list[new_i][new_j]:
                 if (new_i, new_j) == self.goal:
+                    self.found = True
                     print("Goal found.")
                     return self._get_path_to(self.goal)
                 else:
@@ -69,7 +76,7 @@ class a_star:
                         edges[direction[0] + 1][direction[1] + 1]
                     new_h = self._heurestic_function((new_i, new_j))
                     new_f = new_g + new_h
-                    if self._nodes[new_i][new_j].f == float['inf'] or self._nodes[new_i][new_j].f > new_f:
+                    if self._nodes[new_i][new_j].f == float('inf') or self._nodes[new_i][new_j].f > new_f:
                         heapq.heappush(self.open_list,
                                        (new_f, (new_i, new_j), self._nodes[new_i][new_j]))
 
@@ -113,6 +120,6 @@ class a_star:
             path.append(parent)
             parent = self._nodes[parent[0]][parent[1]].parent
             if parent in path:
-                print("ERROR: LOOP IN PATH")
+                print("FINDING PATH FAILED: Loop in the path.")
                 return path
         return path

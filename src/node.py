@@ -19,6 +19,3 @@ class Node:
                 if 0 <= new_x < size and 0 <= new_y < size and not (i == 1 and j == 1):
                     self.edges[i][j] = height_mapping_function(
                         grid[new_x][new_y] - grid[x][y])
-        for i in range(3):
-            print(self.edges[i])
-        print("\n")

@@ -1,56 +1,47 @@
-from matplotlib import pyplot
-from matplotlib import cm
+from random import randint as rnd
+import plotly.graph_objects as go
 import numpy as np
-from random import randint
 from perlin_noise import PerlinNoise
-from a_star import a_star
+from a_star_class import AStar
 
-
-noise = PerlinNoise(octaves=4, seed=randint(1, 100))
-xpix, ypix = 100, 100
-data_range = (0, 1)
-point_ammount = 200
-a = np.linspace(data_range[0], data_range[1], point_ammount)
-b = np.linspace(data_range[0], data_range[1], point_ammount)
-x, y = np.meshgrid(a, b)
+# Defining a datamap from perlin noise.
+noise = PerlinNoise(octaves=4, seed=rnd(1, 100))
+# Defining x, y, z axels in 3d space.
+data_resolution = 50
+line_x = np.linspace(0, 1, data_resolution)
+line_y = np.linspace(0, 1, data_resolution)
+x, y = np.meshgrid(line_x, line_y)
 z = np.array([[noise([i, j]) for i, j in zip(xrow, yrow)]
              for xrow, yrow in zip(x, y)])
 
-norm = pyplot.Normalize(z.min(), z.max())
-colors = cm.viridis(norm(z))
-r, c, _ = colors.shape
+a_star = AStar()
 
-fig = pyplot.figure()
-bx = fig.add_subplot(111, projection='3d')  # , computed_zorder=False)
-bx.plot_surface(x, y, z, rcount=r, ccount=c, facecolors=colors, shade=False)
-# bx.plot_wireframe(x, y, z, zorder=0)
-# wf = pyplot.axes(projection='3d')
+start = (rnd(0, data_resolution - 1), 10)
+goal = (rnd(0, data_resolution - 1), data_resolution - 10)
+a_star.init(start, goal, z)
 
-start = (randint(0, point_ammount//2), randint(0, point_ammount//2))
-goal = (randint(point_ammount//2, point_ammount),
-        randint(point_ammount//2, point_ammount))
+color_map = np.array([['#9bc2de'for _ in range(data_resolution)]
+                      for _ in range(data_resolution)])
+color_map[start[0]][start[1]] = '#ff5900'
+color_map[goal[0]][goal[1]] = '#f700ff'
 
-data = a_star(start, goal, z)
-path = data[0]
-visited = data[1]
+frames = np.array(color_map)
 
-path_x = []
-path_y = []
-path_z = []
+done = False
+while not done:
+    done = a_star.step()
+    for i in range(data_resolution):
+        for j in range(data_resolution):
+            if (i, j) != goal and (i, j) != start:
+                if a_star.closed_list[i][j]:
+                    color_map[i][j] = '#69f542'
+                else:
+                    color_map[i][j] = '#737373'
+    np.append(frames, color_map, axis=0)
+    print("K")
 
 
-for cord in path:
-    x_c = cord[1] / point_ammount * \
-        (data_range[1]-data_range[0]) + data_range[0]
-    y_c = cord[0] / point_ammount * \
-        (data_range[1]-data_range[0]) + data_range[0]
-    z_c = z[cord[0]][cord[1]]
-    path_x.append(x_c)
-    path_y.append(y_c)
-    path_z.append(z_c)
+fig = go.Figure(data=[go.Surface(z=z)])
+fig.update_layout(autosize=False, width=500, height=500)
 
-bx.plot(path_x, path_y, path_z, zorder=10, color='red')
-print(f"MAX_H: {max(path_z)}")
-
-# pyplot.axis('off')
-pyplot.show()
+fig.show()

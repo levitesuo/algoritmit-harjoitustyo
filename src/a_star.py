@@ -51,14 +51,10 @@ def a_star(start, goal, grid):
     nodes[i][j].f = 0
     nodes[i][j].g = 0
     nodes[i][j].h = 0
-    nodes[i][j].parrent = (i, j)
+    nodes[i][j].parent = (i, j)
 
     open_list = []
     heapq.heappush(open_list, (0, i, j))
-
-    found_dest = False
-    with open('log.txt', 'w') as file:
-        file.write("")
     while len(open_list) > 0:
         p = heapq.heappop(open_list)
 
@@ -84,9 +80,7 @@ def a_star(start, goal, grid):
                     new_f = new_g + new_h
                     if nodes[new_i][new_j].f == float('inf') or nodes[new_i][new_j].f > new_f:
                         heapq.heappush(open_list, (new_f, new_i, new_j))
-                        with open('log.txt', 'a') as file:
-                            file.write(
-                                f"node: ({i}, {j})\tnewNode: ({new_i}, {new_j})\tnew_g: {new_g} \tnew_h: {new_h}\n")
+
                         nodes[new_i][new_j].f = new_f
                         nodes[new_i][new_j].g = new_g
                         nodes[new_i][new_j].h = new_h

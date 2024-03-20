@@ -1,0 +1,118 @@
+import heapq
+from math import sqrt
+from node import Node
+from high_map_func import height_mapping_function
+
+
+class a_star:
+    '''
+        Solves the A* algorithm on a heightmap.
+        Inputs are a grid wich is a square 2d array with values that represent their height.
+        start and goal wich are cordinates in that map.
+    '''
+
+    def __init__(self):
+        self.closed_list = []
+        self.open_list = []
+        self._nodes = []
+
+        self.goal = None
+
+    def init(self, start, goal, grid):
+        '''Give a* the info it needs.'''
+        if self._check_node_validity(start):
+            return "The start must be inside the grid."
+        if self._check_node_validity(goal):
+            return "The goal must be inside the grid."
+        if len(grid) != len(grid[0]):
+            return "The grid must be a square."
+        self.closed_list = []
+        self.open_list = []
+        size = len(grid)
+
+        self.goal = goal
+        self._nodes = [[Node((i, j), grid, height_mapping_function)
+                        for i in range(size)] for j in range(size)]
+
+        self._nodes[start[0]][start[1]].f = 0
+        self._nodes[start[0]][start[1]].g = 0
+        self._nodes[start[0]][start[1]].h = 0
+        self._nodes[start[0]][start[1]].parent = (start[0], start[1])
+
+        heapq.heappush(
+            self.open_list, (0, (start[0], start[1]), self._nodes[start[0]][start[1]]))
+
+    def step(self):
+        '''A* performs a single step of the algorithm.'''
+        if len(self.open_list) == 0:
+            print("Stepping failed. Open list empty. initialize the algo again.")
+            return True
+        p = heapq.heappop(self.open_list)
+
+        i = p[1][0]
+        j = p[1][0]
+
+        self.closed_list[i][j] = True
+
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0),
+                      (1, 1), (1, -1), (-1, 1), (-1, -1)]
+        for direction in directions:
+            new_i = i + direction[0]
+            new_j = j + direction[1]
+
+            if self._check_node_validity((new_i, new_j)) and not self.closed_list[new_i][new_j]:
+                if (new_i, new_j) == self.goal:
+                    print("Goal found.")
+                    return self._get_path_to(self.goal)
+                else:
+                    new_g = self._nodes[i][j].g + self._nodes[i][j]. \
+                        edges[direction[0] + 1][direction[1] + 1]
+                    new_h = self._heurestic_function((new_i, new_j))
+                    new_f = new_g + new_h
+                    if self._nodes[new_i][new_j].f == float['inf'] or self._nodes[new_i][new_j].f > new_f:
+                        heapq.heappush(self.open_list,
+                                       (new_f, (new_i, new_j), self._nodes[new_i][new_j]))
+
+                        self._nodes[new_i][new_j].f = new_f
+                        self._nodes[new_i][new_j].g = new_g
+                        self._nodes[new_i][new_j].h = new_h
+                        self._nodes[new_i][new_j].parent = (i, j)
+        return False
+
+    def get_path(self):
+        '''
+        Solves the algorithm and returns path.
+        '''
+        solved = False
+        while not solved:
+            solved = self.step()
+        return solved
+
+    def _heurestic_function(self, cord: tuple):
+        '''
+        Gives an estimate of cost from a point to the goal.
+        '''
+        length = sqrt((self.goal[0]-cord[0])**2 + (self.goal[1]-cord[1])**2)
+        return length
+
+    def _check_node_validity(self, cord: tuple):
+        '''
+        Check if a given cordinates are inside the grid.
+        '''
+        size = len(self._nodes)
+        return 0 <= cord[0] < size and 0 <= cord[1] < size
+
+    def _get_path_to(self, cord: tuple):
+        '''
+        Given cordinates gets the path to those cordinates from the start. 
+        Doesn't run the algo. Just gets the path if it alredy exists.
+        '''
+        path = []
+        parent = cord
+        while parent != (0, 0):
+            path.append(parent)
+            parent = self._nodes[parent[0]][parent[1]].parent
+            if parent in path:
+                print("ERROR: LOOP IN PATH")
+                return path
+        return path

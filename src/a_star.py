@@ -15,6 +15,7 @@ class AStar:
         self.closed_list = []
         self.open_list = []
         self._nodes = []
+        self._grid = None
 
         self.goal = None
         self.found = None
@@ -32,6 +33,7 @@ class AStar:
             return False
         self.open_list = []
         self.found = False
+        self._grid = grid
         size = len(grid)
 
         self.goal = goal
@@ -85,6 +87,7 @@ class AStar:
                         self._nodes[new_i][new_j].g = new_g
                         self._nodes[new_i][new_j].h = new_h
                         self._nodes[new_i][new_j].parent = (i, j)
+
         return False
 
     def get_path(self):
@@ -100,8 +103,12 @@ class AStar:
         '''
         Gives an estimate of cost from a point to the goal.
         '''
-        length = sqrt((self.goal[0]-cord[0])**2 + (self.goal[1]-cord[1])**2)
-        return length
+        x_diff = self.goal[0] - cord[0]
+        y_diff = self.goal[1] - cord[1]
+        z_diff = self._grid[self.goal[0]][self.goal[1]] - \
+            self._grid[cord[0]][cord[1]]
+
+        return sqrt(x_diff**2+y_diff**2+z_diff**2)
 
     def _check_node_validity(self, cord: tuple):
         '''
@@ -119,7 +126,7 @@ class AStar:
         parent = cord
         while parent != (0, 0):
             if parent in path:
-                print(self._nodes[path[1][0]][path[1][1]].f)
+                print(self._nodes[path[1][0]][path[1][1]].g)
                 return path
             path.append(parent)
             parent = self._nodes[parent[0]][parent[1]].parent

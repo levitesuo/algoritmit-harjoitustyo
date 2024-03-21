@@ -30,7 +30,6 @@ class AStar:
         if len(grid) != len(grid[0]):
             print("INIT FAILED: The grid must be a square.")
             return False
-        self._grid = grid
         self.open_list = []
         self.found = False
         size = len(grid)

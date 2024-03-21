@@ -1,4 +1,5 @@
 from random import randint as rnd
+import time
 import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
@@ -32,8 +33,13 @@ f_search.init(start, goal, z)
 xx = []
 yy = []
 zz = []
+a = time.time()
 a_path = a_star.get_path()
-path = f_search.get_path()
+b = time.time()
+f_path = f_search.get_path()
+c = time.time()
+
+print(f"f_time: {c - b}     a_time: {b - a}")
 
 closed = [[], [], [], []]
 for i in range(len(a_star.closed_list)):
@@ -45,12 +51,19 @@ for i in range(len(a_star.closed_list)):
             closed[3].append(a_star._nodes[i][j].f)
 
 
-xx = np.array([cord[1] for cord in path])
-yy = np.array([cord[0] for cord in path])
-zz = []
+a_path_x = np.array([cord[1] for cord in a_path])
+a_path_y = np.array([cord[0] for cord in a_path])
+a_path_z = []
 
-for cord in path:
-    zz.append(z[cord[0]][cord[1]]+0.002)
+for cord in a_path:
+    a_path_z.append(z[cord[0]][cord[1]]+0.002)
+
+f_path_x = np.array([cord[1] for cord in f_path])
+f_path_y = np.array([cord[0] for cord in f_path])
+f_path_z = []
+
+for cord in f_path:
+    f_path_z.append(z[cord[0]][cord[1]]+0.002)
 
 start_trace = go.Scatter3d(
     name='Start',
@@ -82,7 +95,7 @@ closed_trace = go.Scatter3d(
     mode='markers',
     visible='legendonly',
     marker=dict(
-        size=2,
+        size=4,
         opacity=0.3,
         color=closed[3],
         colorbar=dict(
@@ -94,11 +107,11 @@ closed_trace = go.Scatter3d(
     )
 )
 
-path_trace = go.Scatter3d(
-    name='Path',
-    x=xx,
-    y=yy,
-    z=np.array(zz),
+a_path_trace = go.Scatter3d(
+    name='a_path',
+    x=a_path_x,
+    y=a_path_y,
+    z=np.array(a_path_z),
     visible='legendonly',
     marker=dict(
         size=3,
@@ -106,11 +119,24 @@ path_trace = go.Scatter3d(
     )
 )
 
+f_path_trace = go.Scatter3d(
+    name='f_path',
+    x=f_path_x,
+    y=f_path_y,
+    z=np.array(f_path_z),
+    visible='legendonly',
+    marker=dict(
+        size=3,
+        color='blue'
+    )
+)
+
 fig = go.Figure(data=[go.Surface(z=z, showscale=False)])
-fig.add_scatter3d(arg=path_trace, connectgaps=False)
+fig.add_scatter3d(arg=a_path_trace, connectgaps=False)
+fig.add_scatter3d(arg=f_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=closed_trace, connectgaps=False)
 fig.add_scatter3d(arg=start_trace, connectgaps=False)
 fig.add_scatter3d(arg=goal_trace, connectgaps=False)
 fig.update_layout(autosize=True, template='plotly_dark')
 
-fig.show()
+# fig.show()

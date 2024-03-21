@@ -43,50 +43,38 @@ class FringeSearch:
 
     def get_path(self):
         found = False
-        while len(self.wlist) != 0 and not found:
-            i = -1
+        while not found and len(self.wlist) > 0:
             f_min = float('inf')
-            while i <= len(self.wlist):
-                br = False
+            i = -1
+            while i < len(self.wlist) - 1:
                 i += 1
-                if i >= len(self.wlist):
-                    break
                 n = self.wlist[i]
-                if self._removed_nodes[n[0]][n[1]]:
-                    while self._removed_nodes[n[0]][n[1]] == 2:
-                        self.wlist.pop(i)
-                        if len(self.wlist) != 0:
-                            n = self.wlist[i]
-                        else:
-                            br = True
-                        self._removed_nodes[n[0]][n[1]] = 0
-                    if self._removed_nodes[n[0]][n[1]] == 1:
-                        self._removed_nodes[n[0]][n[1]] = 2
-                if br:
-                    break
-                n_node = self._nodes[n[0]][n[1]]
-                g, _ = self.cache[n[0]][n[1]]
+                g, parent = self.cache[n[0]][n[1]]
                 f = g + self._heurestic_function(n)
                 if f > self.f_limit:
                     f_min = min(f, f_min)
                     continue
                 if n == self.goal:
                     found = True
-                    print('Path found')
                     break
-                for j in range(len(n_node.fedges) - 1, -1, -1):
-                    s = n_node.fedges[j]
+                for j in range(len(self._nodes[n[0]][n[1]].fedges)-1, -1, -1):
+                    s = self._nodes[n[0]][n[1]].fedges[j]
+                    s_x, s_y = s[1]
                     g_s = g + s[0]
-                    g_o = self.cache[s[1][0]][s[1][1]]
-                    if g_o:
-                        if g_s >= g_o[0]:
+                    if self.cache[s_x][s_y]:
+                        g_o, _ = self.cache[s_x][s_y]
+                        if g_s >= g_o:
                             continue
-                    self._removed_nodes[s[1][0]][s[1][1]] = 1
-                    self.wlist = self.wlist[0:i] + [s[1]] + self.wlist[i:]
-                    self.cache[s[1][0]][s[1][1]] = (g_s, n)
-                self._removed_nodes[n[0]][n[1]] = 3
+                    if (s_x, s_y) in self.wlist:
+                        self.wlist.remove((s_x, s_y))
+                    self.wlist = self.wlist[0:i] + \
+                        [(s_x, s_y)] + self.wlist[i:]
+                    self.cache[s_x][s_y] = (g_s, n)
+                self.wlist.remove(n)
+                i -= 1
             self.f_limit = f_min
         if found:
+            print("Fringe Search found a path")
             return self._get_path()
 
     def _heurestic_function(self, cord: tuple):

@@ -30,6 +30,7 @@ class AStar:
         if len(grid) != len(grid[0]):
             print("INIT FAILED: The grid must be a square.")
             return False
+        self._grid = grid
         self.open_list = []
         self.found = False
         size = len(grid)
@@ -69,6 +70,7 @@ class AStar:
             if self._check_node_validity((new_i, new_j)) and not self.closed_list[new_i][new_j]:
                 if (new_i, new_j) == self.goal:
                     self.found = True
+                    self._nodes[new_i][new_j].parent = (i, j)
                     print("Goal found.")
                     return self._get_path_to(self.goal)
                 else:
@@ -117,9 +119,8 @@ class AStar:
         path = []
         parent = cord
         while parent != (0, 0):
+            if parent in path:
+                print(self._nodes[path[1][0]][path[1][1]].f)
+                return path
             path.append(parent)
             parent = self._nodes[parent[0]][parent[1]].parent
-            if parent in path:
-                print("FINDING PATH FAILED: Loop in the path.")
-                return path
-        return path

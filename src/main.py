@@ -10,7 +10,7 @@ from a_star_class import AStar
 noise = PerlinNoise(octaves=4, seed=rnd(1, 100))
 
 # Defining x, y, z axels in 3d space.
-data_resolution = 40
+data_resolution = 30
 line_x = np.linspace(0, 1, data_resolution)
 line_y = np.linspace(0, 1, data_resolution)
 x, y = np.meshgrid(line_x, line_y)
@@ -25,8 +25,7 @@ a_star.init(start, goal, z)
 
 color_map = np.array([['#9bc2de'for _ in range(data_resolution)]
                       for _ in range(data_resolution)])
-color_map[start[0]][start[1]] = '#ff5900'
-color_map[goal[0]][goal[1]] = '#f700ff'
+
 
 norm = plt.Normalize(z.min(), z.max())
 colors = cm.viridis(norm(z))
@@ -41,13 +40,14 @@ def animate_graph(i):
         a_star.step()
         for i in range(data_resolution):
             for j in range(data_resolution):
-                if (i, j) != goal and (i, j) != start:
-                    if a_star.closed_list[i][j]:
-                        color_map[i][j] = '#69f542'
-                    else:
-                        color_map[i][j] = '#737373'
-    ax.plot_surface(x, y, z, facecolors=color_map,
-                    rcount=data_resolution, ccount=data_resolution)
+                if a_star.closed_list[i][j]:
+                    color_map[i][j] = '#69f542'
+                else:
+                    color_map[i][j] = '#737373'
+    else:
+        color_map[start[0]][start[1]] = '#ff5900'
+        color_map[goal[0]][goal[1]] = '#f700ff'
+    ax.plot_surface(x, y, z, facecolors=color_map)
 
 
 ani = FuncAnimation(plt.gcf(), animate_graph, 1)

@@ -49,7 +49,7 @@ class FringeSearch:
             while i < len(self.wlist) - 1:
                 i += 1
                 n = self.wlist[i]
-                g, parent = self.cache[n[0]][n[1]]
+                g, _ = self.cache[n[0]][n[1]]
                 f = g + self._heurestic_function(n)
                 if f > self.f_limit:
                     f_min = min(f, f_min)
@@ -74,7 +74,6 @@ class FringeSearch:
                 i -= 1
             self.f_limit = f_min
         if found:
-            print("Fringe Search found a path")
             return self._get_path()
 
     def _heurestic_function(self, cord: tuple):
@@ -91,7 +90,6 @@ class FringeSearch:
     def _get_path(self):
         path = []
         g, parent = self.cache[self.goal[0]][self.goal[1]]
-        print(g)
         while parent != (-1, -1):
             path.append(parent)
             g, new_parent = self.cache[parent[0]][parent[1]]

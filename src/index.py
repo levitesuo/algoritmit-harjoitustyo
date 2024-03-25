@@ -14,7 +14,11 @@ print(f"seed1: {seed1}      seed2: {seed2}")
 noise1 = PerlinNoise(octaves=1, seed=seed1)
 noise2 = PerlinNoise(octaves=5, seed=seed2)
 # Defining x, y, z axels in 3d space.
-data_resolution = 100
+
+
+data_resolution = 200
+
+
 line_x = np.linspace(0, 1, data_resolution)
 line_y = np.linspace(0, 1, data_resolution)
 x, y = np.meshgrid(line_x, line_y)
@@ -22,24 +26,32 @@ z = np.array([[noise1([i, j]) + noise2([i, j])/5 for i, j in zip(xrow, yrow)]
              for xrow, yrow in zip(x, y)])
 
 a_star = AStar()
+d_start = AStar()
+d_start._heurestic_function = lambda x: 0
 f_search = FringeSearch()
 
 start = (rnd(0, data_resolution - 1), 10)
 goal = (rnd(0, data_resolution - 1), data_resolution - 10)
 a_star.init(start, goal, z)
+d_start.init(start, goal, z)
 f_search.init(start, goal, z)
 
 
 xx = []
 yy = []
 zz = []
+
+d = time.time()
+d_path = d_start.get_path()
 a = time.time()
 a_path = a_star.get_path()
 b = time.time()
 f_path = f_search.get_path()
 c = time.time()
 
-print(f"f_time: {c - b}     a_time: {b - a}")
+print(f"f_time: {c - b}     a_time: {b - a}     d_time: {a - d}")
+print(
+    f"f_len: {f_search._nodes[goal[1]][goal[1]].g}     a_len: {a_star._nodes[goal[0]][goal[1]].g}     d_len: {d_start._nodes[goal[0]][goal[1]].g}")
 
 closed = [[], [], [], []]
 for i in range(len(a_star.closed_list)):
@@ -139,4 +151,4 @@ fig.add_scatter3d(arg=start_trace, connectgaps=False)
 fig.add_scatter3d(arg=goal_trace, connectgaps=False)
 fig.update_layout(autosize=True, template='plotly_dark')
 
-# fig.show()
+fig.show()

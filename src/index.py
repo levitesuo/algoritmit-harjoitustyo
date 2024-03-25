@@ -1,4 +1,5 @@
 from random import randint as rnd
+from random import seed
 import time
 import plotly.graph_objects as go
 import numpy as np
@@ -8,8 +9,10 @@ from a_star import AStar
 from fringe_search import FringeSearch
 
 # Defining a datamap from perlin noise.
-seed1 = rnd(1, 100)
-seed2 = rnd(1, 100)
+# Seed 4,5 fringe search is better
+seed1 = 44  # rnd(1, 100)
+seed2 = 50  # rnd(1, 100)
+seed(seed1+seed2)
 print(f"seed1: {seed1}      seed2: {seed2}")
 noise1 = PerlinNoise(octaves=1, seed=seed1)
 noise2 = PerlinNoise(octaves=5, seed=seed2)
@@ -23,6 +26,9 @@ line_x = np.linspace(0, 1, data_resolution)
 line_y = np.linspace(0, 1, data_resolution)
 x, y = np.meshgrid(line_x, line_y)
 z = np.array([[noise1([i, j]) + noise2([i, j])/5 for i, j in zip(xrow, yrow)]
+             for xrow, yrow in zip(x, y)])
+
+z = np.array([[noise1([i, j]) for i, j in zip(xrow, yrow)]
              for xrow, yrow in zip(x, y)])
 
 a_star = AStar()
@@ -61,6 +67,17 @@ for i in range(len(a_star.closed_list)):
             closed[1].append(i)
             closed[2].append(z[i][j] + 0.001)
             closed[3].append(a_star._nodes[i][j].f)
+
+
+f_closed = [[], [], [], []]
+
+for i in range(len(f_search.cache)):
+    for j in range(len(f_search.cache)):
+        if f_search.cache[i][j] and (i, j) != start and (i, j) != goal:
+            f_closed[0].append(j)
+            f_closed[1].append(i)
+            f_closed[2].append(z[i][j] + 0.001)
+            f_closed[3].append(f_search._nodes[i][j].g)
 
 d_path_x = np.array([cord[1] for cord in d_path])
 d_path_y = np.array([cord[0] for cord in d_path])
@@ -126,6 +143,26 @@ closed_trace = go.Scatter3d(
     )
 )
 
+cache_trace = go.Scatter3d(
+    name='f_cache',
+    x=f_closed[0],
+    y=f_closed[1],
+    z=f_closed[2],
+    mode='markers',
+    visible='legendonly',
+    marker=dict(
+        size=4,
+        opacity=0.3,
+        color=f_closed[3],
+        colorbar=dict(
+            title='F_value'
+        ),
+        colorscale='speed',
+        cmin=min(f_closed[3]), cmax=max(f_closed[3]), cauto=False,
+        showscale=False
+    )
+)
+
 d_path_trace = go.Scatter3d(
     name='d_path',
     x=d_path_x,
@@ -167,6 +204,7 @@ fig.add_scatter3d(arg=d_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=a_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=f_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=closed_trace, connectgaps=False)
+fig.add_scatter3d(arg=cache_trace, connectgaps=False)
 fig.add_scatter3d(arg=start_trace, connectgaps=False)
 fig.add_scatter3d(arg=goal_trace, connectgaps=False)
 fig.update_layout(autosize=True, template='plotly_dark')

@@ -56,7 +56,6 @@ class FringeSearch:
                     continue
                 if n == self.goal:
                     found = True
-                    print(n, g)
                     self._nodes[self.goal[0]][self.goal[1]].g = g
                     break
                 for j in range(len(self._nodes[n[0]][n[1]].fedges)-1, -1, -1):
@@ -68,10 +67,16 @@ class FringeSearch:
                         if g_s >= g_o:
                             continue
                     if (s_x, s_y) in self.wlist:
-                        self.wlist.remove((s_x, s_y))
-                    self.wlist = self.wlist[0:i] + \
-                        [(s_x, s_y)] + self.wlist[i:]
+                        s_index = self.wlist.index((s_x, s_y))
+                        if s_index <= i:
+                            i -= 1
+                        self.wlist.pop(s_index)
+                    self.wlist.insert(i + 1, (s_x, s_y))
                     self.cache[s_x][s_y] = (g_s, n)
+                    self._nodes[n[0]][n[1]].g = g_s
+                if n != self.wlist[i]:
+                    print(self.wlist, i, n)
+                    input()
                 self.wlist.remove(n)
                 i -= 1
             self.f_limit = f_min
@@ -96,5 +101,8 @@ class FringeSearch:
             path.append(parent)
             g, new_parent = self.cache[parent[0]][parent[1]]
             parent = new_parent
+        c = path[0]
+        print(self.goal[0]-c[0], self.goal[1]-c[1])
+        print(self._nodes[c[0]][c[1]].g)
 
         return path

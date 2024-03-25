@@ -13,6 +13,7 @@ class Node:
         x = pos[0]
         y = pos[1]
         size = len(grid)
+        # Range -1, 2
         for i in range(3):
             for j in range(3):
                 new_x = x + i - 1

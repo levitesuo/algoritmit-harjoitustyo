@@ -4,4 +4,4 @@ from perlin_noise import PerlinNoise
 
 noise1 = PerlinNoise(octaves=1, seed=58)
 
-data_resolution
+data_resolution = 100

@@ -56,6 +56,8 @@ class FringeSearch:
                     continue
                 if n == self.goal:
                     found = True
+                    print(n, g)
+                    self._nodes[self.goal[0]][self.goal[1]].g = g
                     break
                 for j in range(len(self._nodes[n[0]][n[1]].fedges)-1, -1, -1):
                     s = self._nodes[n[0]][n[1]].fedges[j]

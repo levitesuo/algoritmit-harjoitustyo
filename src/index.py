@@ -62,6 +62,13 @@ for i in range(len(a_star.closed_list)):
             closed[2].append(z[i][j] + 0.001)
             closed[3].append(a_star._nodes[i][j].f)
 
+d_path_x = np.array([cord[1] for cord in d_path])
+d_path_y = np.array([cord[0] for cord in d_path])
+d_path_z = []
+
+for cord in d_path:
+    d_path_z.append(z[cord[0]][cord[1]]+0.002)
+
 
 a_path_x = np.array([cord[1] for cord in a_path])
 a_path_y = np.array([cord[0] for cord in a_path])
@@ -100,7 +107,7 @@ goal_trace = go.Scatter3d(
 )
 
 closed_trace = go.Scatter3d(
-    name='Visited nodes',
+    name='a_closed_nodes',
     x=closed[0],
     y=closed[1],
     z=closed[2],
@@ -116,6 +123,18 @@ closed_trace = go.Scatter3d(
         colorscale='speed',
         cmin=min(closed[3]), cmax=max(closed[3]), cauto=False,
         showscale=False
+    )
+)
+
+d_path_trace = go.Scatter3d(
+    name='d_path',
+    x=d_path_x,
+    y=d_path_y,
+    z=np.array(d_path_z),
+    visible='legendonly',
+    marker=dict(
+        size=3,
+        color='silver'
     )
 )
 
@@ -144,6 +163,7 @@ f_path_trace = go.Scatter3d(
 )
 
 fig = go.Figure(data=[go.Surface(z=z, showscale=False)])
+fig.add_scatter3d(arg=d_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=a_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=f_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=closed_trace, connectgaps=False)

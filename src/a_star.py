@@ -72,6 +72,8 @@ class AStar:
                 if (new_i, new_j) == self.goal:
                     self.found = True
                     self._nodes[new_i][new_j].parent = (i, j)
+                    self._nodes[new_i][new_j].g = self._nodes[i][j].g + self._nodes[i][j]. \
+                        edges[direction[0] + 1][direction[1] + 1]
                     return self._get_path_to(self.goal)
                 else:
                     new_g = self._nodes[i][j].g + self._nodes[i][j]. \

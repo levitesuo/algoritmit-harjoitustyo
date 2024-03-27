@@ -26,5 +26,5 @@ class Node:
                         edge = height_mapping_function(
                             grid[new_x][new_y] - grid[x][y], len(grid))
                     self.edges[i][j] = edge
-                    self.fedges.append((edge, (new_y, new_x)))
+                    self.fedges.append((edge, new_x * size + new_y))
         self.fedges = sorted(self.fedges)

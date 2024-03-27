@@ -21,16 +21,7 @@ class AStar:
         self.found = None
 
     def init(self, start, goal, grid):
-        '''Give a* the info it needs.'''
-        if self._check_node_validity(start):
-            print("INIT FAILED: The start must be inside the grid.")
-            return False
-        if self._check_node_validity(goal):
-            print("INIT FAILED: The goal must be inside the grid.")
-            return False
-        if len(grid) != len(grid[0]):
-            print("INIT FAILED: The grid must be a square.")
-            return False
+
         self.open_list = []
         self.found = False
         self._grid = grid
@@ -51,10 +42,6 @@ class AStar:
         return True
 
     def step(self):
-        '''A* performs a single step of the algorithm.'''
-        if len(self.open_list) == 0:
-            print("STEPPING FAILED: Open list empty. initialize the algo again.")
-            return True
         p = heapq.heappop(self.open_list)
 
         i = p[1][0]

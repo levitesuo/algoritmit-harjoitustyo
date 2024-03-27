@@ -20,7 +20,7 @@ noise2 = PerlinNoise(octaves=5, seed=seed2)
 # Defining x, y, z axels in 3d space.
 
 
-data_resolution = 200
+data_resolution = 100
 
 
 line_x = np.linspace(0, 1, data_resolution)
@@ -51,11 +51,11 @@ d_path = d_start.get_path()
 a = time.time()
 a_path = a_star.get_path()
 b = time.time()
-f = fringe_search(start=start, goal=goal, grid=z)
+f = fringe_search(start, goal, z)
 c = time.time()
 f_path = f['path']
 
-print(f"f_time: {c - b}     a_time: {b - a}     d_time: {a - d}")
+print(f"f_time: {f['time']}     a_time: {b - a}     d_time: {a - d}")
 print(
     f"f_len: {f['cost']}     a_len: {a_star._nodes[goal[0]][goal[1]].g}     d_len: {d_start._nodes[goal[0]][goal[1]].g}")
 
@@ -69,7 +69,7 @@ for i in range(len(a_star.closed_list)):
             closed[3].append(a_star._nodes[i][j].f)
 
 
-f_closed = [[], [], [], []]
+""" f_closed = [[], [], [], []]
 
 for i in range(len(f['cache'])):
     for j in range(len(f['cache'])):
@@ -77,7 +77,7 @@ for i in range(len(f['cache'])):
             f_closed[0].append(j)
             f_closed[1].append(i)
             f_closed[2].append(z[i][j] + 0.001)
-            f_closed[3].append(f['cache'][i][j][0])
+            f_closed[3].append(f['cache'][i][j][0]) """
 
 d_path_x = np.array([cord[1] for cord in d_path])
 d_path_y = np.array([cord[0] for cord in d_path])
@@ -143,7 +143,7 @@ closed_trace = go.Scatter3d(
     )
 )
 
-cache_trace = go.Scatter3d(
+""" cache_trace = go.Scatter3d(
     name='f_cache',
     x=f_closed[0],
     y=f_closed[1],
@@ -161,7 +161,7 @@ cache_trace = go.Scatter3d(
         cmin=min(f_closed[3]), cmax=max(f_closed[3]), cauto=False,
         showscale=False
     )
-)
+) """
 
 d_path_trace = go.Scatter3d(
     name='d_path',
@@ -204,7 +204,7 @@ fig.add_scatter3d(arg=d_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=a_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=f_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=closed_trace, connectgaps=False)
-fig.add_scatter3d(arg=cache_trace, connectgaps=False)
+# fig.add_scatter3d(arg=cache_trace, connectgaps=False)
 fig.add_scatter3d(arg=start_trace, connectgaps=False)
 fig.add_scatter3d(arg=goal_trace, connectgaps=False)
 fig.update_layout(autosize=True, template='plotly_dark')

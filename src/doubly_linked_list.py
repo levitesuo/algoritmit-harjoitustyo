@@ -21,6 +21,8 @@ class LinkedList:
 
     def insert_after(self, next: tuple):
         next_cord = self._t_to_l(next)
+        if self.l[self.i]['next'] is not None:
+            self.l[self.l[self.i]['next']]['past'] = next_cord
         self.l[next_cord] = {'past': self.i, 'next': self.l[self.i]['next']}
         self.l[self.i]['next'] = next_cord
 
@@ -28,11 +30,8 @@ class LinkedList:
         delat = self._t_to_l(cord)
         if self.l[delat] == {'past': None, 'next': None}:
             return
-        print(self)
-        print(self._l_to_t(self.i))
-        if self.l[self.l[delat]['past']] is not None:
-            self.l[self.l[delat]['past']]['next'] = self.l[delat]['next']
-        if self.l[self.l[self.i]['next']] is not None:
+        self.l[self.l[delat]['past']]['next'] = self.l[delat]['next']
+        if self.l[delat]['next'] is not None:
             self.l[self.l[delat]['next']]['past'] = self.l[delat]['past']
         self.l[delat] = {'past': None, 'next': None}
 
@@ -50,6 +49,9 @@ class LinkedList:
 
     def get_i(self):
         return self._l_to_t(self.i)
+
+    def empty(self):
+        return self.l[self._size**2]['next'] is None
 
     def _t_to_l(self, t):
         return t[0] * self._size + t[1]

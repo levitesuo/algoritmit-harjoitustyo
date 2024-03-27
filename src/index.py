@@ -7,7 +7,7 @@ import pandas as pd
 from perlin_noise import PerlinNoise
 from a_star import AStar
 # from fringe_search import FringeSearch
-from new_fringe import FringeSearch
+from new_fringe import fringe_search
 
 # Defining a datamap from perlin noise.
 # Seed 4,5 fringe search is better
@@ -20,22 +20,18 @@ noise2 = PerlinNoise(octaves=5, seed=seed2)
 # Defining x, y, z axels in 3d space.
 
 
-data_resolution = 50
+data_resolution = 100
 
 
 line_x = np.linspace(0, 1, data_resolution)
 line_y = np.linspace(0, 1, data_resolution)
 x, y = np.meshgrid(line_x, line_y)
-z = np.array([[max(noise1([i, j]) + noise2([i, j])/5, 0) for i, j in zip(xrow, yrow)]
-             for xrow, yrow in zip(x, y)])
-
-z = np.array([[max(noise1([i, j]) + 1, 0) for i, j in zip(xrow, yrow)]
+z = np.array([[noise1([i, j]) + noise2([i, j])/5 + 0.5 for i, j in zip(xrow, yrow)]
              for xrow, yrow in zip(x, y)])
 
 a_star = AStar()
 d_start = AStar()
 d_start._heurestic_function = lambda x: 0
-f_search = FringeSearch()
 
 start = (rnd(0, data_resolution - 1), 10)
 goal = (rnd(0, data_resolution - 1), data_resolution - 10)
@@ -52,12 +48,13 @@ d_path = d_start.get_path()
 a = time.time()
 a_path = a_star.get_path()
 b = time.time()
-f_path = f_search.get_path(start, goal, z)
+f = fringe_search(start=start, goal=goal, grid=z)
 c = time.time()
+f_path = f['path']
 
 print(f"f_time: {c - b}     a_time: {b - a}     d_time: {a - d}")
 print(
-    f"f_len: {f_search._nodes[goal[1]][goal[1]].g}     a_len: {a_star._nodes[goal[0]][goal[1]].g}     d_len: {d_start._nodes[goal[0]][goal[1]].g}")
+    f"f_len: {f['cost']}     a_len: {a_star._nodes[goal[0]][goal[1]].g}     d_len: {d_start._nodes[goal[0]][goal[1]].g}")
 
 closed = [[], [], [], []]
 for i in range(len(a_star.closed_list)):
@@ -71,13 +68,13 @@ for i in range(len(a_star.closed_list)):
 
 f_closed = [[], [], [], []]
 
-for i in range(len(f_search.cache)):
+""" for i in range(len(f_search.cache)):
     for j in range(len(f_search.cache)):
         if f_search.cache[i][j] and (i, j) != start and (i, j) != goal:
             f_closed[0].append(j)
             f_closed[1].append(i)
             f_closed[2].append(z[i][j] + 0.001)
-            f_closed[3].append(f_search._nodes[i][j].g)
+            f_closed[3].append(f_search._nodes[i][j].g) """
 
 d_path_x = np.array([cord[1] for cord in d_path])
 d_path_y = np.array([cord[0] for cord in d_path])
@@ -143,7 +140,7 @@ closed_trace = go.Scatter3d(
     )
 )
 
-cache_trace = go.Scatter3d(
+""" cache_trace = go.Scatter3d(
     name='f_cache',
     x=f_closed[0],
     y=f_closed[1],
@@ -161,7 +158,7 @@ cache_trace = go.Scatter3d(
         cmin=min(f_closed[3]), cmax=max(f_closed[3]), cauto=False,
         showscale=False
     )
-)
+) """
 
 d_path_trace = go.Scatter3d(
     name='d_path',
@@ -204,7 +201,7 @@ fig.add_scatter3d(arg=d_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=a_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=f_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=closed_trace, connectgaps=False)
-fig.add_scatter3d(arg=cache_trace, connectgaps=False)
+# fig.add_scatter3d(arg=cache_trace, connectgaps=False)
 fig.add_scatter3d(arg=start_trace, connectgaps=False)
 fig.add_scatter3d(arg=goal_trace, connectgaps=False)
 fig.update_layout(autosize=True, template='plotly_dark')

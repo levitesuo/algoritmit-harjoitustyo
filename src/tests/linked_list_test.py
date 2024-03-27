@@ -38,7 +38,7 @@ class TestLinkedList(unittest.TestCase):
         self.list.insert_after((1, 1))
         self.list.iterate()
         self.list.delete_if_able(self.list._l_to_t(
-            self.list.l[self.list.i]['past']))
+            self.list.l[self.list.i][0]))
         self.assertEqual('[(1, 1), (2, 2)]', str(self.list))
 
     def test_delete_last(self):
@@ -46,3 +46,11 @@ class TestLinkedList(unittest.TestCase):
         self.list.insert_after((1, 1))
         self.list.delete_if_able((2, 2))
         self.assertEqual('[(0, 0), (1, 1)]', str(self.list))
+
+    def test_del_cur_last(self):
+        self.list.insert_after((2, 2))
+        self.list.insert_after((1, 1))
+        self.list.iterate()
+        self.list.iterate()
+        self.list.delete_current()
+        self.assertEqual("[(0, 0), (1, 1)]", str(self.list))

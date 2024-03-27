@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 from perlin_noise import PerlinNoise
 from a_star import AStar
-# from fringe_search import FringeSearch
-from new_fringe import fringe_search
+
+from fringe_search import fringe_search
 
 # Defining a datamap from perlin noise.
 # Seed 4,5 fringe search is better
@@ -20,14 +20,15 @@ noise2 = PerlinNoise(octaves=5, seed=seed2)
 # Defining x, y, z axels in 3d space.
 
 
-data_resolution = 100
+data_resolution = 200
 
 
 line_x = np.linspace(0, 1, data_resolution)
 line_y = np.linspace(0, 1, data_resolution)
 x, y = np.meshgrid(line_x, line_y)
-z = np.array([[noise1([i, j]) + noise2([i, j])/5 + 0.5 for i, j in zip(xrow, yrow)]
+z = np.array([[round(noise1([i, j]) + noise2([i, j])/5 + 0.5, 4) for i, j in zip(xrow, yrow)]
              for xrow, yrow in zip(x, y)])
+# z = np.array([[1 for i, j in zip(xrow, yrow)] for xrow, yrow in zip(x, y)])
 
 a_star = AStar()
 d_start = AStar()
@@ -35,6 +36,8 @@ d_start._heurestic_function = lambda x: 0
 
 start = (rnd(0, data_resolution - 1), 10)
 goal = (rnd(0, data_resolution - 1), data_resolution - 10)
+# start = (0, 0)
+# goal = (data_resolution-1, data_resolution-1)
 a_star.init(start, goal, z)
 d_start.init(start, goal, z)
 
@@ -68,13 +71,13 @@ for i in range(len(a_star.closed_list)):
 
 f_closed = [[], [], [], []]
 
-""" for i in range(len(f_search.cache)):
-    for j in range(len(f_search.cache)):
-        if f_search.cache[i][j] and (i, j) != start and (i, j) != goal:
+for i in range(len(f['cache'])):
+    for j in range(len(f['cache'])):
+        if f['cache'][i][j] and (i, j) != start and (i, j) != goal:
             f_closed[0].append(j)
             f_closed[1].append(i)
             f_closed[2].append(z[i][j] + 0.001)
-            f_closed[3].append(f_search._nodes[i][j].g) """
+            f_closed[3].append(f['cache'][i][j][0])
 
 d_path_x = np.array([cord[1] for cord in d_path])
 d_path_y = np.array([cord[0] for cord in d_path])
@@ -140,7 +143,7 @@ closed_trace = go.Scatter3d(
     )
 )
 
-""" cache_trace = go.Scatter3d(
+cache_trace = go.Scatter3d(
     name='f_cache',
     x=f_closed[0],
     y=f_closed[1],
@@ -158,7 +161,7 @@ closed_trace = go.Scatter3d(
         cmin=min(f_closed[3]), cmax=max(f_closed[3]), cauto=False,
         showscale=False
     )
-) """
+)
 
 d_path_trace = go.Scatter3d(
     name='d_path',
@@ -201,7 +204,7 @@ fig.add_scatter3d(arg=d_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=a_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=f_path_trace, connectgaps=False)
 fig.add_scatter3d(arg=closed_trace, connectgaps=False)
-# fig.add_scatter3d(arg=cache_trace, connectgaps=False)
+fig.add_scatter3d(arg=cache_trace, connectgaps=False)
 fig.add_scatter3d(arg=start_trace, connectgaps=False)
 fig.add_scatter3d(arg=goal_trace, connectgaps=False)
 fig.update_layout(autosize=True, template='plotly_dark')

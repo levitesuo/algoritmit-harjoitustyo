@@ -6,12 +6,13 @@ import numpy as np
 import pandas as pd
 from perlin_noise import PerlinNoise
 from a_star import AStar
-from fringe_search import FringeSearch
+# from fringe_search import FringeSearch
+from new_fringe import FringeSearch
 
 # Defining a datamap from perlin noise.
 # Seed 4,5 fringe search is better
-seed1 = 44  # rnd(1, 100)
-seed2 = 50  # rnd(1, 100)
+seed1 = rnd(1, 100)
+seed2 = rnd(1, 100)
 seed(seed1+seed2)
 print(f"seed1: {seed1}      seed2: {seed2}")
 noise1 = PerlinNoise(octaves=1, seed=seed1)
@@ -19,16 +20,16 @@ noise2 = PerlinNoise(octaves=5, seed=seed2)
 # Defining x, y, z axels in 3d space.
 
 
-data_resolution = 200
+data_resolution = 50
 
 
 line_x = np.linspace(0, 1, data_resolution)
 line_y = np.linspace(0, 1, data_resolution)
 x, y = np.meshgrid(line_x, line_y)
-z = np.array([[noise1([i, j]) + noise2([i, j])/5 for i, j in zip(xrow, yrow)]
+z = np.array([[max(noise1([i, j]) + noise2([i, j])/5, 0) for i, j in zip(xrow, yrow)]
              for xrow, yrow in zip(x, y)])
 
-z = np.array([[noise1([i, j]) for i, j in zip(xrow, yrow)]
+z = np.array([[max(noise1([i, j]) + 1, 0) for i, j in zip(xrow, yrow)]
              for xrow, yrow in zip(x, y)])
 
 a_star = AStar()
@@ -40,7 +41,6 @@ start = (rnd(0, data_resolution - 1), 10)
 goal = (rnd(0, data_resolution - 1), data_resolution - 10)
 a_star.init(start, goal, z)
 d_start.init(start, goal, z)
-f_search.init(start, goal, z)
 
 
 xx = []
@@ -52,7 +52,7 @@ d_path = d_start.get_path()
 a = time.time()
 a_path = a_star.get_path()
 b = time.time()
-f_path = f_search.get_path()
+f_path = f_search.get_path(start, goal, z)
 c = time.time()
 
 print(f"f_time: {c - b}     a_time: {b - a}     d_time: {a - d}")

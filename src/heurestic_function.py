@@ -1,7 +1,7 @@
 from math import sqrt
 
 
-def heurestic_function(grid, cord: int, goal: int, data_resolution):
+def heurestic_function(grid, cord: int, goal: int):
     '''
     Gives an estimate of cost from a point to the goal.
     '''
@@ -12,7 +12,7 @@ def heurestic_function(grid, cord: int, goal: int, data_resolution):
     c_1 = cord % s
     x_diff = g_0 - c_0
     y_diff = g_1 - c_1
-    z_diff = grid[g_1][g_0] - \
-        grid[c_1][c_0]
+    z_diff = grid[g_0][g_1] - \
+        grid[c_0][c_1]
 
     return sqrt(x_diff**2+y_diff**2+z_diff**2)

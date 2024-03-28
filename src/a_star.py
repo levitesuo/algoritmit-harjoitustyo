@@ -12,9 +12,9 @@ def find_path(goal, nodes, size):
     return {'path': path, 'cost': nodes[goal].g}
 
 
-def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function):
+def a_star(start_cord, goal_cord, grid, h_func=heurestic_function):
     size = len(grid)
-    start = start_cord[0] * size + start_cord[1]
+    start = start_cord[0]*size + start_cord[1]
     goal = goal_cord[0] * size + goal_cord[1]
     closed_list = [False for i in range(size ** 2)]
     open_list = []
@@ -32,11 +32,11 @@ def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function):
                 if goal == np:
                     nodes[np].g = ng + g
                     nodes[np].parent = p
-                    d = find_path(goal, nodes, size)
-                    d['closed'] = closed_list
-                    return d
+                    result = find_path(goal, nodes, size)
+                    result['closed'] = closed_list
+                    return result
                 new_g = ng + g
-                h = heurestic_function(grid, np, goal, size)
+                h = h_func(grid, np, goal)
                 if nodes[np].f == float('inf') or nodes[np].f > new_g + h:
                     heappush(open_list, (new_g+h, np))
                     nodes[np].f = new_g + h

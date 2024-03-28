@@ -1,5 +1,3 @@
-import time
-from height_mapping_function import height_mapping_function
 from heurestic_function import heurestic_function
 from node import Node
 from doubly_linked_list import LinkedList
@@ -12,14 +10,13 @@ def fringe_search(start_cord, goal_cord, grid):
 
     nodes = [Node((i // size, i % size), grid) for i in range(size**2)]
 
-    heurestics = [heurestic_function(grid, i, goal, size)
+    heurestics = [heurestic_function(grid, i, goal)
                   for i in range(size ** 2)]
     fringe = LinkedList(size, start_cord)
     cache = [False for i in range(size ** 2)]
     cache[start] = (0, None)
     f_lim = heurestics[start]
     found = False
-    start_time = time.time()
     while found is False or fringe.empty():
         f_min = float('inf')
         # Linked list has a default start node at size ** 2
@@ -47,18 +44,11 @@ def fringe_search(start_cord, goal_cord, grid):
             fringe.delete_current()
         f_lim = f_min
     if found:
-        end_time = time.time()
-        # CONSTRUCT PATH AND CALCULATE LENGTH
-        print("FOUND")
-        path = []
-        p_cost = 0
+        # CONSTRUCT PATH
+        path = [(goal//size, goal % size)]
         _, parent = cache[goal]
         while parent is not None:
             path.append((parent // size, parent % size))
             _, new_parent = cache[parent]
-            if new_parent:
-                for edge in nodes[new_parent].fedges:
-                    if edge[1] == parent:
-                        p_cost += edge[0]
             parent = new_parent
-        return {'path': path, 'cost': p_cost, 'cache': cache, 'time': end_time-start_time}
+        return {'path': path, 'cost': g, 'cache': cache}

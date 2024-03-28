@@ -1,210 +1,57 @@
-from random import randint as rnd
-from random import seed
-import time
+from random import randint, seed
+from time import time
 import plotly.graph_objects as go
-import numpy as np
-import pandas as pd
-from perlin_noise import PerlinNoise
-from a_star import AStar
 
+from drawing_funcitons import draw_path, draw_pointmap
+from get_grid import get_grid
 from fringe_search import fringe_search
-from new_astar import a_star as new_star
-
-# Defining a datamap from perlin noise.
-# Seed 4,5 fringe search is better
-seed1 = rnd(1, 100)
-seed2 = rnd(1, 100)
-seed(seed1+seed2)
-print(f"seed1: {seed1}      seed2: {seed2}")
-noise1 = PerlinNoise(octaves=1, seed=seed1)
-noise2 = PerlinNoise(octaves=5, seed=seed2)
-# Defining x, y, z axels in 3d space.
-
+from new_astar import a_star
 
 data_resolution = 100
 
-
-# z = np.array([[1 for i, j in zip(xrow, yrow)] for xrow, yrow in zip(x, y)])
-
-a_star = AStar()
-d_start = AStar()
-d_start._heurestic_function = lambda x: 0
-
-start = (rnd(0, data_resolution - 1), 10)
-goal = (rnd(0, data_resolution - 1), data_resolution - 10)
-# start = (0, 0)
-# goal = (data_resolution-1, data_resolution-1)
+random_seed = randint(1, 1000)
+print(f"RANDOM SEED: {random_seed}")
+seed(random_seed)
 
 
-xx = []
-yy = []
-zz = []
-f = fringe_search(start, goal, z)
-d_start.init(start, goal, z)
-d = time.time()
-d_path = d_start.get_path()
-a = time.time()
-a_star.init(start, goal, z)
-a_path = a_star.get_path()
-b = time.time()
-aa = new_star(start, goal, z)
-c = time.time()
-f_path = f['path']
-print(aa)
+z = get_grid(data_resolution, random_seed)
 
-print(
-    f"f_time: {f['time']}     n_time{c-b}     a_time: {b - a}     d_time: {a - d}")
-print(
-    f"f_len: {f['cost']}     a_len: {a_star._nodes[goal[0]][goal[1]].g}     d_len: {d_start._nodes[goal[0]][goal[1]].g}")
+start = (randint(1, data_resolution/2), 10)
+goal = (randint(data_resolution/2, data_resolution-1), data_resolution-10)
 
-closed = [[], [], [], []]
-for i in range(len(a_star.closed_list)):
-    for j in range(len(a_star.closed_list)):
-        if a_star.closed_list[i][j] and (i, j) != start and (i, j) != goal:
-            closed[0].append(j)
-            closed[1].append(i)
-            closed[2].append(z[i][j] + 0.001)
-            closed[3].append(a_star._nodes[i][j].f)
+a_time = time()
+a_star_result = a_star(start, goal, z)
+b_time = time()
+dijk_star_result = a_star(start, goal, z, lambda x, y, z, m: 0)
+c_time = time()
+fringe_result = fringe_search(start, goal, z)
+d_time = time()
+
+print(f"a* - t: {b_time-a_time}       c: {a_star_result['cost']}")
+print(f"d* - t: {c_time-b_time}       c: {dijk_star_result['cost']}")
+print(f"fs - t: {d_time-c_time}       c: {fringe_result['cost']}")
+
+fig = go.Figure(data=[go.Surface(z=z, showscale=False, name='Surface')])
+
+draw_path('A*', a_star_result['path'], z, 'green', fig)
+draw_pointmap('A* closed',
+              a_star_result['closed'], z, 'Bluered_r', fig, start, goal)
 
 
-""" f_closed = [[], [], [], []]
+draw_path('D*', dijk_star_result['path'], z, 'blue', fig)
+draw_pointmap('D* closed',
+              dijk_star_result['closed'], z, 'Bluered_r', fig, start, goal)
 
-for i in range(len(f['cache'])):
-    for j in range(len(f['cache'])):
-        if f['cache'][i][j] and (i, j) != start and (i, j) != goal:
-            f_closed[0].append(j)
-            f_closed[1].append(i)
-            f_closed[2].append(z[i][j] + 0.001)
-            f_closed[3].append(f['cache'][i][j][0]) """
+draw_path('FS', fringe_result['path'], z, 'red', fig)
+f_closed = []
+for n in range(len(fringe_result['cache'])):
+    if fringe_result['cache'][n]:
+        f_closed.append(fringe_result['cache'][n][0])
+    else:
+        f_closed.append(None)
 
-d_path_x = np.array([cord[1] for cord in d_path])
-d_path_y = np.array([cord[0] for cord in d_path])
-d_path_z = []
+draw_pointmap('FS closed',
+              f_closed, z, 'Bluered_r', fig, start, goal)
 
-for cord in d_path:
-    d_path_z.append(z[cord[0]][cord[1]]+0.002)
-
-
-a_path_x = np.array([cord[1] for cord in a_path])
-a_path_y = np.array([cord[0] for cord in a_path])
-a_path_z = []
-
-for cord in a_path:
-    a_path_z.append(z[cord[0]][cord[1]]+0.002)
-
-f_path_x = np.array([cord[1] for cord in f_path])
-f_path_y = np.array([cord[0] for cord in f_path])
-f_path_z = []
-
-for cord in f_path:
-    f_path_z.append(z[cord[0]][cord[1]]+0.002)
-
-start_trace = go.Scatter3d(
-    name='Start',
-    x=[start[1]],
-    y=[start[0]],
-    z=[z[start[0]][start[1]]+0.002],
-    marker=dict(
-        color='red',
-        size=5
-    )
-)
-
-goal_trace = go.Scatter3d(
-    name='Goal',
-    x=[goal[1]],
-    y=[goal[0]],
-    z=[z[goal[0]][goal[1]]+0.002],
-    marker=dict(
-        color='purple',
-        size=5
-    )
-)
-
-closed_trace = go.Scatter3d(
-    name='a_closed_nodes',
-    x=closed[0],
-    y=closed[1],
-    z=closed[2],
-    mode='markers',
-    visible='legendonly',
-    marker=dict(
-        size=4,
-        opacity=0.3,
-        color=closed[3],
-        colorbar=dict(
-            title='F_value'
-        ),
-        colorscale='speed',
-        cmin=min(closed[3]), cmax=max(closed[3]), cauto=False,
-        showscale=False
-    )
-)
-
-""" cache_trace = go.Scatter3d(
-    name='f_cache',
-    x=f_closed[0],
-    y=f_closed[1],
-    z=f_closed[2],
-    mode='markers',
-    visible='legendonly',
-    marker=dict(
-        size=4,
-        opacity=0.3,
-        color=f_closed[3],
-        colorbar=dict(
-            title='F_value'
-        ),
-        colorscale='speed',
-        cmin=min(f_closed[3]), cmax=max(f_closed[3]), cauto=False,
-        showscale=False
-    )
-) """
-
-d_path_trace = go.Scatter3d(
-    name='d_path',
-    x=d_path_x,
-    y=d_path_y,
-    z=np.array(d_path_z),
-    visible='legendonly',
-    marker=dict(
-        size=3,
-        color='silver'
-    )
-)
-
-a_path_trace = go.Scatter3d(
-    name='a_path',
-    x=a_path_x,
-    y=a_path_y,
-    z=np.array(a_path_z),
-    visible='legendonly',
-    marker=dict(
-        size=3,
-        color='red'
-    )
-)
-
-f_path_trace = go.Scatter3d(
-    name='f_path',
-    x=f_path_x,
-    y=f_path_y,
-    z=np.array(f_path_z),
-    visible='legendonly',
-    marker=dict(
-        size=3,
-        color='blue'
-    )
-)
-
-fig = go.Figure(data=[go.Surface(z=z, showscale=False)])
-fig.add_scatter3d(arg=d_path_trace, connectgaps=False)
-fig.add_scatter3d(arg=a_path_trace, connectgaps=False)
-fig.add_scatter3d(arg=f_path_trace, connectgaps=False)
-fig.add_scatter3d(arg=closed_trace, connectgaps=False)
-# fig.add_scatter3d(arg=cache_trace, connectgaps=False)
-fig.add_scatter3d(arg=start_trace, connectgaps=False)
-fig.add_scatter3d(arg=goal_trace, connectgaps=False)
 fig.update_layout(autosize=True, template='plotly_dark')
-
 fig.show()

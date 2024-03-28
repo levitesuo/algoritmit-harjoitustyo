@@ -12,7 +12,8 @@ def fringe_search(start_cord, goal_cord, grid):
 
     nodes = [Node((i // size, i % size), grid) for i in range(size**2)]
 
-    heurestics = [heurestic_function(grid, i, goal) for i in range(size ** 2)]
+    heurestics = [heurestic_function(grid, i, goal, size)
+                  for i in range(size ** 2)]
     fringe = LinkedList(size, start_cord)
     cache = [False for i in range(size ** 2)]
     cache[start] = (0, None)

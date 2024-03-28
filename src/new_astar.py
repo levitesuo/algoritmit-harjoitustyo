@@ -9,7 +9,7 @@ def find_path(goal, nodes, size):
     while parent != None:
         path.append((parent//size, parent % size))
         parent = nodes[parent].parent
-    return {'path': path, 'cost': 0}
+    return {'path': path, 'cost': nodes[goal].g}
 
 
 def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function):
@@ -25,19 +25,21 @@ def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function):
     heappush(open_list, (0, start))
     while len(open_list) != 0:
         g, p = heappop(open_list)
-        closed_list[p] = True
+        closed_list[p] = nodes[p].f
         for edge in nodes[p].fedges:
             ng, np = edge
             if not closed_list[np]:
                 if goal == np:
                     nodes[np].g = ng + g
                     nodes[np].parent = p
-                    return find_path(goal, nodes, size)
-                ng += g
-                h = heurestic_function(grid, np, goal)
-                if nodes[np].f == float('inf') or nodes[np].f > ng + h:
-                    heappush(open_list, (ng+h, np))
-                    nodes[np].f = ng + h
-                    nodes[np].g = ng
+                    d = find_path(goal, nodes, size)
+                    d['closed'] = closed_list
+                    return d
+                new_g = ng + g
+                h = heurestic_function(grid, np, goal, size)
+                if nodes[np].f == float('inf') or nodes[np].f > new_g + h:
+                    heappush(open_list, (new_g+h, np))
+                    nodes[np].f = new_g + h
+                    nodes[np].g = new_g
                     nodes[np].parent = p
     return False

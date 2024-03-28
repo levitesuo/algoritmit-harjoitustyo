@@ -8,6 +8,7 @@ from perlin_noise import PerlinNoise
 from a_star import AStar
 
 from fringe_search import fringe_search
+from new_astar import a_star as new_star
 
 # Defining a datamap from perlin noise.
 # Seed 4,5 fringe search is better
@@ -23,11 +24,6 @@ noise2 = PerlinNoise(octaves=5, seed=seed2)
 data_resolution = 100
 
 
-line_x = np.linspace(0, 1, data_resolution)
-line_y = np.linspace(0, 1, data_resolution)
-x, y = np.meshgrid(line_x, line_y)
-z = np.array([[round(noise1([i, j]) + noise2([i, j])/5 + 0.5, 4) for i, j in zip(xrow, yrow)]
-             for xrow, yrow in zip(x, y)])
 # z = np.array([[1 for i, j in zip(xrow, yrow)] for xrow, yrow in zip(x, y)])
 
 a_star = AStar()
@@ -38,24 +34,26 @@ start = (rnd(0, data_resolution - 1), 10)
 goal = (rnd(0, data_resolution - 1), data_resolution - 10)
 # start = (0, 0)
 # goal = (data_resolution-1, data_resolution-1)
-a_star.init(start, goal, z)
-d_start.init(start, goal, z)
 
 
 xx = []
 yy = []
 zz = []
-
+f = fringe_search(start, goal, z)
+d_start.init(start, goal, z)
 d = time.time()
 d_path = d_start.get_path()
 a = time.time()
+a_star.init(start, goal, z)
 a_path = a_star.get_path()
 b = time.time()
-f = fringe_search(start, goal, z)
+aa = new_star(start, goal, z)
 c = time.time()
 f_path = f['path']
+print(aa)
 
-print(f"f_time: {f['time']}     a_time: {b - a}     d_time: {a - d}")
+print(
+    f"f_time: {f['time']}     n_time{c-b}     a_time: {b - a}     d_time: {a - d}")
 print(
     f"f_len: {f['cost']}     a_len: {a_star._nodes[goal[0]][goal[1]].g}     d_len: {d_start._nodes[goal[0]][goal[1]].g}")
 

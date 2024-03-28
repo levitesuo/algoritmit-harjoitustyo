@@ -1,25 +1,8 @@
-from math import sqrt
 import time
-from high_map_func import height_mapping_function
+from height_mapping_function import height_mapping_function
+from heurestic_function import heurestic_function
 from node import Node
 from doubly_linked_list import LinkedList
-
-
-def heurestic_function(grid, cord: int, goal: int):
-    '''
-    Gives an estimate of cost from a point to the goal.
-    '''
-    s = len(grid)
-    g_0 = goal // s
-    g_1 = goal % s
-    c_0 = cord // s
-    c_1 = cord % s
-    x_diff = g_0 // s - c_0
-    y_diff = g_1 // s - c_1
-    z_diff = grid[g_0][g_1] - \
-        grid[g_0][g_1]
-
-    return sqrt(x_diff**2+y_diff**2+z_diff**2)
 
 
 def fringe_search(start_cord, goal_cord, grid):
@@ -27,8 +10,7 @@ def fringe_search(start_cord, goal_cord, grid):
     start = start_cord[0]*size + start_cord[1]
     goal = goal_cord[0]*size + goal_cord[1]
 
-    nodes = [Node((i // size, i % size), grid,
-                  height_mapping_function) for i in range(size**2)]
+    nodes = [Node((i // size, i % size), grid) for i in range(size**2)]
 
     heurestics = [heurestic_function(grid, i, goal) for i in range(size ** 2)]
     fringe = LinkedList(size, start_cord)

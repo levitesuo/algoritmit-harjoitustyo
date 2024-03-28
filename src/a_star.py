@@ -1,7 +1,7 @@
 import heapq
 from math import sqrt
 from node import Node
-from high_map_func import height_mapping_function
+from height_mapping_function import height_mapping_function
 
 
 class AStar:

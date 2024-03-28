@@ -1,23 +1,15 @@
 from heapq import heappop, heappush
-from high_map_func import height_mapping_function
+from heurestic_function import heurestic_function
 from node import Node
 
 
-def heurestic_function(grid, cord: int, goal: int):
-    '''
-    Gives an estimate of cost from a point to the goal.
-    '''
-    s = len(grid)
-    g_0 = goal // s
-    g_1 = goal % s
-    c_0 = cord // s
-    c_1 = cord % s
-    x_diff = g_0 // s - c_0
-    y_diff = g_1 // s - c_1
-    z_diff = grid[g_0][g_1] - \
-        grid[g_0][g_1]
-
-    return sqrt(x_diff**2+y_diff**2+z_diff**2)
+def find_path(goal, nodes, size):
+    path = []
+    parent = nodes[goal].parent
+    while parent != None:
+        path.append((parent//size, parent % size))
+        parent = nodes[parent].parent
+    return {'path': path, 'cost': 0}
 
 
 def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function):
@@ -26,6 +18,26 @@ def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function):
     goal = goal_cord[0] * size + goal_cord[1]
     closed_list = [False for i in range(size ** 2)]
     open_list = []
-    nodes = [Node((i//size, i % size), grid, height_mapping_function)
+    nodes = [Node((i//size, i % size), grid)
              for i in range(size ** 2)]
-    found = False
+
+    nodes[start].g = 0
+    heappush(open_list, (0, start))
+    while len(open_list) != 0:
+        g, p = heappop(open_list)
+        closed_list[p] = True
+        for edge in nodes[p].fedges:
+            ng, np = edge
+            if not closed_list[np]:
+                if goal == np:
+                    nodes[np].g = ng + g
+                    nodes[np].parent = p
+                    return find_path(goal, nodes, size)
+                ng += g
+                h = heurestic_function(grid, np, goal)
+                if nodes[np].f == float('inf') or nodes[np].f > ng + h:
+                    heappush(open_list, (ng+h, np))
+                    nodes[np].f = ng + h
+                    nodes[np].g = ng
+                    nodes[np].parent = p
+    return False

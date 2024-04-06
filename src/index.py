@@ -12,7 +12,7 @@ data_resolution = 100
 
 # Using randon seed so sitsuations are recreatable
 # randomseed 9 weird
-random_seed = 9  # randint(1, 1000)
+random_seed = randint(1, 1000)
 print(f"RANDOM SEED: {random_seed}")
 seed(random_seed)
 

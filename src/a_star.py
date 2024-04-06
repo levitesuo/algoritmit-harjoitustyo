@@ -33,8 +33,9 @@ def a_star(start_cord, goal_cord, grid, h_func=heurestic_function):
     nodes[start].g = 0
     heappush(open_list, (0, start))
     while len(open_list) != 0:
-        g, p = heappop(open_list)
-        closed_list[p] = nodes[p].f
+        _, p = heappop(open_list)
+        g = nodes[p].g
+        closed_list[p] = nodes[p].g + 1
         for edge in nodes[p].fedges:
             cost, np = edge
             if not closed_list[np]:
@@ -46,10 +47,6 @@ def a_star(start_cord, goal_cord, grid, h_func=heurestic_function):
                     return result
                 new_g = cost + g
                 h = h_func(grid, np, goal)
-                if h:
-                    with open("logfile.txt", "a") as file:
-                        file.write(
-                            f"\nnew_g - {new_g}\tg - {g}\tcost - {cost}")
                 new_f = h + new_g
                 if nodes[np].f == float('inf') or nodes[np].f > new_f:
                     heappush(open_list, (new_f, np))

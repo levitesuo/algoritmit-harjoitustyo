@@ -4,7 +4,7 @@ from node import Node
 
 
 def find_path(goal, nodes, size):
-    path = []
+    path = [(goal//size, goal % size)]
     parent = nodes[goal].parent
     while parent != None:
         path.append((parent//size, parent % size))
@@ -27,19 +27,25 @@ def a_star(start_cord, goal_cord, grid, h_func=heurestic_function):
         g, p = heappop(open_list)
         closed_list[p] = nodes[p].f
         for edge in nodes[p].fedges:
-            ng, np = edge
+            cost, np = edge
             if not closed_list[np]:
                 if goal == np:
-                    nodes[np].g = ng + g
+                    nodes[np].g = cost + g
                     nodes[np].parent = p
                     result = find_path(goal, nodes, size)
                     result['closed'] = closed_list
+                    result['cost'] = new_g
                     return result
-                new_g = ng + g
+                new_g = cost + g
                 h = h_func(grid, np, goal)
-                if nodes[np].f == float('inf') or nodes[np].f > new_g + h:
-                    heappush(open_list, (new_g+h, np))
-                    nodes[np].f = new_g + h
+                if h:
+                    with open("logfile.txt", "a") as file:
+                        file.write(
+                            f"\nnew_g - {new_g}\tg - {g}\tcost - {cost}")
+                new_f = h + new_g
+                if nodes[np].f == float('inf') or nodes[np].f > new_f:
+                    heappush(open_list, (new_f, np))
+                    nodes[np].f = new_f
                     nodes[np].g = new_g
                     nodes[np].parent = p
     return False

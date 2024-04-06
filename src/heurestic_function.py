@@ -12,7 +12,5 @@ def heurestic_function(grid, cord: int, goal: int):
     c_1 = cord % s
     x_diff = g_0 - c_0
     y_diff = g_1 - c_1
-    z_diff = grid[g_0][g_1] - \
-        grid[c_0][c_1]
 
-    return sqrt(x_diff**2+y_diff**2+z_diff**2)
+    return sqrt(x_diff**2+y_diff**2)

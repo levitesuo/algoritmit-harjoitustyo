@@ -9,7 +9,16 @@ def find_path(goal, nodes, size):
     while parent != None:
         path.append((parent//size, parent % size))
         parent = nodes[parent].parent
-    return {'path': path, 'cost': nodes[goal].g}
+
+    cost = 0
+
+    for i in range(len(path)):
+        node = path[i][0] * size + path[i][1]
+        for edge in nodes[node].fedges:
+            if i + 1 < len(path) and path[i+1][0]*size + path[i+1][1] == edge[1]:
+                cost += edge[0]
+
+    return {'path': path, 'cost': cost}
 
 
 def a_star(start_cord, goal_cord, grid, h_func=heurestic_function):
@@ -34,7 +43,6 @@ def a_star(start_cord, goal_cord, grid, h_func=heurestic_function):
                     nodes[np].parent = p
                     result = find_path(goal, nodes, size)
                     result['closed'] = closed_list
-                    result['cost'] = new_g
                     return result
                 new_g = cost + g
                 h = h_func(grid, np, goal)

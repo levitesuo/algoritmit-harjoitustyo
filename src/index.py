@@ -8,7 +8,7 @@ from fringe_search import fringe_search
 from a_star import a_star
 
 # Num of datapoint per side
-data_resolution = 100
+data_resolution = 200
 
 # Using randon seed so sitsuations are recreatable
 # randomseed 9 weird
@@ -35,9 +35,9 @@ fringe_result = fringe_search(start, goal, z)
 d_time = time()
 
 # Printing the stats
-print(f"a* - t: {b_time-a_time}       c: {a_star_result['cost']}")
-print(f"d* - t: {c_time-b_time}       c: {dijk_star_result['cost']}")
-print(f"fs - t: {d_time-c_time}       c: {fringe_result['cost']}")
+print(f"a* - t: {b_time-a_time}\tc: {a_star_result['cost']}")
+print(f"d* - t: {c_time-b_time}\tc: {dijk_star_result['cost']}")
+print(f"fs - t: {d_time-c_time}\tc: {fringe_result['cost']}")
 
 # Drawing the visualization
 draw_plots(z, a_star_result, dijk_star_result, fringe_result, start, goal)

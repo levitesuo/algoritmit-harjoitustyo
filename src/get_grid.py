@@ -27,8 +27,8 @@ def hill_func(x, y):
 
 
 def get_hill(data_resolution):
-    line_x = np.linspace(-1, 1, data_resolution)
-    line_y = np.linspace(-1, 1, data_resolution)
+    line_x = np.linspace(-0.75, 0.75, data_resolution)
+    line_y = np.linspace(-0.75, 0.75, data_resolution)
     x, y = np.meshgrid(line_x, line_y)
     z = np.array([[hill_func(i, j) for i, j in zip(xrow, yrow)]
                  for xrow, yrow in zip(x, y)])

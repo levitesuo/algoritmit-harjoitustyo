@@ -23,6 +23,8 @@ def get_grid(data_resolution, random_seed):
 def hill_func(x, y):
     def helpper(p):
         return (1-p)**2 * (1+p)**2
+    if -0.1 < x < 0.1:
+        return 0
     return helpper(min(1, sqrt(x**2 + y**2)))
 
 

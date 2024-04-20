@@ -20,8 +20,8 @@ seed(random_seed)
 z = get_grid(data_resolution, random_seed)
 
 # Random start and goal
-start = (randint(1, data_resolution/2), 10)
-goal = (randint(data_resolution/2, data_resolution-1), data_resolution-10)
+start = (randint(1, data_resolution//2), 10)
+goal = (randint(data_resolution//2, data_resolution-1), data_resolution-10)
 
 print(f"start: {start}   goal: {goal}")
 

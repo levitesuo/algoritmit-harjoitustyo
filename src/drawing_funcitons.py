@@ -6,9 +6,9 @@ import numpy as np
 def draw_path(name, path, grid, color, figure):
     p = [[], [], []]
     for cord in path:
-        p[0].append(cord[0])
-        p[1].append(cord[1])
-        p[2].append(grid[cord[1]][cord[0]]+0.005)
+        p[0].append(cord[1])
+        p[1].append(cord[0])
+        p[2].append(grid[cord[0]][cord[1]]+0.005)
     trace = go.Scatter3d(
         name=name,
         x=np.array(p[0]),

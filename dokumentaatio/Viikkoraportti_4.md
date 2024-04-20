@@ -12,6 +12,7 @@ On ollut vaikeaa tarttua projektiin tauon jälkeen.
 
 ### Seuraavaksi
 Testien kirjoittamista
+Dokumentaation kirjoittamista
 
 
 Työtunteja n. 1

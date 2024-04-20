@@ -29,15 +29,15 @@ print(f"start: {start}   goal: {goal}")
 a_time = time()
 a_star_result = a_star(start, goal, z)
 b_time = time()
-dijk_star_result = a_star(start, goal, z, lambda x, y, z: 0)
+dijkstra_result = a_star(start, goal, z, lambda x, y, z: 0)
 c_time = time()
 fringe_result = fringe_search(start, goal, z)
 d_time = time()
 
 # Printing the stats
-print(f"a* - t: {b_time-a_time}\tc: {a_star_result['cost']}")
-print(f"d* - t: {c_time-b_time}\tc: {dijk_star_result['cost']}")
-print(f"fs - t: {d_time-c_time}\tc: {fringe_result['cost']}")
+print(f"a star\ttime: {b_time-a_time}\tcost: {a_star_result['cost']}")
+print(f"dijkstra\ttime: {c_time-b_time}\tcost: {dijkstra_result['cost']}")
+print(f"fringe search\ttime: {d_time-c_time}\tcost: {fringe_result['cost']}")
 
 # Drawing the visualization
-draw_plots(z, a_star_result, dijk_star_result, fringe_result, start, goal)
+draw_plots(z, a_star_result, dijkstra_result, fringe_result, start, goal)

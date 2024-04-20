@@ -1,6 +1,8 @@
-from heurestic_function import heurestic_function
-from doubly_linked_list import LinkedList
-from height_mapping_function import height_mapping_function
+
+
+from .functions.height_mapping_function import height_mapping_function
+from .functions.heurestic_function import heurestic_function
+from .objects.doubly_linked_list import LinkedList
 
 
 class Node:

@@ -1,6 +1,6 @@
 from heapq import heappop, heappush
-from heurestic_function import heurestic_function
-from height_mapping_function import height_mapping_function
+from .functions.heurestic_function import heurestic_function
+from .functions.height_mapping_function import height_mapping_function
 
 
 class Node:

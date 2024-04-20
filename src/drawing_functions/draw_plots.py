@@ -1,4 +1,3 @@
-from math import sqrt
 import plotly.graph_objects as go
 
 from drawing_functions.draw_path import draw_path

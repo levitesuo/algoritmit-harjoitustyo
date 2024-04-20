@@ -11,9 +11,9 @@ def draw_pointmap(name, pointmap, grid, colorscale, figure, start, goal):
     for i in range(size):
         for j in range(size):
             if cordmap[i][j] and (i, j) != start and (i, j) != goal:
-                p[0].append(j)
-                p[1].append(i)
-                p[2].append(grid[i][j] + 0.001)
+                p[0].append(i)
+                p[1].append(j)
+                p[2].append(grid[j][i] + 0.001)
                 p[3].append(cordmap[i][j])
 
     trace = go.Scatter3d(

@@ -3,6 +3,8 @@
 ### Tehty
 - Korjasin yhden bugin vertaisarvion pohjalta
 - Lisäsin Toeutusdokumentin
+- Pientä reformatointia
+- README:n muokkaamista
 
 ### Edistys
 Edistys on ollut hidasta mutta nyt kun olen päässyt alkuun kyllä tämä tästä.

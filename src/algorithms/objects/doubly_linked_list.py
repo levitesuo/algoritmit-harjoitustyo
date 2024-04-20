@@ -1,8 +1,13 @@
 
 class LinkedList:
+    '''
+    Implementaatio doubly linked lististä josta poistaminen ja johon lisäminen on O(0) nopeaa.
+    Listassa on hardkoodattu aloitus node joka löytyy paikasta size ** 2
+    '''
+
     def __init__(self, size, start: tuple):
         self._size = size
-        self.l = [[None, None] for _ in range((size+1) ** 2)]
+        self.l = [[None, None] for _ in range((size) ** 2 + 1)]
         start_list_cord = self._t_to_l(start)
 
         self.l[start_list_cord] = [size**2, None]
@@ -14,8 +19,11 @@ class LinkedList:
         return str(self.get_list())
 
     def get_list(self):
+        '''
+        Transforms the linked list to a conventional list and returns it.
+        '''
         l = []
-        i = self._size ** 2
+        i = self._size ** 2 + 1
         while True:
             i = self.l[i][1]
             if i is None:

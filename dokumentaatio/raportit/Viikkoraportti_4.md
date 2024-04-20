@@ -2,6 +2,7 @@
 
 ### Tehty
 - Korjasin yhden bugin vertaisarvion pohjalta
+- Lisäsin Toeutusdokumentin
 
 ### Edistys
 Edistys on ollut hidasta
@@ -15,4 +16,4 @@ Testien kirjoittamista
 Dokumentaation kirjoittamista
 
 
-Työtunteja n. 1
+Työtunteja n. 2

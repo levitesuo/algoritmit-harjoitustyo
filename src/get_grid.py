@@ -28,10 +28,10 @@ def hill_func(x, y):
     return helpper(min(1, sqrt(x**2 + y**2)))
 
 
-def get_hill(data_resolution):
+def get_shape(data_resolution, shape_func=hill_func):
     line_x = np.linspace(-0.75, 0.75, data_resolution)
     line_y = np.linspace(-0.75, 0.75, data_resolution)
     x, y = np.meshgrid(line_x, line_y)
-    z = np.array([[hill_func(i, j) for i, j in zip(xrow, yrow)]
+    z = np.array([[shape_func(i, j) for i, j in zip(xrow, yrow)]
                  for xrow, yrow in zip(x, y)])
     return z

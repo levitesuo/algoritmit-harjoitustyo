@@ -35,9 +35,10 @@ fringe_result = fringe_search(start, goal, z)
 d_time = time()
 
 # Printing the stats
-print(f"a star\ttime: {b_time-a_time}\tcost: {a_star_result['cost']}")
-print(f"dijkstra\ttime: {c_time-b_time}\tcost: {dijkstra_result['cost']}")
-print(f"fringe search\ttime: {d_time-c_time}\tcost: {fringe_result['cost']}")
+print(f"a star       \ttime: {b_time-a_time}\t  cost: {a_star_result['cost']}")
+print(
+    f"dijkstra     \ttime: {c_time-b_time}\t  cost: {dijkstra_result['cost']}")
+print(f"fringe search\ttime: {d_time-c_time}\t  cost: {fringe_result['cost']}")
 
 # Drawing the visualization
 draw_plots(z, a_star_result, dijkstra_result, fringe_result, start, goal)

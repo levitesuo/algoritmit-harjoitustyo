@@ -1,4 +1,4 @@
-from height_mapping_function import height_mapping_function
+from algorithms.functions.height_mapping_function import height_mapping_function
 
 
 class Node:

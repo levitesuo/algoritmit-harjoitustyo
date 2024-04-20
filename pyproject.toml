@@ -11,7 +11,7 @@ invoke = "^2.2.0"
 perlin-noise = "^1.12"
 plotly = "^5.20.0"
 numpy = "^1.26.4"
-pandas = "^2.2.1"
+coverage = "^7.4.4"
 
 
 [tool.poetry.group.dev.dependencies]

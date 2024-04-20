@@ -1,7 +1,7 @@
 import plotly.graph_objects as go
 
-from drawing_functions.draw_path import draw_path
-from drawing_functions.draw_point_map import draw_pointmap
+from .draw_path import draw_path
+from .draw_point_map import draw_pointmap
 
 
 def draw_plots(surface, a_star_result, dijk_star_result, fringe_result, start, goal):

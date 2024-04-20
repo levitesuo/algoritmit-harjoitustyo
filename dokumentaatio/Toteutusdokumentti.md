@@ -57,4 +57,5 @@
 - node
   - A simple node object.
   - The algorithms datamaps are comprised of these
-  
+- #### Drawing functions
+  - holds 3 functions responsible for the visuals

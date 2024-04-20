@@ -1,10 +1,10 @@
 from random import randint, seed
 from time import time
 
-from drawing_funcitons import draw_plots
+from algorithms.drawing_functions.draw_plots import draw_plots
 from get_grid import get_hill
-from fringe_search import fringe_search
-from a_star import a_star
+from algorithms.fringe_search import fringe_search
+from algorithms.a_star import a_star
 
 # Num of datapoint per side
 data_resolution = 50

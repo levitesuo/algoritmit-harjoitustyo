@@ -1,20 +1,15 @@
-from algorithms.functions.height_mapping_function import height_mapping_function
-
-
 class Node:
-    def __init__(self, pos: tuple, grid):
+    def __init__(self):
         self.parent = None
-        self.fedges = []
+        self.edges = []
 
         self.f = float('inf')
         self.g = float('inf')
         self.h = 0
-        self._init_edges(grid, pos)
 
-    def _init_edges(self, grid, pos):
-        x = pos[0]
-        y = pos[1]
-        size = len(grid)
+    def init_edges(self, grid, pos, size, height_mapping_function, is_frigne=False):
+        x = pos // size
+        y = pos % size
         for i in range(3):
             for j in range(3):
                 new_x = x + i - 1
@@ -26,5 +21,6 @@ class Node:
                     else:
                         edge = height_mapping_function(
                             grid[new_x][new_y] - grid[x][y], len(grid))
-                    self.fedges.append((edge, new_x * size + new_y))
-        self.fedges = sorted(self.fedges)
+                    self.edges.append((edge, new_x * size + new_y))
+        if is_frigne:
+            self.edges = sorted(self.edges)

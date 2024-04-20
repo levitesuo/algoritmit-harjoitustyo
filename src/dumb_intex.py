@@ -1,8 +1,8 @@
 from random import randint, seed
 from time import time
 
-from algorithms.drawing_functions.draw_plots import draw_plots
-from get_grid import get_hill
+from drawing_functions.draw_plots import draw_plots
+from get_grid import get_shape
 from algorithms.fringe_search import fringe_search
 from algorithms.a_star import a_star
 
@@ -16,7 +16,7 @@ print(f"RANDOM SEED: {random_seed}")
 seed(random_seed)
 
 # z is a  2d array where the values represent the hight
-z = get_hill(data_resolution)
+z = get_shape(data_resolution)
 
 # Random start and goal
 start = (5, 5)

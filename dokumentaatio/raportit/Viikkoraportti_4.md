@@ -5,7 +5,7 @@
 - Lisäsin Toeutusdokumentin
 
 ### Edistys
-Edistys on ollut hidasta
+Edistys on ollut hidasta mutta nyt kun olen päässyt alkuun kyllä tämä tästä.
 
 
 ### Vaikeudet

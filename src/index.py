@@ -8,7 +8,7 @@ from algorithms.fringe_search import fringe_search
 from algorithms.a_star import a_star
 
 # Num of datapoint per side
-data_resolution = 200
+data_resolution = 100
 
 # Using randon seed so sitsuations are recreatable
 # randomseed 9 weird

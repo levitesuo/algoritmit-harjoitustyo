@@ -22,7 +22,7 @@ def find_path(goal, nodes, size):
     return {'path': path, 'cost': cost}
 
 
-def a_star(start_cord, goal_cord, grid, h_func=heurestic_function):
+def a_star(start_cord, goal_cord, grid, h_func=heurestic_function, height_mapping_function=height_mapping_function):
     size = len(grid)
     start = start_cord[0]*size + start_cord[1]
     goal = goal_cord[0] * size + goal_cord[1]

@@ -15,8 +15,13 @@ random_seed = randint(1, 1000)
 print(f"RANDOM SEED: {random_seed}")
 seed(random_seed)
 
+
+def linear_slope(x, y):
+    return x
+
+
 # z is a  2d array where the values represent the hight
-z = get_shape(data_resolution)
+z = get_shape(data_resolution, shape_func=linear_slope)
 
 # Random start and goal
 start = (5, 5)

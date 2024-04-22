@@ -1,6 +1,6 @@
 # Tira harjoitustyö
 ### Esittely
-Algoritmien hajoitustyö jossa käytetään A*, dijkstra sekä fringe search algoritmeja löytämään "Vähiten energiaa vaativa reitti mäkisessä ympäristössä. Karttoja luodaan satunnaisesti käyttäen perlin noise:a.
+Algoritmien hajoitustyö jossa käytetään A*, dijkstra sekä fringe search algoritmeja löytämään "Vähiten energiaa vaativa reitti mäkisessä ympäristössä. Karttoja luodaan satunnaisesti käyttäen perlin noisea.
 ### Asennus
 
 ```bash

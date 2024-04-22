@@ -23,7 +23,7 @@ class LinkedList:
         Transforms the linked list to a conventional list and returns it.
         '''
         l = []
-        i = self._size ** 2 + 1
+        i = self._size ** 2
         while True:
             i = self.l[i][1]
             if i is None:
@@ -31,12 +31,18 @@ class LinkedList:
             l.append(self._l_to_t(i))
 
     def insert_after(self, next):
+        '''
+        Inserts given cell after the current cell.
+        '''
         if self.l[self.i][1] is not None:
             self.l[self.l[self.i][1]][0] = next
         self.l[next] = [self.i, self.l[self.i][1]]
         self.l[self.i][1] = next
 
     def delete_if_able(self, cord):
+        '''
+        Deletes a cell if it exists.
+        '''
         if self.l[cord] == [None, None]:
             return
         self.l[self.l[cord][0]][1] = self.l[cord][1]
@@ -45,6 +51,9 @@ class LinkedList:
         self.l[cord] = [None, None]
 
     def delete_current(self):
+        '''
+
+        '''
         self.l[self.l[self.i][0]][1] = self.l[self.i][1]
         if self.l[self.i][1] is not None and self.l[self.l[self.i][1]] is not None:
             self.l[self.l[self.i][1]][0] = self.l[self.i][0]

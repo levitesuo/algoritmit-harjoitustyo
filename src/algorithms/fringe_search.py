@@ -6,7 +6,7 @@ from .objects.doubly_linked_list import LinkedList
 from .objects.node import Node
 
 
-def fringe_search(start_cord, goal_cord, grid):
+def fringe_search(start_cord, goal_cord, grid, heurestic_function=heurestic_function, height_mapping_function=height_mapping_function):
     size = len(grid)
     start = start_cord[0]*size + start_cord[1]
     goal = goal_cord[0]*size + goal_cord[1]

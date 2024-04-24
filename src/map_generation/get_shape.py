@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def get_shape(data_resolution: int, shape_func: function(float, float), data_range=(-1, 1)):
+def get_shape(data_resolution: int, shape_func, data_range=(-1, 1)):
     '''
         Returns a 2d array of a shape defined by the shape func and the datarange.
 

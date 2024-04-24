@@ -1,4 +1,4 @@
-## Viikko 1
+## Viikko 3
 
 ### Tehty
 - Koodi reformatoitu ja kordinaattisysteemi uudelleenkirjoitettu.

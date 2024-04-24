@@ -22,7 +22,7 @@ def find_path(goal, nodes, size):
     return {'path': path, 'cost': cost}
 
 
-def a_star(start_cord, goal_cord, grid, h_func=heurestic_function, height_mapping_function=height_mapping_function):
+def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function, height_mapping_function=height_mapping_function):
     size = len(grid)
     start = start_cord[0]*size + start_cord[1]
     goal = goal_cord[0] * size + goal_cord[1]
@@ -48,7 +48,7 @@ def a_star(start_cord, goal_cord, grid, h_func=heurestic_function, height_mappin
             cost, np = edge
             if not closed_list[np]:
                 new_g = cost + g
-                h = h_func(grid, np, goal)
+                h = heurestic_function(grid, np, goal)
                 new_f = h + new_g
                 if nodes[np].f == float('inf') or nodes[np].f > new_f:
                     heappush(open_list, (new_f, np))

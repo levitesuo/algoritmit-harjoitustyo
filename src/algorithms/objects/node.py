@@ -21,7 +21,7 @@ class Node:
                 if 0 <= new_x < len(grid[0]) and 0 <= new_y < len(grid) and not (i == 1 and j == 1):
                     if i - 1 != 0 and j - 1 != 0:
                         edge = height_mapping_function(
-                            grid[new_y][new_x] - grid[y][x], len(grid)) * 1.42
+                            grid[new_y][new_x] - grid[y][x], len(grid)) * 1.41421356237309504880168872420969807856967187537694
                     else:
                         edge = height_mapping_function(
                             grid[new_y][new_x] - grid[y][x], len(grid))

@@ -3,6 +3,18 @@ import plotly.graph_objects as go
 
 
 def draw_pointmap(name, pointmap, grid, colorscale, figure, start, goal):
+    '''
+    Draws a pointmap on specified canvas.
+
+    Parameters:
+        name (str): Name of the pointmap. Will be shown on screen.
+        pointmap (array): 2d array of points to be drawn containing float values that correspond to color.
+        grid (array): 2d array of floats corresponding to height. Used to draw the point at the correct y cordinate.
+        colorscale (str): plotly colorscale keyword. Spesifiec the colorscale of the pointmap.
+        figure (plotly obj): Plotly figure object. Used as the canvas to draw on.
+        start and goal (tuple): These cordinates are excluded from the pointmap. Otherwise the color scaling dosen't work.
+    '''
+
     p = [[], [], [], []]
     size = int(sqrt(len(pointmap)))
     cordmap = [[pointmap[i*size + j]

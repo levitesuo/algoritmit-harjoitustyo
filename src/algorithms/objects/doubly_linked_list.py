@@ -1,8 +1,8 @@
 
 class LinkedList:
     '''
-    Implementaatio doubly linked lististä josta poistaminen ja johon lisäminen on O(0) nopeaa.
-    Listassa on hardkoodattu aloitus node joka löytyy paikasta size ** 2
+    An implementation of a doubly linked list outlined in this paper https://webdocs.cs.ualberta.ca/~holte/Publications/fringe.pdf
+    Has a default starting node at [size]
     '''
 
     def __init__(self, size, start):
@@ -20,6 +20,7 @@ class LinkedList:
     def get_list(self):
         '''
         Transforms the linked list to a conventional list and returns it.
+        Also performs a transformation of cordinates where the assumption is made that the original map is  a square.
         '''
         l = []
         i = self._size
@@ -51,7 +52,7 @@ class LinkedList:
 
     def delete_current(self):
         '''
-
+        Deletes the cell that the iteration is currently on.
         '''
         self.l[self.l[self.i][0]][1] = self.l[self.i][1]
         if self.l[self.i][1] is not None and self.l[self.l[self.i][1]] is not None:
@@ -59,15 +60,25 @@ class LinkedList:
         self.l[self.i][0] = None
 
     def iterate(self):
+        '''
+        Iterates the list one step further.
+        '''
         if self.l[self.i][1] is None:
             return False
         self.i = self.l[self.i][1]
         return True
 
     def get_i(self):
+        '''
+        Returns the current iteration
+        '''
         return self._l_to_t(self.i)
 
     def empty(self):
+        '''
+        Return bool that tells if the list is empty.
+        '''
+        # If the default starting node is pointing to empty. The list has nothing in it.
         return self.l[self._size][1] is None
 
     def _l_to_t(self, i):

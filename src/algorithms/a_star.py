@@ -2,6 +2,15 @@ from heapq import heappop, heappush
 
 
 def find_path(node_list, goal):
+    '''
+    When the a* has found the goal this method is responsible for "retracing" a*:s steps.
+        Parameter:
+            node_list (list): List of node objects.
+            goal (int): place of the goal in the node_list
+
+        Returns:
+            Result (dict): a dictionary with one key/value pari path.
+    '''
     parent = goal
     path = []
     while parent is not None:

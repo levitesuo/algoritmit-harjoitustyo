@@ -3,6 +3,14 @@ import plotly.graph_objects as go
 
 
 def draw_path(name, path, grid, color, figure):
+    '''
+    Draws a line and dots corresponding to the path list
+        Parameters:
+            name (str): Name of the path to be drawn. Will be shown on screen.
+            path (list): List of tuples from which the line is drawn.
+            grid (array): 2d array from where we check the y cordinate of points in path.
+            figure (plotly.graph_objects figure): The base "canvas" where the path will be drawn.
+    '''
     p = [[], [], []]
     for cord in path:
         p[0].append(cord[1])

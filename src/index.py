@@ -6,14 +6,14 @@ from map_generation.shape_functions import layered_noise
 from algorithms.fringe_search import fringe_search
 from algorithms.a_star import a_star
 from algorithms.functions.heurestic_function import heurestic_function
-from algorithm_handler import algorithm_handler
+from services.algorithm_handler import algorithm_handler
 
 # Num of datapoint per side
 data_resolution = 100
 
 # Using randon seed so sitsuations are recreatable
-# Good demo seeds 189, 389 ( dataresolution 150 Shows the problem.)
-random_seed = randint(1, 1000)
+# Good demo seeds 189, 389 ( dataresolution 150 Shows the problem.) 510 dr 100
+random_seed = 510  # randint(1, 1000)
 print(f"RANDOM SEED: {random_seed}")
 seed(random_seed)
 
@@ -32,7 +32,7 @@ print(f"start: {start}   goal: {goal}")
 # Running the algorithms, measuring their performance and visualizing them.
 algorithm_handler(
     name="Dijkstra",
-    color="red",
+    color="green",
     data_map=data_map,
     start=start,
     goal=goal,

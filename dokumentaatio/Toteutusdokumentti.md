@@ -24,6 +24,7 @@
 ```
 ## File docstring
 
+(Out of date)
 ### get_grid.py
 - Has methods for generating maps for the algorithms.
 1. get_grid provides a map based on perlin noise

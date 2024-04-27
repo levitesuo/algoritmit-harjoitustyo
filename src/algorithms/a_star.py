@@ -35,7 +35,6 @@ def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function, h
     heappush(open_list, (0, start))
     while len(open_list) != 0:
         _, p = heappop(open_list)
-        nodes[p].init_edges(grid, p, size, height_mapping_function)
         g = nodes[p].g
         closed_list[p] = nodes[p].g + 1
 

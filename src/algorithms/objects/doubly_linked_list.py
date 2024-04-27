@@ -5,15 +5,14 @@ class LinkedList:
     Listassa on hardkoodattu aloitus node joka löytyy paikasta size ** 2
     '''
 
-    def __init__(self, size, start: tuple):
+    def __init__(self, size, start):
         self._size = size
-        self.l = [[None, None] for _ in range((size) ** 2 + 1)]
-        start_list_cord = self._t_to_l(start)
+        self.l = [[None, None] for _ in range(size + 1)]
 
-        self.l[start_list_cord] = [size**2, None]
-        self.l[size**2][1] = start_list_cord
+        self.l[start] = [size, None]
+        self.l[size][1] = start
 
-        self.i = start_list_cord
+        self.i = start
 
     def __str__(self):
         return str(self.get_list())
@@ -23,7 +22,7 @@ class LinkedList:
         Transforms the linked list to a conventional list and returns it.
         '''
         l = []
-        i = self._size ** 2
+        i = self._size
         while True:
             i = self.l[i][1]
             if i is None:
@@ -69,7 +68,7 @@ class LinkedList:
         return self._l_to_t(self.i)
 
     def empty(self):
-        return self.l[self._size**2][1] is None
+        return self.l[self._size][1] is None
 
     def _l_to_t(self, i):
         return (i//self._size, i % self._size)

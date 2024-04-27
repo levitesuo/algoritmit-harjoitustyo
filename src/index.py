@@ -3,16 +3,17 @@ from random import randint, seed
 from drawing_functions.draw_plain import draw_plain
 from map_generation.get_shape import get_shape
 from map_generation.shape_functions import layered_noise
-from algorithms.fringe_search import fringe_search
-from algorithms.a_star import a_star
-from algorithm_handler import algorithm_handler
+from algorithms.new_fringe_search import fringe_search
+from algorithms.new_a_star import a_star
+from algorithm_handler import algorithm_visualizer
+from algorithms.functions.heurestic_function import heurestic_function
 
 # Num of datapoint per side
-data_resolution = 100
+data_resolution = 200
 
 # Using randon seed so sitsuations are recreatable
-# Good demo seeds 189
-random_seed = 189  # randint(1, 1000)
+# Good demo seeds 189, 389 ( dataresolution 150 Shows the problem.)
+random_seed = randint(1, 1000)
 print(f"RANDOM SEED: {random_seed}")
 seed(random_seed)
 
@@ -29,29 +30,41 @@ goal = (randint(data_resolution//2, data_resolution-1), data_resolution-10)
 print(f"start: {start}   goal: {goal}")
 
 # Running the algorithms, measuring their performance and visualizing them.
-algorithm_handler(
+algorithm_visualizer(
     name="Dijkstra",
-    color="green",
+    color="red",
     data_map=data_map,
-    algorithm=lambda: a_star(start, goal, data_map,
-                             heurestic_function=lambda x, y, z: 0),
+    start=start,
+    goal=goal,
+    algorithm=lambda s, g, m: a_star(
+        start=s, goal=g, node_list=m,
+        heurestic_function=lambda x, y, z: 0),
     figure=plain
 )
 
-algorithm_handler(
+algorithm_visualizer(
     name="Fringe search",
     color="orange",
     data_map=data_map,
-    algorithm=lambda: fringe_search(start, goal, data_map),
+    start=start,
+    goal=goal,
+    algorithm=lambda s, g, m: fringe_search(
+        start=s, goal=g, node_list=m,
+        heurestic_function=heurestic_function
+    ),
     figure=plain,
     is_fringe=True
 )
 
-algorithm_handler(
-    name="A star",
+algorithm_visualizer(
+    name="a_ star",
     color="red",
     data_map=data_map,
-    algorithm=lambda: a_star(start, goal, data_map),
+    start=start,
+    goal=goal,
+    algorithm=lambda s, g, m: a_star(
+        start=s, goal=g, node_list=m,
+        heurestic_function=heurestic_function),
     figure=plain
 )
 

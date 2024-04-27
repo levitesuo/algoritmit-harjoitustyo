@@ -21,6 +21,7 @@ def fringe_search(start_cord, goal_cord, grid, heurestic_function=heurestic_func
 
     f_lim = nodes[start].h
     found = False
+
     while found is False or fringe.empty():
         f_min = float('inf')
         # Linked list has a default start node at size ** 2

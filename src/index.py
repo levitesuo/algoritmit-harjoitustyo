@@ -3,8 +3,8 @@ from random import randint, seed
 from drawing_functions.draw_plain import draw_plain
 from map_generation.get_shape import get_shape
 from map_generation.shape_functions import layered_noise
-from algorithms.new_fringe_search import fringe_search
-from algorithms.new_a_star import a_star
+from algorithms.fringe_search import fringe_search
+from algorithms.a_star import a_star
 from algorithm_handler import algorithm_visualizer
 from algorithms.functions.heurestic_function import heurestic_function
 

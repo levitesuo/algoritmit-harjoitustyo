@@ -3,7 +3,7 @@
 Algoritmien hajoitustyö jossa käytetään A*, dijkstra sekä fringe search algoritmeja löytämään "Vähiten energiaa vaativa reitti mäkisessä ympäristössä. Karttoja luodaan satunnaisesti käyttäen perlin noisea.
 
 ### Huomautus
-Tällä hetkellä keskisuuri refaktorointi kesken. Kaikki testin on rikki. Korjaan ne seuraavaksi.
+Tällä hetkellä keskisuuri refaktorointi kesken. Kaikki testin on rikki. Korjaan ne seuraavaksi. ( Myös vähäinen dokumentaatio hieman out of date)
 
 ### Asennus
 

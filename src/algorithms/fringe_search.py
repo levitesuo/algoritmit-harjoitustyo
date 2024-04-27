@@ -1,52 +1,52 @@
-
-
-from .functions.height_mapping_function import height_mapping_function
-from .functions.heurestic_function import heurestic_function
 from .objects.doubly_linked_list import LinkedList
-from .objects.node import Node
 
 
-def fringe_search(start_cord, goal_cord, grid, heurestic_function=heurestic_function, height_mapping_function=height_mapping_function):
-    size = len(grid)
-    start = start_cord[0]*size + start_cord[1]
-    goal = goal_cord[0]*size + goal_cord[1]
-    nodes = [Node() for i in range(size**2)]
+def fringe_search(start, goal, node_list, heurestic_function):
+    '''
+    Finds the best path in node_list. Returns a dict with {'cost': , 'path': , 'closed_list': }
 
-    fringe = LinkedList(size, start_cord)
-    cache = [False for i in range(size ** 2)]
+        Parameters:
+            start (int): A integer indicating from where on the node list to start.
+            goal (int): A integer indicating a goal in the node_list.
+            node_list (list): List of nodes that have verticies and some values. (See src/algorithms/objects/node.py)
+            heurestic_function (function): a function that takes in three inputs (position, goal, node_list) and spits out a heurestic estimate for the length of the route.
+
+        Returns:
+            Result (dict): A dictionary containing path, cost and closed_list aka. visited cells.
+    '''
+    size = len(node_list)
+    fringe = LinkedList(size, start)
+    cache = [False for _ in range(size)]
 
     cache[start] = (0, None)
-    nodes[start].init_edges(grid, start, size, height_mapping_function, True)
-    nodes[start].h = heurestic_function(grid, start, goal)
+    node_list[start].h = heurestic_function(node_list, start, goal)
+    f_lim = node_list[start].h
 
-    f_lim = nodes[start].h
     found = False
 
     while found is False or fringe.empty():
         f_min = float('inf')
         # Linked list has a default start node at size ** 2
-        fringe.i = size ** 2
-        while fringe.iterate():  # Returns false if at las on the list
+        fringe.i = size
+        while fringe.iterate():
             n = fringe.i
             g, _ = cache[n]
-            f = g + nodes[n].h
+            f = g + node_list[n].h
             if f > f_lim:
                 f_min = min(f, f_min)
                 continue
             if n == goal:
                 found = True
                 break
-            for i in range(len(nodes[n].edges) - 1, -1, -1):
-                cost, s = nodes[n].edges[i]
+            for i in range(len(node_list[n].edges) - 1, -1, -1):
+                cost, s = node_list[n].edges[i]
                 g_s = g + cost
                 if cache[s]:
                     g_c, _ = cache[s]
                     if g_s >= g_c:
                         continue
                 else:
-                    nodes[s].init_edges(
-                        grid, s, size, height_mapping_function, True)
-                    nodes[s].h = heurestic_function(grid, s, goal)
+                    node_list[s].h = heurestic_function(node_list, s, goal)
                 fringe.delete_if_able(s)
                 fringe.insert_after(s)
                 cache[s] = (g_s, n)
@@ -54,10 +54,10 @@ def fringe_search(start_cord, goal_cord, grid, heurestic_function=heurestic_func
         f_lim = f_min
     if found:
         # CONSTRUCT PATH
-        path = [(goal//size, goal % size)]
+        path = [goal]
         _, parent = cache[goal]
         while parent is not None:
-            path.append((parent // size, parent % size))
+            path.append(parent)
             _, new_parent = cache[parent]
             parent = new_parent
         return {'path': path, 'cost': g, 'cache': cache}

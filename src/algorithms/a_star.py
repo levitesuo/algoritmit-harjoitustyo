@@ -1,57 +1,52 @@
 from heapq import heappop, heappush
-from .objects.node import Node
-from .functions.heurestic_function import heurestic_function
-from .functions.height_mapping_function import height_mapping_function
 
 
-def find_path(goal, nodes, size):
-    path = [(goal//size, goal % size)]
-    parent = nodes[goal].parent
-    while parent != None:
-        path.append((parent//size, parent % size))
-        parent = nodes[parent].parent
-
-    cost = 0
-
-    for i in range(len(path)):
-        node = path[i][0] * size + path[i][1]
-        for edge in nodes[node].edges:
-            if i + 1 < len(path) and path[i+1][0]*size + path[i+1][1] == edge[1]:
-                cost += edge[0]
-
-    return {'path': path, 'cost': cost}
+def find_path(node_list, goal):
+    parent = goal
+    path = []
+    while parent is not None:
+        path.append(parent)
+        parent = node_list[parent].parent
+        if parent in path:
+            break
+    return {'path': path}
 
 
-def a_star(start_cord, goal_cord, grid, heurestic_function=heurestic_function, height_mapping_function=height_mapping_function):
-    size = len(grid)
-    start = start_cord[0]*size + start_cord[1]
-    goal = goal_cord[0] * size + goal_cord[1]
-    closed_list = [False for i in range(size ** 2)]
+def a_star(start, goal, node_list, heurestic_function):
+    '''
+    Finds the best path in node_list. Returns a dict with {'cost': , 'path': , 'closed_list': }
+
+        Parameters:
+            start (int): A integer indicating from where on the node list to start.
+            goal (int): A integer indicating a goal in the node_list.
+            node_list (list): List of nodes that have verticies and some values. (See src/algorithms/objects/node.py)
+            heurestic_function (function): a function that takes in three inputs (position, goal, node_list) and spits out a heurestic estimate for the length of the route.
+
+        Returns:
+            Result (dict): A dictionary containing path, cost and closed_list aka. visited cells.
+    '''
+    size = len(node_list)
+    closed_list = [False for _ in range(size)]
     open_list = []
-    nodes = [Node()
-             for i in range(size ** 2)]
-
-    nodes[start].g = 0
+    node_list[start].g = 0
     heappush(open_list, (0, start))
-    while len(open_list) != 0:
+    while open_list:
         _, p = heappop(open_list)
-        g = nodes[p].g
-        closed_list[p] = nodes[p].g + 1
-
+        g = node_list[p].g
+        closed_list[p] = node_list[p].g+1
         if goal == p:
-            result = find_path(goal, nodes, size)
+            result = find_path(node_list, goal)
+            result['cost'] = node_list[p].g
             result['closed'] = closed_list
             return result
-
-        for edge in nodes[p].edges:
-            cost, np = edge
-            if not closed_list[np]:
+        for cost, new_p in node_list[p].edges:
+            if not closed_list[new_p]:
                 new_g = cost + g
-                h = heurestic_function(grid, np, goal)
+                h = heurestic_function(node_list, new_p, goal)
                 new_f = h + new_g
-                if nodes[np].f == float('inf') or nodes[np].f > new_f:
-                    heappush(open_list, (new_f, np))
-                    nodes[np].f = new_f
-                    nodes[np].g = new_g
-                    nodes[np].parent = p
+                if node_list[new_p].f == float('inf') or node_list[new_p].f > new_f:
+                    heappush(open_list, (new_f, new_p))
+                    node_list[new_p].f = new_f
+                    node_list[new_p].g = new_g
+                    node_list[new_p].parent = p
     return False

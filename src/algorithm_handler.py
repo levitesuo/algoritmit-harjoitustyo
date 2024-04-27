@@ -42,7 +42,7 @@ def algorithm_translator(start, goal, grid, algorithm):
     return result
 
 
-def algorithm_visualizer(name, color, data_map, start, goal, algorithm, figure, is_fringe=False):
+def algorithm_handler(name, color, data_map, start, goal, algorithm, figure, is_fringe=False):
     '''
 
     '''

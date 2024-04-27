@@ -5,8 +5,8 @@ from map_generation.get_shape import get_shape
 from map_generation.shape_functions import layered_noise
 from algorithms.fringe_search import fringe_search
 from algorithms.a_star import a_star
-from algorithm_handler import algorithm_visualizer
 from algorithms.functions.heurestic_function import heurestic_function
+from algorithm_handler import algorithm_handler
 
 # Num of datapoint per side
 data_resolution = 100
@@ -30,7 +30,7 @@ goal = (randint(data_resolution//2, data_resolution-1), data_resolution-10)
 print(f"start: {start}   goal: {goal}")
 
 # Running the algorithms, measuring their performance and visualizing them.
-algorithm_visualizer(
+algorithm_handler(
     name="Dijkstra",
     color="red",
     data_map=data_map,
@@ -42,7 +42,7 @@ algorithm_visualizer(
     figure=plain
 )
 
-algorithm_visualizer(
+algorithm_handler(
     name="Fringe search",
     color="orange",
     data_map=data_map,
@@ -56,7 +56,7 @@ algorithm_visualizer(
     is_fringe=True
 )
 
-algorithm_visualizer(
+algorithm_handler(
     name="a_ star",
     color="red",
     data_map=data_map,
@@ -67,15 +67,6 @@ algorithm_visualizer(
         heurestic_function=heurestic_function),
     figure=plain
 )
-
-""" algorithm_handler(
-    name="A star non linear",
-    color="blue",
-    data_map=data_map,
-    algorithm=lambda: a_star(
-        start, goal, data_map, height_mapping_function=exponential_mapping_function),
-    figure=plain
-) """
 
 plain.update_layout(autosize=True, template='plotly_dark')
 plain.show()

@@ -19,7 +19,7 @@ Edistys etenee kohti projektin loppua. Motivaatiota on taas löytynyt
 Olen tällä viikolla alkanut käyttää enemmän lambda funktiota ja funktioita funktioiden argumentteina.
 
 ### Vaikeudet
-Jostain syystä a star ei osaa laskea reitin pituuksia oikein. Jännä
+Järkevän testauksen keksinnässä meni hetki. 
 
 ### Seuraavaksi
 Testien kirjoittamista

@@ -9,7 +9,7 @@ from algorithm_handler import algorithm_visualizer
 from algorithms.functions.heurestic_function import heurestic_function
 
 # Num of datapoint per side
-data_resolution = 200
+data_resolution = 100
 
 # Using randon seed so sitsuations are recreatable
 # Good demo seeds 189, 389 ( dataresolution 150 Shows the problem.)

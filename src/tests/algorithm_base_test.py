@@ -9,7 +9,7 @@ class TestAlgorithmBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         '''
-        These tests are run on moving ai labs map AR0022SR.map. 
+        These tests are run on movinai map AR0022SR.map. 
         The inputs_outputs list contains data parsed from the .map.scene file in a format ((start tuple), (goal tuple), (cost)).
         The list is 150 cases long. Witht the num_of_test_cases variable you can tune how meny run.
         150 cases might be a litle demanding for your machine.

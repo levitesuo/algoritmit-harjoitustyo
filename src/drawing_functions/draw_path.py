@@ -27,4 +27,5 @@ def draw_path(name, path, grid, color, figure):
         )
     )
     figure.add_scatter3d(arg=trace, connectgaps=False)
+
     return trace

@@ -12,15 +12,21 @@ from services.algorithm_handler import algorithm_handler
 data_resolution = 100
 
 # Using randon seed so sitsuations are recreatable
+# The figures below are with datarange form 0, 1 and only 2 noises layered.
 # Good demo seeds 189, 389 ( dataresolution 150 Shows the problem.) 510 dr 100
-random_seed = 510  # randint(1, 1000)
+random_seed = randint(1, 1000)
 print(f"RANDOM SEED: {random_seed}")
 seed(random_seed)
 
 # z is a  2d array where the values represent the hight
 data_map = get_shape(data_resolution=data_resolution,
-                     shape_func=lambda x, y: layered_noise(random_seed, x, y),
-                     data_range=(0, 1))
+                     shape_func=lambda x, y: layered_noise(
+                         random_seed=random_seed,
+                         x=x,
+                         y=y,
+                         octaves=(1, 5, 10),
+                         amplitudes=(1, 0.2, 0.05)),
+                     data_range=(-1, 1))
 plain = draw_plain(data_map)
 
 # Random start and goal

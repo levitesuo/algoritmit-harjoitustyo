@@ -14,7 +14,7 @@ Doubly linked listin testisyötteet ovat yksiselitteisiä. Sen toiminta on selit
 
 ### Moving ai labs testis
 algorithm_base_test.py
-Tässä tiedostossa testataan kaikki kolme algoritmia movingai kartassa [AR0022SR](https://movingai.com/benchmarks/bgmaps/AR0022SR.png). Luokkaan on ohjelmoitu valmiiksi 150 eri syötettä jota voidaan kaikkia tarvittaessa testata.
+Tässä tiedostossa testataan kaikki kolme algoritmia movingai kartassa ![AR0022SR](https://movingai.com/benchmarks/bgmaps/AR0022SR.png). Luokkaan on ohjelmoitu valmiiksi 150 eri syötettä jota voidaan kaikkia tarvittaessa testata.
 
 Muuttuja num_of_test_cases hallitsee kuinka monta näistä syötteistä käytetään.
 150 testi juokseminen vie paljon aikaa. Täten sitä kannattaa vähän rajoittaa.

@@ -10,7 +10,7 @@ from algorithms.functions.heurestic_function import heurestic_function
 class TestAlgorithmAdvanced(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        num_of_test_cases = 1
+        num_of_test_cases = 10
 
         super(TestAlgorithmAdvanced, cls).setUpClass()
 

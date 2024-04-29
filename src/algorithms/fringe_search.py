@@ -53,7 +53,6 @@ def fringe_search(start, goal, node_list, heurestic_function):
             fringe.delete_current()
         f_lim = f_min
     if found:
-        # CONSTRUCT PATH
         path = [goal]
         _, parent = cache[goal]
         while parent is not None:

@@ -1,3 +1,5 @@
+from math import sqrt
+
 
 class LinkedList:
     '''
@@ -28,7 +30,7 @@ class LinkedList:
             i = self.l[i][1]
             if i is None:
                 return l
-            l.append(self._l_to_t(i))
+            l.append(i)
 
     def insert_after(self, next):
         '''
@@ -45,7 +47,8 @@ class LinkedList:
         '''
         if self.l[cord] == [None, None]:
             return
-        self.l[self.l[cord][0]][1] = self.l[cord][1]
+        if self.l[cord][0] is not None:
+            self.l[self.l[cord][0]][1] = self.l[cord][1]
         if self.l[cord][1] is not None:
             self.l[self.l[cord][1]][0] = self.l[cord][0]
         self.l[cord] = [None, None]
@@ -54,6 +57,8 @@ class LinkedList:
         '''
         Deletes the cell that the iteration is currently on.
         '''
+        # Sets i:s previouses next to i:s next
+
         self.l[self.l[self.i][0]][1] = self.l[self.i][1]
         if self.l[self.i][1] is not None and self.l[self.l[self.i][1]] is not None:
             self.l[self.l[self.i][1]][0] = self.l[self.i][0]
@@ -72,7 +77,7 @@ class LinkedList:
         '''
         Returns the current iteration
         '''
-        return self._l_to_t(self.i)
+        return self.i
 
     def empty(self):
         '''
@@ -80,9 +85,3 @@ class LinkedList:
         '''
         # If the default starting node is pointing to empty. The list has nothing in it.
         return self.l[self._size][1] is None
-
-    def _l_to_t(self, i):
-        return (i//self._size, i % self._size)
-
-    def _t_to_l(self, cord):
-        return (cord[0]*self._size + cord[1])

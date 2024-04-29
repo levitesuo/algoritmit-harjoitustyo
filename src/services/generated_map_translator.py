@@ -5,8 +5,10 @@ from algorithms.functions.height_mapping_function import height_mapping_function
 
 def generated_map_translator(start, goal, grid, algorithm):
     '''
-    A function that translates the grids we are using to node_lists that the algorithms are using. 
+
+    A function that translates the grids we rae using to node_lists that the algorithms are using. 
     Also mesures the algorithm running time.
+    THIS IS WHERE THE FUNCTION CALL FINALLY HAPPENS.
 
         Parameters:
             grid (array): 2d array containing floats that corrispond to heights.

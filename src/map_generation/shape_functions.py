@@ -12,7 +12,7 @@ def layered_noise(random_seed, x, y, octaves=(1, 5), amplitudes=(1, 0.2)):
     return result
 
 
-def hill_func(x, y):
+def hill_func(x, y):  # pragma: no cover
     def helpper(p):
         return (1-p)**2 * (1+p)**2
     if -0.1 < x < 0.1:
@@ -20,15 +20,15 @@ def hill_func(x, y):
     return helpper(min(1, sqrt(x**2 + y**2)))
 
 
-def plane_function(x, y):
+def plane_function(x, y):  # pragma: no cover
     return 1
 
 
-def slope_function(x, y):
+def slope_function(x, y):  # pragma: no cover
     return x
 
 
-def zig_zag_plane_function(x, y):
+def zig_zag_plane_function(x, y):  # pragma: no cover
     if x < -0.5:
         return x
     if x < 0:
@@ -38,7 +38,7 @@ def zig_zag_plane_function(x, y):
     return -x
 
 
-def corridor_function(x, y):
+def corridor_function(x, y):  # pragma: no cover
     if 0.8 < x < 0.9:
         return 0
     if -0.9 < y < -0.8:

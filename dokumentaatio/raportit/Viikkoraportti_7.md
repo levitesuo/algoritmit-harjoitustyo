@@ -19,4 +19,4 @@ Testien kirjoittamista
 Dokumentaation kirjoittamista
 
 
-Työtunteja n. 3
+Työtunteja n. 9

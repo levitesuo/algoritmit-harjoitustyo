@@ -1,5 +1,10 @@
+# Toetutusdokumentti
 
-```
+Projektissa on toteutettu 3 eri reitinetsintä algoritmia. Pääpainona on onnlut Fringe search algoritmi jota vertaillaa a* algoritmiin. Dijkstra on tullut ns. vahingossa mukaan ja implementoitu antamalla a_star algoritmin heureettiseksi funktioksi 0.
+
+## Ohjelman rakenne
+
+```text
     └── src                    
         ├── index.py
         ├── show_map.py

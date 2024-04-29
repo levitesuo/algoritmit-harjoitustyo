@@ -33,7 +33,7 @@ Luokasta löytyy tuttuun tapaa num_of_test_cases muuttuja jolla voi vaikutaa tes
 
 Kartat luodaan siemennetyllä satunnaisuudella tarkoittaen että ännäs testikartta on joka kerta testejä suorittaessa sama.
 
-Testit juostaan eri kartoissa, mutta lähtö ja maalipisteet ovat samat. Syötteiden dataresoluutio on asetettu 50 jottei ne olisi liian raskaita. Tämä tekee testikarttojen kooksi 2500 nodea. Kyseisissä kartoissa on myös käytetty hieman eri octaves ja amplitude muuttujia kuin ohjelmassa muutoin käytetään. Karttoihin käytännössä lisättiin yksi kerron ääntä lisää. Tämä tekee kartoista vaikeampia navigoida, mutta myös ikävämmän näköisiä. Tämän takia testeissä käytetään eri muuttujaa kun ohjelmassa muuten.
+Testit juostaan eri kartoissa, mutta lähtö ja maalipisteet ovat samat. Syötteiden dataresoluutio on asetettu 50 jottei ne olisi liian raskaita. Tämä tekee testikarttojen kooksi 2500 nodea.
 
 Testien kartoja ja oikeita reittijä voi tarkastella suorittamalla seuraavan komennon ja antamalla sen kartan minkä haluaa nähdä.
 ```bash

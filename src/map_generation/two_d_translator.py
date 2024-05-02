@@ -2,7 +2,7 @@ from math import sqrt
 from functions.two_d_heurestic import two_d_heurestics
 
 
-def run_on_node_map(start, goal, node_list, algorithm, heurestic=two_d_heurestics):
+def two_d_translator(start, goal, node_list, algorithm, heurestic=two_d_heurestics):
     '''
     A function that translates .map files to a readable format for the algorithms.
     Then translates the result back to cordinates.
@@ -17,8 +17,8 @@ def run_on_node_map(start, goal, node_list, algorithm, heurestic=two_d_heurestic
     '''
     size = int(sqrt(len(node_list)))
 
-    translated_start = start[0] * size + start[1]
-    translated_goal = goal[0] * size + goal[1]
+    translated_start = start[1] * size + start[0]
+    translated_goal = goal[1] * size + goal[0]
 
     result = algorithm(start=translated_start,
                        goal=translated_goal,

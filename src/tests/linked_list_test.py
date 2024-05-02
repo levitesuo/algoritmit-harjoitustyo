@@ -1,5 +1,5 @@
 import unittest
-from algorithms.objects.doubly_linked_list import LinkedList
+from objects.doubly_linked_list import LinkedList
 
 
 class TestLinkedList(unittest.TestCase):

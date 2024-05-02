@@ -39,6 +39,66 @@ class StartingEngine:
         # Variable for ommitting the drawing of the results.
         self.draw_results = True
 
+    def execute(self):
+        '''
+        Executes and draws the algorithms.
+        '''
+        print(f"RANDOM_SEED: {self.random_seed}")
+        print(f"start: {self.start}\tgoal: {self.goal} ")
+        # z is a  2d array where the values represent the hight
+        data_map = get_shape(data_resolution=self.data_resolution,
+                             shape_func=lambda x, y: layered_noise(
+                                 random_seed=self.random_seed,
+                                 x=x,
+                                 y=y,
+                                 octaves=(1, 5, 10),
+                                 amplitudes=(1, 0.2, 0.05)),
+                             data_range=(-1, 1))
+        plain = draw_plain(data_map)
+        # Running the algorithms, measuring their performance and visualizing them.
+        if self.run_dijkstra:
+            # Dijkstra implemented as a_star with the heuresticfunction always returning 0
+            algorithm_handler(
+                name="Dijkstra",
+                color="green",
+                data_map=data_map,
+                start=self.start,
+                goal=self.goal,
+                algorithm=lambda s, g, m: a_star(
+                    start=s, goal=g, node_list=m,
+                    heurestic_function=lambda x, y, z: 0),
+                figure=plain
+            )
+        if self.run_fringe_search:
+            algorithm_handler(
+                name="Fringe search",
+                color="orange",
+                data_map=data_map,
+                start=self.start,
+                goal=self.goal,
+                algorithm=lambda s, g, m: fringe_search(
+                    start=s, goal=g, node_list=m,
+                    heurestic_function=heurestic_function
+                ),
+                figure=plain,
+                is_fringe=True
+            )
+        if self.run_a_star:
+            algorithm_handler(
+                name="a_ star",
+                color="red",
+                data_map=data_map,
+                start=self.start,
+                goal=self.goal,
+                algorithm=lambda s, g, m: a_star(
+                    start=s, goal=g, node_list=m,
+                    heurestic_function=heurestic_function),
+                figure=plain
+            )
+        if self.draw_results:
+            plain.update_layout(autosize=True, template='plotly_dark')
+            plain.show()
+
     def set_octaves_from_string(self, string):
         '''
         Takes in a string in the format of 10, 22, 44 and sets self.octaves variable to a list [10, 22, 44].
@@ -100,65 +160,6 @@ class StartingEngine:
 
         if not self.amplitudes:
             self.amplitudes = (1, 5, 10)
-
-    def execute(self):
-        '''
-        Executes and draws the algorithms.
-        '''
-        # z is a  2d array where the values represent the hight
-        data_map = get_shape(data_resolution=self.data_resolution,
-                             shape_func=lambda x, y: layered_noise(
-                                 random_seed=self.random_seed,
-                                 x=x,
-                                 y=y,
-                                 octaves=(1, 5, 10),
-                                 amplitudes=(1, 0.2, 0.05)),
-                             data_range=(-1, 1))
-        plain = draw_plain(data_map)
-
-        # Running the algorithms, measuring their performance and visualizing them.
-        if self.run_dijkstra:
-            # Dijkstra implemented as a_star with the heuresticfunction always returning 0
-            algorithm_handler(
-                name="Dijkstra",
-                color="green",
-                data_map=data_map,
-                start=self.start,
-                goal=self.goal,
-                algorithm=lambda s, g, m: a_star(
-                    start=s, goal=g, node_list=m,
-                    heurestic_function=lambda x, y, z: 0),
-                figure=plain
-            )
-        if self.run_fringe_search:
-            algorithm_handler(
-                name="Fringe search",
-                color="orange",
-                data_map=data_map,
-                start=self.start,
-                goal=self.goal,
-                algorithm=lambda s, g, m: fringe_search(
-                    start=s, goal=g, node_list=m,
-                    heurestic_function=heurestic_function
-                ),
-                figure=plain,
-                is_fringe=True
-            )
-        if self.run_a_star:
-            algorithm_handler(
-                name="a_ star",
-                color="red",
-                data_map=data_map,
-                start=self.start,
-                goal=self.goal,
-                algorithm=lambda s, g, m: a_star(
-                    start=s, goal=g, node_list=m,
-                    heurestic_function=heurestic_function),
-                figure=plain
-            )
-        if self.draw_results:
-            plain.update_layout(autosize=True, template='plotly_dark')
-            plain.show()
 
 
 app_engine = StartingEngine()

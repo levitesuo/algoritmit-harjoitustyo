@@ -1,4 +1,4 @@
-from .objects.doubly_linked_list import LinkedList
+from objects.doubly_linked_list import LinkedList
 
 
 def fringe_search(start, goal, node_list, heurestic_function):

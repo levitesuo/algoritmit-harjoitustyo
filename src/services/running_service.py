@@ -1,11 +1,12 @@
 from random import randint, seed
 
 from drawing_functions.draw_plain import draw_plain
+from map_generation.node_list_generator import node_list_generator
 from map_generation.get_shape import get_shape
 from map_generation.shape_functions import layered_noise
-from algorithms.fringe_search import fringe_search
-from algorithms.a_star import a_star
-from algorithms.functions.heurestic_function import heurestic_function
+from functions.fringe_search import fringe_search
+from functions.a_star import a_star
+from functions.heurestic import heurestic
 from services.algorithm_handler import algorithm_handler
 
 
@@ -45,23 +46,29 @@ class StartingEngine:
         '''
         print(f"RANDOM_SEED: {self.random_seed}")
         print(f"start: {self.start}\tgoal: {self.goal} ")
+        print(f"Octaves: {self.octaves}\nAmplitudes: {self.amplitudes}")
+        print("\nResults:")
+
         # z is a  2d array where the values represent the hight
-        data_map = get_shape(data_resolution=self.data_resolution,
-                             shape_func=lambda x, y: layered_noise(
-                                 random_seed=self.random_seed,
-                                 x=x,
-                                 y=y,
-                                 octaves=(1, 5, 10),
-                                 amplitudes=(1, 0.2, 0.05)),
-                             data_range=(-1, 1))
-        plain = draw_plain(data_map)
+        grid = get_shape(data_resolution=self.data_resolution,
+                         shape_func=lambda x, y: layered_noise(
+                             random_seed=self.random_seed,
+                             x=x,
+                             y=y,
+                             octaves=(1, 5, 10),
+                             amplitudes=(1, 0.2, 0.05)),
+                         data_range=(-1, 1))
+        node_list = node_list_generator(grid=grid, use_two_d=False)
+        plain = draw_plain(grid)
+
         # Running the algorithms, measuring their performance and visualizing them.
         if self.run_dijkstra:
             # Dijkstra implemented as a_star with the heuresticfunction always returning 0
             algorithm_handler(
                 name="Dijkstra",
                 color="green",
-                data_map=data_map,
+                grid=grid,
+                node_list=node_list,
                 start=self.start,
                 goal=self.goal,
                 algorithm=lambda s, g, m: a_star(
@@ -73,12 +80,13 @@ class StartingEngine:
             algorithm_handler(
                 name="Fringe search",
                 color="orange",
-                data_map=data_map,
+                grid=grid,
+                node_list=node_list,
                 start=self.start,
                 goal=self.goal,
                 algorithm=lambda s, g, m: fringe_search(
                     start=s, goal=g, node_list=m,
-                    heurestic_function=heurestic_function
+                    heurestic_function=heurestic
                 ),
                 figure=plain,
                 is_fringe=True
@@ -87,12 +95,13 @@ class StartingEngine:
             algorithm_handler(
                 name="a_ star",
                 color="red",
-                data_map=data_map,
+                grid=grid,
+                node_list=node_list,
                 start=self.start,
                 goal=self.goal,
                 algorithm=lambda s, g, m: a_star(
                     start=s, goal=g, node_list=m,
-                    heurestic_function=heurestic_function),
+                    heurestic_function=heurestic),
                 figure=plain
             )
         if self.draw_results:

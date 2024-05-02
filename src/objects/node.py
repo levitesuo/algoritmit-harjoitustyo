@@ -11,6 +11,12 @@ class Node:
 
         self._init_edges(grid, height_mapping_function)
 
+    def reset(self):
+        self.parent = None
+        self.f = float('inf')
+        self.g = float('inf')
+        self.h = 0
+
     def _init_edges(self, grid, height_mapping_function):
         x = self.position[1]
         y = self.position[0]

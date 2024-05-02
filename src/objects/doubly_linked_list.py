@@ -47,8 +47,8 @@ class LinkedList:
         '''
         if self.l[cord] == [None, None]:
             return
-        if self.l[cord][0] is not None:
-            self.l[self.l[cord][0]][1] = self.l[cord][1]
+
+        self.l[self.l[cord][0]][1] = self.l[cord][1]
         if self.l[cord][1] is not None:
             self.l[self.l[cord][1]][0] = self.l[cord][0]
         self.l[cord] = [None, None]
@@ -60,9 +60,11 @@ class LinkedList:
         # Sets i:s previouses next to i:s next
 
         self.l[self.l[self.i][0]][1] = self.l[self.i][1]
-        if self.l[self.i][1] is not None and self.l[self.l[self.i][1]] is not None:
+        if self.l[self.i][1] is not None:
             self.l[self.l[self.i][1]][0] = self.l[self.i][0]
-        self.l[self.i][0] = None
+        old_i = self.i
+        self.i = self.l[self.i][0]
+        self.l[old_i] = [None, None]
 
     def iterate(self):
         '''

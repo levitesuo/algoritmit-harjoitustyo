@@ -1,13 +1,16 @@
-from services.generated_map_translator import generated_map_translator
+from map_generation.translator import translator
 from drawing_functions.draw_path import draw_path
 from drawing_functions.draw_point_map import draw_pointmap
 
 
-def algorithm_handler(name, color, data_map, start, goal, algorithm, figure, is_fringe=False):
+def algorithm_handler(name, color, grid, node_list, start, goal, algorithm, figure, is_fringe=False):
     '''
     Handels the drawing running and time measurements for a algorithm.
     '''
-    result = generated_map_translator(start, goal, data_map, algorithm)
+    result = translator(start, goal, node_list, algorithm)
+
+    for node in node_list:
+        node.reset()
 
     # Fringe searches visited cells are stored in a different format. the loop below transforms them.
     if is_fringe:
@@ -22,10 +25,15 @@ def algorithm_handler(name, color, data_map, start, goal, algorithm, figure, is_
     print(
         f"{name + ' ' * (20 - len(name))} time: {result['time']}\t cost: {result['cost']}")
 
-    draw_path(name, result['path'], data_map, color, figure)
+    draw_path(name=name,
+              path=result['path'],
+              grid=grid,
+              color=color,
+              figure=figure
+              )
     draw_pointmap(name=name + " visited",
                   pointmap=result['closed'],
-                  grid=data_map,
+                  grid=grid,
                   colorscale='Bluered_r',
                   figure=figure,
                   start=result['path'][-1],

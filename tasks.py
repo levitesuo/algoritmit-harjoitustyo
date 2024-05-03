@@ -13,7 +13,7 @@ def showmap(ctx):
 
 @task
 def coverage(ctx):
-    ctx.run("coverage run --branch -m pytest", pty=True)
+    ctx.run("coverage run --branch -m pytest -s", pty=True)
 
 
 @task(coverage)

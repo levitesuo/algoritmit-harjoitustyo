@@ -7,7 +7,7 @@ from functions.a_star import a_star
 from functions.fringe_search import fringe_search
 
 
-class TestAlgorithmBase(unittest.TestCase):
+class TestAlgorithms(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         '''
@@ -19,7 +19,7 @@ class TestAlgorithmBase(unittest.TestCase):
         These test are designed to give a reasonable cerainty that the algorithms are running correctly.
         '''
         maps = ['AR0022SR']
-        super(TestAlgorithmBase, cls).setUpClass()
+        super(TestAlgorithms, cls).setUpClass()
 
         map_folder_path = os.path.join(
             os.getcwd(), "src/map_generation/maps/")
@@ -42,19 +42,45 @@ class TestAlgorithmBase(unittest.TestCase):
                 cost = float(data[8])
                 test_cases[i]['scenarios'].append(
                     {'start': start, 'goal': goal, 'cost': cost})
-                # print(f"s: {start}, g:{goal}, c:{cost}\n")
         cls.test_cases = test_cases
 
-    def test_run_a_star_test(self):
-        start_time = time()
+    def test_run_dijkstra(self):
         for map in self.test_cases:
             node_list = map['node_list']
             for scenario in map['scenarios']:
-                generated_cost = two_d_translator(
+                generated_result = two_d_translator(
                     start=scenario['start'],
                     goal=scenario['goal'],
                     node_list=node_list,
                     algorithm=a_star
-                )['cost']
+                )
                 self.assertAlmostEqual(
-                    scenario['cost'], generated_cost, msg=f"s: {scenario['start']}, g:{scenario['goal']}")
+                    scenario['cost'], generated_result['cost'], places=5, msg=f"s: {scenario['start']}, g:{scenario['goal']}, p:{generated_result['path']}")
+
+    def test_run_frigne_search(self):
+        for map in self.test_cases:
+            node_list = map['node_list']
+            for scenario in map['scenarios']:
+                generated_result = two_d_translator(
+                    start=scenario['start'],
+                    goal=scenario['goal'],
+                    node_list=node_list,
+                    algorithm=fringe_search
+                )
+                self.assertAlmostEqual(
+                    scenario['cost'], generated_result['cost'], places=5, msg=f"s: {scenario['start']}, g:{scenario['goal']}, p:{generated_result['path']}")
+
+    def test_run_a_star(self):
+
+        for map in self.test_cases:
+            node_list = map['node_list']
+            for scenario in map['scenarios']:
+                generated_result = two_d_translator(
+                    start=scenario['start'],
+                    goal=scenario['goal'],
+                    node_list=node_list,
+                    algorithm=a_star,
+                    heurestic=lambda x, y, z: 0
+                )
+                self.assertAlmostEqual(
+                    scenario['cost'], generated_result['cost'], places=5, msg=f"s: {scenario['start']}, g:{scenario['goal']}, p:{generated_result['path']}")

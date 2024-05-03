@@ -17,25 +17,33 @@ Doubly linked listin testisyötteet ovat yksiselitteisiä. Sen toiminta on selit
 ### Moving ai labs testis
 [algorithm_base_test.py](https://github.com/levitesuo/algoritmit-harjoitusty-/blob/main/src/tests/algorithm_base_test.py)
 
-Tässä tiedostossa testataan kaikki kolme algoritmia movingai kartassa [AR0022SR](https://movingai.com/benchmarks/bgmaps/AR0022SR.png). Luokkaan on ohjelmoitu valmiiksi 150 eri syötettä jota voidaan kaikkia tarvittaessa testata. Kartan koko on 64x64 eli nodeja on 4096
+Tässä tiedostossa testataan kaikki kolme algoritmia movingai [kartoissa](https://movingai.com/benchmarks/bgmaps/index.html). Projektin map_generation kansiosta voi valita haluamansa kartat ja suorittaa niiden kaikki .scen tiedostossa mainitut syötteet. Tämän kanssa kuitenkin kannattaa olla varovainen sillä joidenkin karttojen syötteiden suorittamisessa saattaa mennä ikä sekä terveys.
 
-Muuttuja num_of_test_cases hallitsee kuinka monta näistä syötteistä käytetään.
-150 testi juokseminen vie paljon aikaa. Täten sitä kannattaa vähän rajoittaa.
 
-Näiden testejen tarkoitus on varmistua algoritmejen oikeellisuudesta, jotta voimme käyttää myöhemmin käyttää dijkstra algoritmia toteamaan fringe_searchin ja a_starin oikeellisuus ns. tarkoitetussa ympäristössä.
+Näiden testejen tarkoitus on varmistua algoritmejen oikeellisuudesta, jotta voimme käyttää myöhemmin dijkstra algoritmia toteamaan fringe_searchin ja a_starin oikeellisuus ns. tarkoitetussa ympäristössä.
 
-### Itse generoitujen karttojen testis
+### Itse generoitujen karttojen suorituskykytestaus
 [algorithm_advanced_test.py](https://github.com/levitesuo/algoritmit-harjoitusty-/blob/main/src/tests/algorithm_advanced_test.py)
 
-Tässä tiedostossa testataan fringe_search sekä a_star algoritmejä itse generoiduissa kartoissa. Näit tulee samalla testattua koko ohjelman toiminnallisuus. a_starin ja fringe searchin syötteitä vertaillaan dijkstran syötteisiin samassa ympäristössä.
+Tässä tiedostossa testataan fringe_search sekä a_star algoritmejä itse generoiduissa kartoissa. Näin tulee samalla testattua koko ohjelman toiminnallisuus. a_starin ja fringe searchin syötteitä vertaillaan dijkstran syötteisiin.
 
-Luokasta löytyy tuttuun tapaa num_of_test_cases muuttuja jolla voi vaikutaa testien määrään. Samaan tapaan kuin äskön. Tämä on olemassa jotta testien suorittamiseen käytettyyn aikaan voi vaikuttaa. Tämän muuttujan voi kuitenkin halutessaan asettaa mielivaltaisen suureksi.
+Luokasta löytyy 3 muuttujaa jolla voi vaikuttaa testien vaativuuteen.
+- num_of_maps
+- num_of_runs_per_map
+- data_resolution
 
-Kartat luodaan siemennetyllä satunnaisuudella tarkoittaen että ännäs testikartta on joka kerta testejä suorittaessa sama.
+Muuttujat ovat mielestni yksiselitteisiä. 
 
-Testit juostaan eri kartoissa, mutta lähtö ja maalipisteet ovat samat. Syötteiden dataresoluutio on asetettu 50 jottei ne olisi liian raskaita. Tämä tekee testikarttojen kooksi 2500 nodea.
+Jokaiselle ns. runille (jonka määrän voi asettaa num_of_runs_per_map muuttujalla) arvotaan seeden varainen aloitus ja lopetus paikka. Tällä voidaan varmistaa että syötteet ovat eriäviä.
 
-Testien kartoja ja oikeita reittijä voi tarkastella suorittamalla seuraavan komennon ja antamalla sen kartan minkä haluaa nähdä.
-```bash
-poetry run invoke showmap
-```
+Joka ikisen algoritmin suorituksen oikeutta arvioidaan vertaamalla parhaan reitin pituutta dijkstarin antamaan parhaan reitin pituuten. Algoritmeijen juoksuaikaa myös lasketaan, jonka avulla suoritetaan suorituskykytestausta.
+
+Kuten aloitus ja lopetus kohdat kartat on luotu siemennetyllä satunnaisuudella jotta ensimmäiset n karttaa ovat aina samat.
+
+### Huomio
+
+Lähtökohtaisesti fringe search on marginaalisesti hitaampi kuin a_star. Sen takia sen suoritusta a_starin ei verrata testeissä automaattisesti. Testejä juoksiessa huomasin kuitenkin että tietyllä data_resoluutiolla on yleistä (ainakin pöytäkoneellani) että fringe search on hiukan nopeampi kuin a_star. Tässä vielä relevantit muuttujat tilanteeseen jonka dokumentoin [näytönkaappauksella]()
+- num_of_maps = 10
+- num_of_runs_per_map = 50
+- data_resolution = 50
+- seed = 10

@@ -38,9 +38,5 @@ class TwoDNode:
             deg_x = d[i-1][0] + self.position[0]
             deg_y = d[i-1][1] + self.position[1]
             if 0 <= dia_x < len(grid) and 0 <= dia_y < len(grid) and grid[new_y][new_x] == "." and grid[deg_y][deg_x] == "." and grid[dia_y][dia_x] == ".":
-                self.edges.append((1.41421356237, dia_x * len(grid) + dia_y))
+                self.edges.append((1.41421356, dia_x * len(grid) + dia_y))
                 g[dia_y][dia_x] = "D"
-        if self.position[0] == 43 and 24 <= self.position[1] < 31:
-            for i in range(5):
-                print(g[self.position[1]-i+3][41:46])
-            print("_---------------------------------_")

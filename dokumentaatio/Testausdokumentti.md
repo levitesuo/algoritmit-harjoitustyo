@@ -42,8 +42,17 @@ Kuten aloitus ja lopetus kohdat kartat on luotu siemennetyllä satunnaisuudella 
 
 ### Huomio
 
-Lähtökohtaisesti fringe search on marginaalisesti hitaampi kuin a_star. Sen takia sen suoritusta a_starin ei verrata testeissä automaattisesti. Testejä juoksiessa huomasin kuitenkin että tietyllä data_resoluutiolla on yleistä (ainakin pöytäkoneellani) että fringe search on hiukan nopeampi kuin a_star. Tässä vielä relevantit muuttujat tilanteeseen jonka dokumentoin [näytönkaappauksella]()
+Lähtökohtaisesti fringe search on marginaalisesti hitaampi kuin a_star. Sen takia sen suoritusta a_starin ei verrata testeissä automaattisesti. Testejä juoksiessa huomasin kuitenkin että tietyllä data_resoluutiolla on yleistä (ainakin pöytäkoneellani) että fringe search on hiukan nopeampi kuin a_star. Tässä vielä relevantit muuttujat tilanteeseen jonka dokumentoin [näytönkaappauksella](https://github.com/levitesuo/algoritmit-harjoitusty-/blob/main/dokumentaatio/kuvat/Screenshot%20from%202024-05-03%2000-20-11.png)
+
+#### Variables
+
 - num_of_maps = 10
 - num_of_runs_per_map = 50
 - data_resolution = 50
 - seed = 10
+
+#### Results
+
+- fringe_search_time = 32.97014403343201
+- a_star_time =  34.6319019797944641
+- dijkstra_time = 46.915706396102905

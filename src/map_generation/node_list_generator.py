@@ -6,6 +6,13 @@ from objects.two_d_node import TwoDNode
 def node_list_generator(grid, use_two_d):
     '''
     A function for converting a grid or map to node list.
+
+    Arguments:
+        grid (array): Data to be converted
+        use_two_d (bool): if the data is 2d
+
+    Returns:
+        node_list (list): a list of node objects.
     '''
     nodes = []
     if use_two_d:

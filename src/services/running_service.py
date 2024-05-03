@@ -55,8 +55,8 @@ class StartingEngine:
                              random_seed=self.random_seed,
                              x=x,
                              y=y,
-                             octaves=(1, 5, 10),
-                             amplitudes=(1, 0.2, 0.05)),
+                             octaves=self.octaves,
+                             amplitudes=self.amplitudes),
                          data_range=(-1, 1))
         node_list = node_list_generator(grid=grid, use_two_d=False)
         plain = draw_plain(grid)

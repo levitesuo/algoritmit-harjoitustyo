@@ -5,7 +5,7 @@ from drawing_functions.draw_point_map import draw_pointmap
 
 def algorithm_handler(name, color, grid, node_list, start, goal, algorithm, figure, is_fringe=False):
     '''
-    Handels the drawing running and time measurements for a algorithm.
+    Handels the drawing, running and time measurements for a algorithm.
     '''
     result = translator(start, goal, node_list, algorithm)
 

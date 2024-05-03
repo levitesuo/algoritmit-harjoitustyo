@@ -6,17 +6,17 @@
 
 
 ### Edistys
-Edistys on ollut hyvään. Alkaa näyttää musta aika valmiilta.
+Edistys on ollut hyvään.
 
 ### Opin
-Olen tällä viikolla alkanut käyttää enemmän lambda funktiota ja funktioita funktioiden argumentteina.
+
 
 ### Vaikeudet
-Järkevän testauksen keksinnässä meni hetki. 
+
 
 ### Seuraavaksi
 Testien kirjoittamista
 Dokumentaation kirjoittamista
 
 
-Työtunteja n. 9
+Työtunteja n. 22

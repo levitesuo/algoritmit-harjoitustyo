@@ -126,8 +126,8 @@ sequenceDiagram title Algoritmin suoritus generated map suorituskyky testeissä.
   node_list_generator->>Tester:node_list
   Tester->>translator:two_d_translator(start, goal, node_list, arg)
   translator->>translator:translates start and goal
-  translator->>algoritm:algorithm(args)
-  algoritm->>translator:results
+  translator->>algorithm:algorithm(args)
+  algorithm->>translator:results
   translator->>translator:translates path, measures time
   translator->>Tester:results
 ```
@@ -142,7 +142,7 @@ sequenceDiagram title Algoritmin suoritus movingai validointi testeissä.
   node_list_generator->>Tester:node_list
   Tester->>two_d_translator:two_d_translator(start, goal, node_list, arg)
   two_d_translator->>two_d_translator:translates start and goal
-  two_d_translator->>algoritm:algorithm(args)
-  algoritm->>two_d_translator:results
+  two_d_translator->>algorithm:algorithm(args)
+  algorithm->>two_d_translator:results
   two_d_translator->>Tester:results
 ```

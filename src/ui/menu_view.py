@@ -48,7 +48,7 @@ class MenuView:
                                  )
         notice_lable.pack(anchor='w')
         notice_lable = ttk.Label(master=self._frame,
-                                 text="Amplitudes and octaves are lists of floats and ints respectively seperated by commas.", foreground='blue'
+                                 text="Amplitudes and octaves are lists of floats seperated by commas.", foreground='blue'
                                  )
 
         notice_lable.pack(anchor='w')
@@ -66,7 +66,7 @@ class MenuView:
             "Amplitudes", "1, 0.2, 0.05")
 
         self._run_dijkstra_box = self._draw_check_box("run dijkstra")
-        self._run_a_star_box = self._draw_check_box("run = a_star")
+        self._run_a_star_box = self._draw_check_box("run a_star")
         self._run_fringe_search_box = self._draw_check_box("run fringe_search")
         self._draw_results = self._draw_check_box("run draw_results")
 

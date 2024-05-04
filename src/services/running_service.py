@@ -114,7 +114,7 @@ class StartingEngine:
         NOTE: len(self.amplitudes) must be equal to len(self.octaves). If the lengths differ remaning numbers will be generated.
         '''
         data = string.split(",")
-        self.octaves = [int(num) for num in data]
+        self.octaves = [float(num) for num in data]
 
     def set_amplitudes_from_string(self, string):
         '''
@@ -149,26 +149,6 @@ class StartingEngine:
         if not self.goal:
             self.goal = (randint(self.data_resolution//2,
                                  self.data_resolution-1), self.data_resolution-10)
-
-        self._init_amplitudes_octaves()
-
-    def _init_amplitudes_octaves(self):
-        '''There must be the same amount of octaves and amplitudes. We make sure thats the case here.'''
-        if len(self.octaves) != len(self.amplitudes):
-            self.amplitudes = [value for value in self.amplitudes]
-            self.octaves = [value for value in self.octaves]
-
-            for i in range(len(self.octaves) - len(self.amplitudes)):
-                self.octaves.append(1//self.amplitudes[-(1+i)])
-
-            for i in range(len(self.amplitudes) - len(self.octaves)):
-                self.amplitudes.append(1/self.octaves[-(1+i)])
-
-        if not self.octaves:
-            self.octaves = (1, 5, 10)
-
-        if not self.amplitudes:
-            self.amplitudes = (1, 5, 10)
 
 
 app_engine = StartingEngine()

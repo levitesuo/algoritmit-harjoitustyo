@@ -21,7 +21,7 @@ def translator(start, goal, node_list, algorithm, ignore_path=False):
     translated_goal = goal[1] * size + goal[0]
 
     start_time = time()
-    result = algorithm(translated_goal, translated_start, node_list)
+    result = algorithm(translated_start, translated_goal, node_list)
     end_time = time()
     if not ignore_path:
         translated_path = []

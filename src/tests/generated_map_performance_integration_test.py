@@ -48,7 +48,8 @@ class TestAlgorithmAdvanced(unittest.TestCase):
                                       goal=g,
                                       node_list=m,
                                       heurestic_function=lambda x, y, z: 0
-                                  ))['cost']
+                                  ),
+                                  ignore_path=True)['cost']
                 scenarios.append({'start': start, 'goal': goal, 'cost': cost})
                 cls.test_cases[i]['scenarios'] += scenarios
 

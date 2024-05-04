@@ -22,21 +22,21 @@ Tässä tiedostossa testataan kaikki kolme algoritmia movingai [kartoissa](https
 
 Näiden testejen tarkoitus on varmistua algoritmejen oikeellisuudesta, jotta voimme käyttää myöhemmin dijkstra algoritmia toteamaan fringe_searchin ja a_starin oikeellisuus ns. tarkoitetussa ympäristössä.
 
-### Itse generoitujen karttojen suorituskykytestaus
+### Itse generoiduilla kartoilla testaus.
 [algorithm_advanced_test.py](https://github.com/levitesuo/algoritmit-harjoitusty-/blob/main/src/tests/algorithm_advanced_test.py)
 
-Tässä tiedostossa testataan fringe_search sekä a_star algoritmejä itse generoiduissa kartoissa. Näin tulee samalla testattua koko ohjelman toiminnallisuus. a_starin ja fringe searchin syötteitä vertaillaan dijkstran syötteisiin.
+Tässä tiedostossa testataan fringe_search sekä a_star algoritmejä itse generoiduissa kartoissa. Näin suoritetaan samalla intergaatio seikä suorituskyky testausta. a_starin ja fringe searchin syötteitä vertaillaan dijkstran syötteisiin. Dijkstran syöteiden oikeellisuudesta voidaan olla varmoja muiden testejen perusteella.
 
 Luokasta löytyy 3 muuttujaa jolla voi vaikuttaa testien vaativuuteen.
 - num_of_maps
 - num_of_runs_per_map
 - data_resolution
 
-Muuttujat ovat mielestni yksiselitteisiä. 
+Muuttujat ovat mielestäni yksiselitteisiä. 
 
-Jokaiselle ns. runille (jonka määrän voi asettaa num_of_runs_per_map muuttujalla) arvotaan seeden varainen aloitus ja lopetus paikka. Tällä voidaan varmistaa että syötteet ovat eriäviä.
+Jokaiselle ns. runille (jonka määrän voi asettaa num_of_runs_per_map muuttujalla) arvotaan random seeden varainen aloitus ja lopetus paikka. Tällä voidaan varmistaa että syötteet ovat eriäviä ja tuotettavia uudestaan.
 
-Joka ikisen algoritmin suorituksen oikeutta arvioidaan vertaamalla parhaan reitin pituutta dijkstarin antamaan parhaan reitin pituuten. Algoritmeijen juoksuaikaa myös lasketaan, jonka avulla suoritetaan suorituskykytestausta.
+Joka ikisen algoritmin suorituksen oikeutta arvioidaan vertaamalla parhaan reitin pituutta dijkstarin antamaan parhaan reitin pituuten. Tämän avulla tehdään integraatio testausta. Algoritmeijen juoksuaikaa myös lasketaan, jonka avulla suoritetaan suorituskykytestausta.
 
 Kuten aloitus ja lopetus kohdat kartat on luotu siemennetyllä satunnaisuudella jotta ensimmäiset n karttaa ovat aina samat.
 

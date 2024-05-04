@@ -122,9 +122,9 @@ sequenceDiagram title Algoritmin suoritus generated map suorituskyky testeissä.
   participant node_list_generator
   participant translator
   participant algorithm
-  Tester->>node_list_generator:node_list_generator((filepath.map).read(), True)
+  Tester->>node_list_generator:node_list_generator(layered_noise(args), False)
   node_list_generator->>Tester:node_list
-  Tester->>translator:two_d_translator(start, goal, node_list, arg)
+  Tester->>translator:translator(start, goal, node_list, arg)
   translator->>translator:translates start and goal
   translator->>algorithm:algorithm(args)
   algorithm->>translator:results

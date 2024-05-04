@@ -12,8 +12,19 @@ def showmap(ctx):
 
 
 @task
+def test_skip_p(ctx):
+    ctx.run("coverage run --branch -m pytest -k 'not performance'")
+
+
+@task
+def performance(ctx):
+    ctx.run(
+        "coverage run --branch -m pytest -s src/tests/performance_test.py")
+
+
+@task
 def coverage(ctx):
-    ctx.run("coverage run --branch -m pytest -s", pty=True)
+    ctx.run("coverage run --branch -m pytest", pty=True)
 
 
 @task(coverage)

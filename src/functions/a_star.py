@@ -1,5 +1,4 @@
 from heapq import heappop, heappush
-from math import sqrt
 
 
 def find_path(node_list, goal):

@@ -1,7 +1,7 @@
 import unittest
 from random import seed, randint
 from math import sqrt
-from timeit import timeit
+from time import time
 
 from map_generation.shape_functions import layered_noise
 from map_generation.get_shape import get_shape
@@ -15,13 +15,11 @@ class TestAlgorithmAdvanced(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         num_of_maps = 5
-        num_of_runs_per_map = 5
+        num_of_runs_per_map = 10
         data_resolution = 50
 
         super(TestAlgorithmAdvanced, cls).setUpClass()
         seed(10)
-
-        cls.num_of_runs_per_scenario = 2
 
         cls.test_cases = []
         for i in range(num_of_maps):
@@ -54,17 +52,35 @@ class TestAlgorithmAdvanced(unittest.TestCase):
         djikstra_time = 0
         fringe_search_time = 0
         a_star_time = 0
-        for i, map_cases in enumerate(self.test_cases):
+        for map_cases in self.test_cases:
             node_list = map_cases['node_list']
-            size = int(sqrt(len(node_list)))
             for scenario in map_cases['scenarios']:
+                a = time()
+                djikstra_results = a_star(
+                    scenario['start'], scenario['goal'], node_list, lambda x, y, z: 0)
+                b = time()
+                for node in node_list:
+                    node.reset()
+                c = time()
+                a_star_results = a_star(
+                    scenario['start'], scenario['goal'], node_list, heurestic)
+                d = time()
+                for node in node_list:
+                    node.reset()
+                e = time()
+                fringe_search_results = fringe_search(scenario['start'],
+                                                      scenario['goal'], node_list, heurestic)
+                f = time()
+                for node in node_list:
+                    node.reset()
+                djikstra_time += b - a
+                a_star_time += d - c
+                fringe_search_time += f - e
 
-                djikstra_time += timeit(lambda: a_star(scenario['start'],
-                                        scenario['goal'], node_list, lambda x, y, z: 0), number=self.num_of_runs_per_scenario)
-                a_star_time += timeit(lambda: a_star(scenario['start'],
-                                                     scenario['goal'], node_list, heurestic), number=self.num_of_runs_per_scenario)
-                fringe_search_time += timeit(lambda: fringe_search(scenario['start'],
-                                                                   scenario['goal'], node_list, heurestic), number=self.num_of_runs_per_scenario)
+                self.assertAlmostEqual(
+                    djikstra_results['cost'], a_star_results['cost'])
+                self.assertAlmostEqual(
+                    djikstra_results['cost'], fringe_search_results['cost'])
         print(
             f"\tfringe_search_time: {fringe_search_time}\ta_star_time: {a_star_time}\tdijkstra_time: {djikstra_time}")
 

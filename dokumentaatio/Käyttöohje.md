@@ -65,3 +65,26 @@ $ poetry run invoke start
 | Formaatti 	| Päällä tai pois 	|
 | Kuvaus 	| Määräävät tehdäänkö jotain. 	|
 | Oletusarvo 	| Päällä 	|
+
+
+### Testien suorittamis komentoja
+
+Suorittaa testit mutta ohittaa performance testauksen.
+```bash
+$ poetry run invoke test-skip-p
+```
+
+Suorittaa vain performance testin ja printtaa ajan konsoliin.
+```bash
+$ poetry run invoke performance
+```
+
+Suorittaa kaikki testit käyttäen coveragea.
+```bash
+$ poetry run invoke coverage
+```
+
+Suorittaa kaikki testit coveragella ja luo coverage raportin.
+```bash
+$ poetry run invoke coverage-report
+```

@@ -1,5 +1,6 @@
-from time import time
+import time
 from math import sqrt
+from timeit import timeit
 
 
 def translator(start, goal, node_list, algorithm, ignore_path=False):
@@ -20,16 +21,16 @@ def translator(start, goal, node_list, algorithm, ignore_path=False):
     translated_start = start[1] * size + start[0]
     translated_goal = goal[1] * size + goal[0]
 
-    start_time = time()
+    start_time = time.time()
     result = algorithm(translated_start, translated_goal, node_list)
-    end_time = time()
+    end_time = time.time()
     if not ignore_path:
         translated_path = []
         for node in result['path']:
             translated_path.append((node % size, node // size))
 
         result['path'] = translated_path
-        result['time'] = end_time - start_time
+    result['time'] = end_time - start_time
 
     for node in node_list:
         node.reset()

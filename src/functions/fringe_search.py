@@ -1,4 +1,5 @@
 from objects.doubly_linked_list import LinkedList
+from time import time
 
 
 def fringe_search(start, goal, node_list, heurestic_function):

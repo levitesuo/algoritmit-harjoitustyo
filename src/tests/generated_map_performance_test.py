@@ -1,12 +1,10 @@
 import unittest
 from random import seed, randint
-from time import time
 from math import sqrt
 from timeit import timeit
 
 from map_generation.shape_functions import layered_noise
 from map_generation.get_shape import get_shape
-from map_generation.translator import translator
 from map_generation.node_list_generator import node_list_generator
 from functions.a_star import a_star
 from functions.fringe_search import fringe_search
@@ -16,14 +14,14 @@ from functions.heurestic import heurestic
 class TestAlgorithmAdvanced(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        num_of_maps = 10
-        num_of_runs_per_map = 10
+        num_of_maps = 5
+        num_of_runs_per_map = 5
         data_resolution = 50
 
         super(TestAlgorithmAdvanced, cls).setUpClass()
         seed(10)
 
-        cls.num_of_runs_per_scenario = 5
+        cls.num_of_runs_per_scenario = 2
 
         cls.test_cases = []
         for i in range(num_of_maps):

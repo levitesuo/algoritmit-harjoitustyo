@@ -79,5 +79,5 @@ class TestAlgorithmDot3(unittest.TestCase):
         result = fringe_search(5, 3, self.map, two_d_heurestics)
         correct_cache = [(3, 1), (2, 2), (1, 5),
                          (4, 0), False, (0, None),
-                         False, (2, 8), (1, 5)]
+                         (3, 7), (2, 8), (1, 5)]
         self.assertEqual(correct_cache, result['cache'])

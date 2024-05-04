@@ -3,14 +3,14 @@ from random import randint, seed
 from drawing_functions.draw_plain import draw_plain
 from map_generation.node_list_generator import node_list_generator
 from map_generation.get_shape import get_shape
-from map_generation.shape_functions import layered_noise
+from map_generation.shape_functions import *
 from functions.fringe_search import fringe_search
 from functions.a_star import a_star
 from functions.heurestic import heurestic
 from services.algorithm_handler import algorithm_handler
 
 
-class StartingEngine:
+class AppEngine:
     '''
     Class for setting the neccessary variables for the execution of algorithms.
     '''
@@ -47,7 +47,7 @@ class StartingEngine:
         print(f"RANDOM_SEED: {self.random_seed}")
         print(f"start: {self.start}\tgoal: {self.goal} ")
         print(f"Octaves: {self.octaves}\nAmplitudes: {self.amplitudes}")
-        print("\nResults:")
+        print("\nResults:\n")
 
         # z is a  2d array where the values represent the hight
         grid = get_shape(data_resolution=self.data_resolution,
@@ -61,10 +61,12 @@ class StartingEngine:
         node_list = node_list_generator(grid=grid, use_two_d=False)
         plain = draw_plain(grid)
 
+        results = {}
+
         # Running the algorithms, measuring their performance and visualizing them.
         if self.run_dijkstra:
             # Dijkstra implemented as a_star with the heuresticfunction always returning 0
-            algorithm_handler(
+            results['dijkstra'] = algorithm_handler(
                 name="Dijkstra",
                 color="green",
                 grid=grid,
@@ -77,7 +79,7 @@ class StartingEngine:
                 figure=plain
             )
         if self.run_fringe_search:
-            algorithm_handler(
+            results['fringe_search'] = algorithm_handler(
                 name="Fringe search",
                 color="orange",
                 grid=grid,
@@ -92,7 +94,7 @@ class StartingEngine:
                 is_fringe=True
             )
         if self.run_a_star:
-            algorithm_handler(
+            results['a_star'] = algorithm_handler(
                 name="a_ star",
                 color="red",
                 grid=grid,
@@ -107,6 +109,7 @@ class StartingEngine:
         if self.draw_results:
             plain.update_layout(autosize=True, template='plotly_dark')
             plain.show()
+        return results
 
     def set_octaves_from_string(self, string):
         '''
@@ -126,11 +129,11 @@ class StartingEngine:
 
     def set_start_from_string(self, string):
         data = string.split(",")
-        self.start = (int(num) for num in data)
+        self.start = tuple(int(num) for num in data)
 
     def set_goal_from_string(self, string):
         data = string.split(",")
-        self.goal = (int(num) for num in data)
+        self.goal = tuple(int(num) for num in data)
 
     def init_empty_values(self):
         '''
@@ -150,5 +153,12 @@ class StartingEngine:
             self.goal = (randint(self.data_resolution//2,
                                  self.data_resolution-1), self.data_resolution-10)
 
+    def get_values(self):
+        values = {'data_resolution': self.data_resolution,
+                  'random_seed': self.random_seed,
+                  'start': self.start,
+                  'goal': self.goal}
+        return values
 
-app_engine = StartingEngine()
+
+app_engine = AppEngine()

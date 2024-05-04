@@ -39,3 +39,4 @@ def algorithm_handler(name, color, grid, node_list, start, goal, algorithm, figu
                   start=result['path'][-1],
                   goal=result['path'][0]
                   )
+    return result

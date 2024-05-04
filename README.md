@@ -2,9 +2,6 @@
 ### Esittely
 Algoritmien hajoitustyö jossa käytetään A*, dijkstra sekä fringe search algoritmeja löytämään "Vähiten energiaa vaativa reitti mäkisessä ympäristössä. Karttoja luodaan satunnaisesti käyttäen perlin noisea.
 
-### Huomautus
-Tällä hetkellä keskisuuri refaktorointi kesken. Kaikki testin on rikki. Korjaan ne seuraavaksi. ( Myös vähäinen dokumentaatio hieman out of date)
-
 ### Asennus
 
 ```bash
@@ -13,3 +10,5 @@ $ cd algoritmit-harjoitusty-/
 $ poetry install
 $ poetry run invoke start
 ```
+
+Selitykset kaikille muuttujille, jota voi säätää käyttöliittymästä löytyy [Käyttöohjeesta](https://github.com/levitesuo/algoritmit-harjoitusty-/blob/main/dokumentaatio/K%C3%A4ytt%C3%B6ohje.md).

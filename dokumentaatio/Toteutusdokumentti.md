@@ -116,33 +116,19 @@ sequenceDiagram title Algoritmin suoritus UI:n kautta 3d kartassa
 
 Ylläoleva taulukko on tarkoitettu antamaan lukija yleiskuva miten algoritmin suoritus toimii UI:n kautta 3d kartassa. Siitä puuttuu  hieman  nuanssia.
 
-```mermaid
-sequenceDiagram title Algoritmin suoritus generated map suorituskyky testeissä.
-  actor Tester
-  participant node_list_generator
-  participant translator
-  participant algorithm
-  Tester->>node_list_generator:node_list_generator(layered_noise(args), False)
-  node_list_generator->>Tester:node_list
-  Tester->>translator:translator(start, goal, node_list, arg)
-  translator->>translator:translates start and goal
-  translator->>algorithm:algorithm(args)
-  algorithm->>translator:results
-  translator->>translator:translates path, measures time
-  translator->>Tester:results
-```
+## Aikavaatimukset
 
-```mermaid
-sequenceDiagram title Algoritmin suoritus movingai validointi testeissä.
-  actor Tester
-  participant node_list_generator
-  participant two_d_translator
-  participant algorithm
-  Tester->>node_list_generator:node_list_generator((filepath.map).read(), True)
-  node_list_generator->>Tester:node_list
-  Tester->>two_d_translator:two_d_translator(start, goal, node_list, arg)
-  two_d_translator->>two_d_translator:translates start and goal
-  two_d_translator->>algorithm:algorithm(args)
-  algorithm->>two_d_translator:results
-  two_d_translator->>Tester:results
-```
+**A starin** aikavaatimus on huonoimmassa tapauksessa $$O\left(b^d\right)$$ missä d on lyhin reitti ja b on noden lapsien keskiarvoinen määrä.
+
+**Dijkstran** aikavaatimus on tässä tapauksessa 
+$$O\left(V+E\log V\right)$$
+
+**Fringe searchin** aikavaatimuksesta oli hanka löytää resursseja. Kotikeittonen fringe search on noin 7.5 kertaa hitaampi kuin a star, mutta [kirjallisuuden](https://webdocs.cs.ualberta.ca/~holte/Publications/fringe.pdf) mukaan sen pitäisi olla noin 25 % - 40 % nopeampi.
+
+Lähteet:
+
+A star [wikipedia](https://en.wikipedia.org/wiki/A*_search_algorithm)
+
+Dijkstra [hackerearth](https://www.hackerearth.com/practice/algorithms/graphs/shortest-path-algorithms/tutorial/#:~:text=Time%20Complexity%20of%20Dijkstra's%20Algorithm,E%20l%20o%20g%20V%20)
+
+Fringe search [University of Alberta](https://webdocs.cs.ualberta.ca/~holte/Publications/fringe.pdf)

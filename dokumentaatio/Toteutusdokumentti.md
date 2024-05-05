@@ -81,7 +81,7 @@ Projektissa on toteutettu 3 eri reitinetsintä algoritmia. Pääpainona on onnlu
 
   - holds 3 functions responsible for the visuals
 
-## Erilaisia tapoja suorittaa algoritmi
+## Algoritmejen suoritus
 
 ```mermaid
 sequenceDiagram title Algoritmin suoritus UI:n kautta 3d kartassa

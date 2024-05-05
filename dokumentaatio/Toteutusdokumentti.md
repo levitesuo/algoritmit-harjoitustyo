@@ -125,6 +125,15 @@ $$O\left(V+E\log V\right)$$
 
 **Fringe searchin** aikavaatimuksesta oli hanka löytää resursseja. Kotikeittonen fringe search on noin 7.5 kertaa hitaampi kuin a star, mutta [kirjallisuuden](https://webdocs.cs.ualberta.ca/~holte/Publications/fringe.pdf) mukaan sen pitäisi olla noin 25 % - 40 % nopeampi.
 
+
+## Selvitys kielimallien käytöstä
+
+Käytin muutamassa kohdassa kielimalleja ratkaisemaan jonkun tietyn bugin. Muuten en ole käyttänyt kielimalleja.
+
+## Parannusehdotuksia
+
+On selkeää että koko projekti pitäisi kirjoittaa sille sopivammalla / nopeammalla keilellä esim. c++. Sen lisäksi koordinaatisto systeemi pitäisi rakentaa eri tavalla, jotta saataisiin parhaat mahdolliset tulokse. Tätä voi kompensoida genroimalla isompia karttoja, mutta parhaat tulokset saataisiin jos koordinaatit rakennettaisiin korkeuskäyrille. 
+
 Lähteet:
 
 A star [wikipedia](https://en.wikipedia.org/wiki/A*_search_algorithm)
@@ -132,3 +141,5 @@ A star [wikipedia](https://en.wikipedia.org/wiki/A*_search_algorithm)
 Dijkstra [hackerearth](https://www.hackerearth.com/practice/algorithms/graphs/shortest-path-algorithms/tutorial/#:~:text=Time%20Complexity%20of%20Dijkstra's%20Algorithm,E%20l%20o%20g%20V%20)
 
 Fringe search [University of Alberta](https://webdocs.cs.ualberta.ca/~holte/Publications/fringe.pdf)
+
+Tirakirja [Tirakirja](https://github.com/hy-tira/tirakirja/raw/master/tirakirja.pdf)

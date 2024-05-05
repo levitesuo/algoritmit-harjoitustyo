@@ -44,7 +44,7 @@ sequenceDiagram title Algoritmin suoritus validity testeissä
 
 #### algorithm_performance_test
 
-Täällä suoritetaan testejä itse generoiduissa kartoissa. Tiedoston nimen mukaan juoksemme performance testejä mitaten aikaa. Fringe searchin performancea ei vertailla suoraan unittestillä sillä se on huomattavasti hitaampi kuin djikstra ja a_star. Testejen aikana varmistetaan kuitenkin että a_starin ja fringe_searchin tulosteet vastaavat djikstran tulostetta, jonka oletamme oikeaksi. Isoimmat suoritetut testimäärät tällä testillä on sample size 500 tilannetta joissa jokaisessa 2500 nodea.
+Täällä suoritetaan testejä itse generoiduissa kartoissa. Tiedoston nimen mukaan juoksemme performance testejä mitaten aikaa. Fringe searchin performancea ei vertailla suoraan unittestillä sillä se on huomattavasti hitaampi kuin djikstra ja a_star. Testejen aikana varmistetaan kuitenkin että a_starin ja fringe_searchin tulosteet vastaavat djikstran tulostetta, jonka oletamme oikeaksi. Isoimmat suoritetut testimäärät tällä testillä on sample size 500 tilannetta joissa jokaisessa 2500 nodea. Testien määrään voi vaikuttaa num_of_map, num_of_runs_per_map muuttujilla.
 
 #### integration_test
 

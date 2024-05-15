@@ -1,12 +1,20 @@
 from math import sqrt
+from functools import cache
+import numpy as np
 
 
-def heurestic(node_list, cord: int, goal: int):
+@cache
+def heurestic(start_node,  goal_node, size):
     '''
     Gives an estimate of cost from a point to the goal.
     '''
-    x_diff = node_list[goal].position[1] - node_list[cord].position[1]
-    y_diff = node_list[goal].position[0] - node_list[cord].position[0]
-    z_diff = node_list[goal].height - node_list[cord].height
+    data_resolution = int(sqrt(size))
+    x_diff = goal_node.position[1] - start_node.position[1]
+    y_diff = goal_node.position[0] - start_node.position[0]
+    z_diff = goal_node.height - start_node.height
 
-    return sqrt(x_diff**2+y_diff**2) + abs(z_diff) * sqrt(len(node_list)) + 1
+    return np.hypot(x_diff, y_diff) + abs(z_diff) * data_resolution + 1
+
+
+def djikstra_heurestic(x, y, z):
+    return 0

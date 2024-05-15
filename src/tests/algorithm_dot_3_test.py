@@ -3,6 +3,7 @@ import unittest
 from functions.a_star import a_star
 from functions.fringe_search import fringe_search
 from functions.two_d_heurestic import two_d_heurestics
+from functions.heurestic import djikstra_heurestic
 from map_generation.node_list_generator import node_list_generator
 
 
@@ -26,7 +27,7 @@ class TestAlgorithmDot3(unittest.TestCase):
             node.reset()
 
     def test_closed_0_2_dijkstra(self):
-        result = a_star(0, 2, self.map, lambda x, y, z: 0)
+        result = a_star(0, 2, self.map, djikstra_heurestic)
         correct_closed = [1, 2, 3, 2, False, False,
                           False, False, False]
         self.assertEqual(correct_closed, result['closed'])
@@ -44,7 +45,7 @@ class TestAlgorithmDot3(unittest.TestCase):
         self.assertEqual(correct_cache, result['cache'])
 
     def test_closed_0_8_dijkstra(self):
-        result = a_star(0, 8, self.map, lambda x, y, z: 0)
+        result = a_star(0, 8, self.map, djikstra_heurestic)
         correct_closed = [1, 2, 3, 2, False, 4,
                           3, 4, 5]
         self.assertEqual(correct_closed, result['closed'])
@@ -62,7 +63,7 @@ class TestAlgorithmDot3(unittest.TestCase):
         self.assertEqual(correct_cache, result['cache'])
 
     def test_closed_5_3_dijkstra(self):
-        result = a_star(5, 3, self.map, lambda x, y, z: 0)
+        result = a_star(5, 3, self.map, djikstra_heurestic)
         correct_closed = [4, 3, 2,
                           5, False, 1,
                           4, 3, 2]

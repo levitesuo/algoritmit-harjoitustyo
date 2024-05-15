@@ -6,7 +6,7 @@ from map_generation.get_shape import get_shape
 from map_generation.shape_functions import *
 from functions.fringe_search import fringe_search
 from functions.a_star import a_star
-from functions.heurestic import heurestic
+from functions.heurestic import heurestic, djikstra_heurestic
 from services.algorithm_handler import algorithm_handler
 
 
@@ -75,7 +75,7 @@ class AppEngine:
                 goal=self.goal,
                 algorithm=lambda s, g, m: a_star(
                     start=s, goal=g, node_list=m,
-                    heurestic_function=lambda x, y, z: 0),
+                    heurestic_function=djikstra_heurestic),
                 figure=plain
             )
         if self.run_fringe_search:

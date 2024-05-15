@@ -1,0 +1,41 @@
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    24                                           @profile
+    25                                           def a_star(start, goal, node_list, heurestic_function):
+    26                                               '''
+    27                                               Finds the best path in node_list. Returns a dict with {'cost': , 'path': , 'closed_list': }
+    28                                           
+    29                                                   Parameters:
+    30                                                       start (int): A integer indicating from where on the node list to start.
+    31                                                       goal (int): A integer indicating a goal in the node_list.
+    32                                                       node_list (list): List of nodes that have verticies and some values. (See src/algorithms/objects/node.py)
+    33                                                       heurestic_function (function): a function that takes in three inputs (position, goal, node_list) and spits out a heurestic estimate for the length of the route.
+    34                                           
+    35                                                   Returns:
+    36                                                       Result (dict): A dictionary containing path, cost and closed_list aka. visited cells.
+    37                                               '''
+    38         1          0.7      0.7      0.0      size = len(node_list)
+    39         1       1846.9   1846.9      0.3      closed_list = [False for _ in range(size)]
+    40         1          0.1      0.1      0.0      open_list = []
+    41         1          1.3      1.3      0.0      node_list[start].g = 0
+    42         1          0.8      0.8      0.0      heappush(open_list, (0, start))
+    43     55010       5641.3      0.1      0.9      while open_list:
+    44     55010      40863.2      0.7      6.6          _, p = heappop(open_list)
+    45     55010      12099.8      0.2      2.0          g = node_list[p].g
+    46     55010      15091.5      0.3      2.4          closed_list[p] = node_list[p].g+1
+    47     55010       7418.9      0.1      1.2          if goal == p:
+    48         1        236.8    236.8      0.0              result = find_path(node_list, goal)
+    49         1          0.5      0.5      0.0              result['cost'] = node_list[p].g
+    50         1          0.2      0.2      0.0              result['closed'] = closed_list
+    51         1          0.1      0.1      0.0              return result
+    52    493871     107812.4      0.2     17.5          for cost, new_p in node_list[p].edges:
+    53    438862      56998.3      0.1      9.2              if not closed_list[new_p]:
+    54    158563      25959.5      0.2      4.2                  new_g = cost + g
+    55    158563     217429.6      1.4     35.3                  h = heurestic_function(node_list, new_p, goal)
+    56    158563      25370.8      0.2      4.1                  new_f = h + new_g
+    57    158563      56940.7      0.4      9.2                  if node_list[new_p].f == float('inf') or node_list[new_p].f > new_f:
+    58     56719      13967.6      0.2      2.3                      heappush(open_list, (new_f, new_p))
+    59     56719       9788.6      0.2      1.6                      node_list[new_p].f = new_f
+    60     56719       9683.7      0.2      1.6                      node_list[new_p].g = new_g
+    61     56719       9208.3      0.2      1.5                      node_list[new_p].parent = p
+    62                                               return False

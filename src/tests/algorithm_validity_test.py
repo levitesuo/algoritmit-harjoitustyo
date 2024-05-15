@@ -2,6 +2,7 @@ import os
 import unittest
 from time import time
 from map_generation.two_d_translator import two_d_translator
+from functions.heurestic import djikstra_heurestic
 from map_generation.node_list_generator import node_list_generator
 from functions.a_star import a_star
 from functions.fringe_search import fringe_search
@@ -80,7 +81,7 @@ class TestAlgorithms(unittest.TestCase):
                     goal=scenario['goal'],
                     node_list=node_list,
                     algorithm=a_star,
-                    heurestic=lambda x, y, z: 0
+                    heurestic=djikstra_heurestic
                 )
                 self.assertAlmostEqual(
                     scenario['cost'], generated_result['cost'], places=5, msg=f"s: {scenario['start']}, g:{scenario['goal']}, p:{generated_result['path']}")

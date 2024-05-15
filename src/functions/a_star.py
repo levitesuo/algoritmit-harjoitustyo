@@ -51,7 +51,7 @@ def a_star(start, goal, node_list, heurestic_function):
         for cost, new_p in node_list[p].edges:
             if not closed_list[new_p]:
                 new_g = cost + g
-                h = heurestic_function(node_list, new_p, goal)
+                h = heurestic_function(node_list[new_p], node_list[goal], size)
                 new_f = h + new_g
                 if node_list[new_p].f == float('inf') or node_list[new_p].f > new_f:
                     heappush(open_list, (new_f, new_p))

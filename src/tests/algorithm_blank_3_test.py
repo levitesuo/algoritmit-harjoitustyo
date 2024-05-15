@@ -3,6 +3,7 @@ import unittest
 from functions.a_star import a_star
 from functions.fringe_search import fringe_search
 from functions.two_d_heurestic import two_d_heurestics
+from functions.heurestic import djikstra_heurestic
 from map_generation.node_list_generator import node_list_generator
 
 
@@ -26,7 +27,7 @@ class TestAlgorithmBlank3(unittest.TestCase):
             node.reset()
 
     def test_closed_1_2_dijkstra(self):
-        result = a_star(1, 2, self.map, lambda x, y, z: 0)
+        result = a_star(1, 2, self.map, djikstra_heurestic)
         correct_closed = [2, 1, 2, False, False, False,
                           False, False, False]
         self.assertEqual(correct_closed, result['closed'])
@@ -44,7 +45,7 @@ class TestAlgorithmBlank3(unittest.TestCase):
         self.assertEqual(correct_cache, result['cache'])
 
     def test_closed_4_1_dijkstra(self):
-        result = a_star(4, 1, self.map, lambda x, y, z: 0)
+        result = a_star(4, 1, self.map, djikstra_heurestic)
         correct_closed = [False, 2, False,
                           False, 1, False, False, False, False]
         self.assertEqual(correct_closed, result['closed'])
@@ -63,7 +64,7 @@ class TestAlgorithmBlank3(unittest.TestCase):
         self.assertEqual(correct_cache, result['cache'])
 
     def test_path_0_8_dijkstra(self):
-        result = a_star(0, 8, self.map, lambda x, y, z: 0)
+        result = a_star(0, 8, self.map, djikstra_heurestic)
         correct_paht = [8, 4, 0]
         self.assertEqual(correct_paht, result['path'])
 
@@ -78,7 +79,7 @@ class TestAlgorithmBlank3(unittest.TestCase):
         self.assertEqual(correct_paht, result['path'])
 
     def test_path_6_2_dijkstra(self):
-        result = a_star(6, 2, self.map, lambda x, y, z: 0)
+        result = a_star(6, 2, self.map, djikstra_heurestic)
         correct_paht = [2, 4, 6]
         self.assertEqual(correct_paht, result['path'])
 

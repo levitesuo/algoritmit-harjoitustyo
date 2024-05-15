@@ -8,15 +8,15 @@ from map_generation.get_shape import get_shape
 from map_generation.node_list_generator import node_list_generator
 from functions.a_star import a_star
 from functions.fringe_search import fringe_search
-from functions.heurestic import heurestic
+from functions.heurestic import heurestic, djikstra_heurestic
 
 
 class TestAlgorithmAdvanced(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        num_of_maps = 5
+        num_of_maps = 20
         num_of_runs_per_map = 10
-        data_resolution = 50
+        data_resolution = 75
 
         super(TestAlgorithmAdvanced, cls).setUpClass()
         seed(10)
@@ -57,7 +57,7 @@ class TestAlgorithmAdvanced(unittest.TestCase):
             for scenario in map_cases['scenarios']:
                 a = time()
                 djikstra_results = a_star(
-                    scenario['start'], scenario['goal'], node_list, lambda x, y, z: 0)
+                    scenario['start'], scenario['goal'], node_list, djikstra_heurestic)
                 b = time()
                 for node in node_list:
                     node.reset()

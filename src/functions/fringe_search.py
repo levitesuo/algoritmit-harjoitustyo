@@ -20,7 +20,8 @@ def fringe_search(start, goal, node_list, heurestic_function):
     cache = [False for _ in range(size)]
 
     cache[start] = (0, None)
-    node_list[start].h = heurestic_function(node_list, start, goal)
+    node_list[start].h = heurestic_function(
+        node_list[start], node_list[goal], size)
     f_lim = node_list[start].h
 
     found = False
@@ -47,7 +48,8 @@ def fringe_search(start, goal, node_list, heurestic_function):
                     if g_s >= g_c:
                         continue
                 else:
-                    node_list[s].h = heurestic_function(node_list, s, goal)
+                    node_list[s].h = heurestic_function(
+                        node_list[s], node_list[goal], size)
                 fringe.delete_if_able(s)
                 fringe.insert_after(s)
                 cache[s] = (g_s, n)

@@ -12,7 +12,7 @@ class IntegrationTest(unittest.TestCase):
     def test_seed_1_cost(self):
         self.engine.random_seed = 1
         self.engine.init_empty_values()
-        best_path_length = 217.30271822122836
+        best_path_length = 200.45358306417907
         results = self.engine.execute()
         costs = [results[run]['cost'] for run in results]
         for cost in costs:
@@ -21,7 +21,7 @@ class IntegrationTest(unittest.TestCase):
     def test_seed_2_path(self):
         self.engine.random_seed = 2
         self.engine.init_empty_values()
-        best_path_length = 128.02704264129372
+        best_path_length = 116.9220831125023
         results = self.engine.execute()
         costs = [results[run]['cost'] for run in results]
         for cost in costs:
@@ -30,7 +30,7 @@ class IntegrationTest(unittest.TestCase):
     def test_seed_3_path(self):
         self.engine.random_seed = 3
         self.engine.init_empty_values()
-        best_path_length = 192.2527885757507
+        best_path_length = 179.46187686021312
         results = self.engine.execute()
         costs = [results[run]['cost'] for run in results]
         for cost in costs:

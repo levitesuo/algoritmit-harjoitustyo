@@ -1,3 +1,4 @@
+from math import sqrt
 SQRT2 = 1.41421356237309504880168872420969807856967187537694
 
 
@@ -29,8 +30,8 @@ class Node:
                 new_y = y + j - 1
                 if 0 <= new_x < len(grid[0]) and 0 <= new_y < len(grid) and not (i == 1 and j == 1):
                     if i - 1 != 0 and j - 1 != 0:
-                        edge = abs(grid[new_y][new_x] - grid[y][x]) + SQRT2
+                        edge = sqrt(abs(grid[new_y][new_x] - grid[y][x]) + 2)
                     else:
-                        edge = abs(grid[new_y][new_x] - grid[y][x]) + 1
+                        edge = sqrt(abs(grid[new_y][new_x] - grid[y][x]) + 1)
                     self.edges.append((edge, new_x * len(grid) + new_y))
             self.edges = sorted(self.edges)

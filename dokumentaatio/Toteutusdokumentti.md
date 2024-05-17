@@ -145,7 +145,7 @@ Mittasin kyseisessä testissä myös kuinka monessa nodessa a_star ja djikstra k
 
 A starin sekä fringe searchin tehokkuutta voisi parantaa kehittämällä paremman heureettisen funktion. Miten tämä pitäisi toteuttaa on vaikea sanoa. Tällä hetkellä heureettinen funktion on eukleedinen pituus pisteestä maaliin.
 
-Lisätietoa algoritmejen suorituksen nopeudesta lötyy kansiosta [profiilit](linkki) josta löytyy rivi profiili jokaisesta algoritmista. Nämä profiilit on generoitu käyttämällä komentoa poetry run invoke start ja antamalla parametrit dataresolution 150 ja random_seed 15.
+Lisätietoa algoritmejen suorituksen nopeudesta lötyy kansiosta [profiilit](https://github.com/levitesuo/algoritmit-harjoitusty-/tree/main/dokumentaatio/profiilit) josta löytyy rivi profiili jokaisesta algoritmista. Nämä profiilit on generoitu käyttämällä komentoa poetry run invoke start ja antamalla parametrit dataresolution 150 ja random_seed 15.
 
 ## Selvitys kielimallien käytöstä
 

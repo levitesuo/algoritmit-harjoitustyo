@@ -17,6 +17,6 @@ def get_shape(data_resolution: int, shape_func, data_range=(-1, 1)):
     line_x = np.linspace(data_range[0], data_range[1], data_resolution)
     line_y = np.linspace(data_range[0], data_range[1], data_resolution)
     x, y = np.meshgrid(line_x, line_y)
-    z = np.array([[shape_func(i, j) for i, j in zip(xrow, yrow)]
+    z = np.array([[shape_func(i, j)*data_resolution for i, j in zip(xrow, yrow)]
                  for xrow, yrow in zip(x, y)])
     return z

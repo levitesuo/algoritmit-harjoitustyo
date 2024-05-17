@@ -13,7 +13,7 @@ def heurestic(start_node,  goal_node, size):
     y_diff = goal_node.position[0] - start_node.position[0]
     z_diff = goal_node.height - start_node.height
 
-    return sqrt(x_diff**2 + y_diff**2 + (abs(z_diff) * data_resolution)**2)
+    return sqrt(x_diff**2 + y_diff**2 + z_diff**2)
 
 
 def djikstra_heurestic(x, y, z):

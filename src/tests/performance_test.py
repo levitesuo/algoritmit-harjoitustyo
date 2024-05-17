@@ -52,6 +52,7 @@ class TestAlgorithmAdvanced(unittest.TestCase):
         djikstra_time = 0
         fringe_search_time = 0
         a_star_time = 0
+        closed = {'djikstra': 0, 'a_star': 0}
         for map_cases in self.test_cases:
             node_list = map_cases['node_list']
             for scenario in map_cases['scenarios']:
@@ -59,18 +60,24 @@ class TestAlgorithmAdvanced(unittest.TestCase):
                 djikstra_results = a_star(
                     scenario['start'], scenario['goal'], node_list, djikstra_heurestic)
                 b = time()
+                closed['djikstra'] += sum(
+                    [1 if node else 0 for node in djikstra_results['closed']])
                 for node in node_list:
                     node.reset()
                 c = time()
                 a_star_results = a_star(
                     scenario['start'], scenario['goal'], node_list, heurestic)
                 d = time()
+                closed['a_star'] += sum(
+                    [1 if node else 0 for node in a_star_results['closed']])
                 for node in node_list:
                     node.reset()
+
                 e = time()
                 fringe_search_results = fringe_search(scenario['start'],
                                                       scenario['goal'], node_list, heurestic)
                 f = time()
+
                 for node in node_list:
                     node.reset()
                 djikstra_time += b - a
@@ -83,6 +90,7 @@ class TestAlgorithmAdvanced(unittest.TestCase):
                     djikstra_results['cost'], fringe_search_results['cost'])
         print(
             f"\tfringe_search_time: {fringe_search_time}\ta_star_time: {a_star_time}\tdijkstra_time: {djikstra_time}")
+        print(closed)
 
         self.assertGreater(djikstra_time, a_star_time,
                            msg="A_star is slower tha dijkstra.")

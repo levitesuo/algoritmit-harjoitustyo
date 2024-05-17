@@ -1,0 +1,64 @@
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     6                                           @profile
+     7                                           def fringe_search(start, goal, node_list, heurestic_function):
+     8                                               '''
+     9                                               Finds the best path in node_list. Returns a dict with {'cost': , 'path': , 'closed_list': }
+    10                                           
+    11                                                   Parameters:
+    12                                                       start (int): A integer indicating from where on the node list to start.
+    13                                                       goal (int): A integer indicating a goal in the node_list.
+    14                                                       node_list (list): List of nodes that have verticies and some values. (See src/algorithms/objects/node.py)
+    15                                                       heurestic_function (function): a function that takes in three inputs (position, goal, node_list) and spits out a heurestic estimate for the length of the route.
+    16                                           
+    17                                                   Returns:
+    18                                                       Result (dict): A dictionary containing path, cost and closed_list aka. visited cells.
+    19                                               '''
+    20         1          1.1      1.1      0.0      size = len(node_list)
+    21         1       2560.0   2560.0      0.0      fringe = LinkedList(size, start)
+    22         1       1120.7   1120.7      0.0      cache = [False for _ in range(size)]
+    23                                           
+    24         1          0.2      0.2      0.0      cache[start] = (0, None)
+    25         2         11.6      5.8      0.0      node_list[start].h = heurestic_function(
+    26         1          0.6      0.6      0.0          node_list[start], node_list[goal], size)
+    27         1          0.2      0.2      0.0      f_lim = node_list[start].h
+    28                                           
+    29         1          0.1      0.1      0.0      found = False
+    30                                           
+    31     15428       2305.9      0.1      0.0      while found is False or fringe.empty():
+    32     15427       4890.2      0.3      0.1          f_min = float('inf')
+    33                                                   # Linked list has a default start node at size ** 2
+    34     15427       2169.9      0.1      0.0          fringe.i = size
+    35   4742681    2585253.3      0.5     34.5          while fringe.iterate():
+    36   4727255     593025.8      0.1      7.9              n = fringe.i
+    37   4727255     845431.1      0.2     11.3              g, _ = cache[n]
+    38   4727255    1024527.9      0.2     13.7              f = g + node_list[n].h
+    39   4727255     636899.9      0.1      8.5              if f > f_lim:
+    40   4711828    1075842.0      0.2     14.3                  f_min = min(f, f_min)
+    41   4711828     462487.0      0.1      6.2                  continue
+    42     15427       2418.7      0.2      0.0              if n == goal:
+    43         1          0.1      0.1      0.0                  found = True
+    44         1          0.1      0.1      0.0                  break
+    45    138049      24289.6      0.2      0.3              for i in range(len(node_list[n].edges) - 1, -1, -1):
+    46    122623      31467.5      0.3      0.4                  cost, s = node_list[n].edges[i]
+    47    122623      20252.6      0.2      0.3                  g_s = g + cost
+    48    122623      18121.3      0.1      0.2                  if cache[s]:
+    49    106803      19857.1      0.2      0.3                      g_c, _ = cache[s]
+    50    106803      13700.3      0.1      0.2                      if g_s >= g_c:
+    51     94484       8762.5      0.1      0.1                          continue
+    52                                                           else:
+    53     31640      39878.9      1.3      0.5                      node_list[s].h = heurestic_function(
+    54     15820       2962.2      0.2      0.0                          node_list[s], node_list[goal], size)
+    55     28139      24297.7      0.9      0.3                  fringe.delete_if_able(s)
+    56     28139      27690.9      1.0      0.4                  fringe.insert_after(s)
+    57     28139       6161.2      0.2      0.1                  cache[s] = (g_s, n)
+    58     15426      19740.1      1.3      0.3              fringe.delete_current()
+    59     15427       1826.5      0.1      0.0          f_lim = f_min
+    60         1          0.1      0.1      0.0      if found:
+    61         1          0.1      0.1      0.0          path = [goal]
+    62         1          0.2      0.2      0.0          _, parent = cache[goal]
+    63       155         14.7      0.1      0.0          while parent is not None:
+    64       154         31.0      0.2      0.0              path.append(parent)
+    65       154         53.3      0.3      0.0              _, new_parent = cache[parent]
+    66       154         14.3      0.1      0.0              parent = new_parent
+    67         1          0.9      0.9      0.0          return {'path': path, 'cost': g, 'cache': cache}

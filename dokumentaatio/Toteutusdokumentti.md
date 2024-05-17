@@ -127,25 +127,23 @@ $$O\left(V+E\log V\right)$$
 
 ### Algoritmejen nopeus
 
-Optimointejen jälkeen djikstra on noin kaksi kertaa hitaampi kuin a star. Fringe search ei pääse oikeuksiinsa pythonissa. Pythonissa on kallista katsoa node[i] listasta ja tämän fringe search tekee eri suuruusluokassa kun a star ja djikstra.
+Optimointejen jälkeen djikstra on noin kolme kertaa hitaampi kuin a star. Fringe search ei pääse oikeuksiinsa pythonissa. Pythonissa on kallista katsoa node[i] listasta ja tämän fringe search tekee eri suuruusluokassa kun a star ja djikstra.
 
 Suorituskykytesti parametreilla
-- num_of_maps = 20
-- num_of_runs_per_map = 10
+- num_of_maps = 10
+- num_of_runs_per_map = 25
 - data_resolution = 75
 
 Mitattiin tulokset l
-- fringe_search_time: 221.38882541656494 s
-- dijkstra_time: 27.79947280883789 s
-- a_star_time: 13.055675029754639 s
+- fringe_search_time: 429.8073649406433 s
+- dijkstra_time: 88.70072555541992 s
+- a_star_time: 27.70150637626648 s
 
 Mittasin kyseisessä testissä myös kuinka monessa nodessa a_star ja djikstra kävivät. Tämä korreloi todella hyvin aikojen kanssa
-- djikstra 3103410
-- a star 1360361
+- djikstra 9313970
+- a star 2514890
 
 A starin sekä fringe searchin tehokkuutta voisi parantaa kehittämällä paremman heureettisen funktion. Miten tämä pitäisi toteuttaa on vaikea sanoa. Tällä hetkellä heureettinen funktion on eukleedinen pituus pisteestä maaliin.
-
-Lisätietoa algoritmejen suorituksen nopeudesta lötyy kansiosta [profiilit](https://github.com/levitesuo/algoritmit-harjoitusty-/tree/main/dokumentaatio/profiilit) josta löytyy rivi profiili jokaisesta algoritmista. Nämä profiilit on generoitu käyttämällä komentoa poetry run invoke start ja antamalla parametrit dataresolution 150 ja random_seed 15.
 
 ## Selvitys kielimallien käytöstä
 

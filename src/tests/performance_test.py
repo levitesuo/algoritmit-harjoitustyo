@@ -14,8 +14,8 @@ from functions.heurestic import heurestic, djikstra_heurestic
 class TestAlgorithmAdvanced(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        num_of_maps = 20
-        num_of_runs_per_map = 10
+        num_of_maps = 10
+        num_of_runs_per_map = 25
         data_resolution = 75
 
         super(TestAlgorithmAdvanced, cls).setUpClass()

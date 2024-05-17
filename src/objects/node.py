@@ -29,9 +29,12 @@ class Node:
                 new_x = x + i - 1
                 new_y = y + j - 1
                 if 0 <= new_x < len(grid[0]) and 0 <= new_y < len(grid) and not (i == 1 and j == 1):
+                    delta_z = grid[new_y][new_x] - grid[y][x]
                     if i - 1 != 0 and j - 1 != 0:
-                        edge = sqrt(abs(grid[new_y][new_x] - grid[y][x]) + 2)
+                        # Kulmittain
+                        edge = sqrt(delta_z**2 + 2)
                     else:
-                        edge = sqrt(abs(grid[new_y][new_x] - grid[y][x]) + 1)
+                        # ns Suoraan
+                        edge = sqrt(delta_z**2 + 1)
                     self.edges.append((edge, new_x * len(grid) + new_y))
             self.edges = sorted(self.edges)

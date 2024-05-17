@@ -34,13 +34,15 @@ def a_star(start, goal, node_list, heurestic_function):
         Returns:
             Result (dict): A dictionary containing path, cost and closed_list aka. visited cells.
     '''
+    list_index = 0
     size = len(node_list)
     closed_list = [False for _ in range(size)]
     open_list = []
     node_list[start].g = 0
-    heappush(open_list, (0, start))
+    heappush(open_list, (0, list_index, start))
+    list_index -= 1
     while open_list:
-        _, p = heappop(open_list)
+        _, _, p = heappop(open_list)
         g = node_list[p].g
         closed_list[p] = node_list[p].g+1
         if goal == p:
@@ -54,7 +56,8 @@ def a_star(start, goal, node_list, heurestic_function):
                 h = heurestic_function(node_list[new_p], node_list[goal], size)
                 new_f = h + new_g
                 if node_list[new_p].f == float('inf') or node_list[new_p].f > new_f:
-                    heappush(open_list, (new_f, new_p))
+                    heappush(open_list, (new_f, list_index, new_p))
+                    list_index -= 1
                     node_list[new_p].f = new_f
                     node_list[new_p].g = new_g
                     node_list[new_p].parent = p

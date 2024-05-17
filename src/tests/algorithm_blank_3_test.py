@@ -28,8 +28,7 @@ class TestAlgorithmBlank3(unittest.TestCase):
 
     def test_closed_1_2_dijkstra(self):
         result = a_star(1, 2, self.map, djikstra_heurestic)
-        correct_closed = [2, 1, 2, False, False, False,
-                          False, False, False]
+        correct_closed = [False, 1, 2, False, 2, False, False, False, False]
         self.assertEqual(correct_closed, result['closed'])
 
     def test_closed_1_2_a_star(self):
@@ -46,8 +45,7 @@ class TestAlgorithmBlank3(unittest.TestCase):
 
     def test_closed_4_1_dijkstra(self):
         result = a_star(4, 1, self.map, djikstra_heurestic)
-        correct_closed = [False, 2, False,
-                          False, 1, False, False, False, False]
+        correct_closed = [False, 2, False, 2, 1, 2, False, 2, False]
         self.assertEqual(correct_closed, result['closed'])
 
     def test_closed_4_1_a_star(self):

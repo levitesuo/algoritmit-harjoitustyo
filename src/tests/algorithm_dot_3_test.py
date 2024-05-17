@@ -52,8 +52,7 @@ class TestAlgorithmDot3(unittest.TestCase):
 
     def test_closed_0_8_a_star(self):
         result = a_star(0, 8, self.map, two_d_heurestics)
-        correct_closed = [1, 2, 3, 2, False, 4,
-                          3, 4, 5]
+        correct_closed = [1, 2, 3, 2, False, 4, False, False, 5]
         self.assertEqual(correct_closed, result['closed'])
 
     def test_closed_0_8_fringe_search(self):
@@ -71,9 +70,7 @@ class TestAlgorithmDot3(unittest.TestCase):
 
     def test_closed_5_3_a_star(self):
         result = a_star(5, 3, self.map, two_d_heurestics)
-        correct_closed = [4, 3, 2,
-                          5, False, 1,
-                          False, 3, 2]
+        correct_closed = [False, 3, 2, 5, False, 1, 4, 3, 2]
         self.assertEqual(correct_closed, result['closed'])
 
     def test_closed_5_3_fringe_search(self):
